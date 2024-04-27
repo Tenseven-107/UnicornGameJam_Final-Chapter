@@ -1,0 +1,26 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Scripts/Utils/Gameplay/GameCamera.gd" type="Script" id=1]
+
+[node name="GameCamera" type="Camera2D" groups=["GameCamera"]]
+current = true
+script = ExtResource( 1 )
+
+[node name="Timer" type="Timer" parent="."]
+one_shot = true
+
+[node name="Timer2" type="Timer" parent="."]
+one_shot = true
+
+[node name="Timer3" type="Timer" parent="."]
+one_shot = true
+
+[node name="Shake_tween" type="Tween" parent="."]
+
+[node name="Zoom_tween" type="Tween" parent="."]
+
+[node name="Hitstop_tween" type="Tween" parent="."]
+
+[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
+[connection signal="timeout" from="Timer2" to="." method="_on_Timer2_timeout"]
+[connection signal="timeout" from="Timer3" to="." method="_on_Timer3_timeout"]

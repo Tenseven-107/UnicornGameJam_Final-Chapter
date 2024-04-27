@@ -13,7 +13,7 @@ extents = Vector2( 41.5, 41.5 )
 
 [node name="GameCamera" parent="." instance=ExtResource( 1 )]
 visible = false
-zoom = Vector2( 2, 2 )
+target_path = NodePath("../PlayerContainer/Player")
 
 [node name="PlayerContainer" type="Node2D" parent="."]
 

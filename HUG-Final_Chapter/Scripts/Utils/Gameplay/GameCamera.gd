@@ -18,9 +18,11 @@ export (bool) var snappy_camera: bool = false
 var can_zoom: bool = true
 var shake_multiplier: float = 1
 
+export (float) var x_cam_offset: float = 40
+
 # Movement
 export (NodePath) var target_path: NodePath
-onready var player_target: Node
+onready var player_target: PlayerController
 
 # Cam effect variables
 var shake_amount: float = 0
@@ -69,7 +71,13 @@ func _process(delta):
 		rand_range(shake_amount, -shake_amount)) * delta
 
 	if is_instance_valid(player_target):
-		position = player_target.global_position
+		update_cam()
+
+
+# Update camera
+func update_cam():
+	var player_input = Vector2(player_target.x_input * x_cam_offset, 0)
+	global_position = lerp(global_position, player_target.global_position + player_input, 1)
 
 
 

@@ -24,6 +24,11 @@ export (bool) var destroy_on_death: bool = false
 const LAYER: int = 4
 const MASK: int = 4
 
+# Effect players
+export var _c_effect_players: String
+export (Array, NodePath) var effects_hit
+export (Array, NodePath) var effects_death
+
 
 
 # Setup
@@ -38,16 +43,26 @@ func _ready():
 
 # Damage/ healing handling
 func handle_hit(hit_team: int, damage: int):
-	if hit_team != team:
+	if hit_team != team and current_hp > 0:
 		if invincible == false and GODMODE == false:
 			current_hp -= damage
 
 			if current_hp <= 0:
 				die()
 
+			# Play effects on hit
+			for effect in effects_hit:
+				var play_effect: EffectPlayer = get_node(effect)
+				play_effect.play_effect()
+
 
 func handle_heal(hit_team: int, healed_hp: int):
-	pass
+	if hit_team == team:
+		if (healed_hp + current_hp) <= hp:
+			current_hp += healed_hp
+
+		else:
+			current_hp += (hp - healed_hp)
 
 
 
@@ -55,9 +70,14 @@ func handle_heal(hit_team: int, healed_hp: int):
 func die():
 	emit_signal("dead")
 
+	# Play effects on death
+	for effect in effects_death:
+		var play_effect: EffectPlayer = get_node(effect)
+		play_effect.play_effect()
+
 	if destroy_on_death == true:
 		var destroy_object: Node = get_node(destroy_path)
-		call_deferred("queue_free", destroy_object)
+		destroy_object.call_deferred("queue_free")
 
 
 # Getting hp

@@ -78,8 +78,8 @@ func _process(delta):
 
 # Update camera
 func update_cam():
-	var player_offset = Vector2(player_target.x_input * x_cam_offset, -y_cam_offset)
-	if player_offset.x != 0:
+	var player_offset = Vector2(player_target.input_vector.normalized().x * x_cam_offset, -y_cam_offset)
+	if player_offset.x != 0 and player_target.input_vector.y == 0:
 		last_cam_offset = player_offset
 
 	global_position = lerp(global_position, player_target.global_position + last_cam_offset, 1)

@@ -1,12 +1,12 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://Scripts/Player/PlayerController.gd" type="Script" id=1]
 [ext_resource path="res://Sprites/Testing/Player_test_sprite.png" type="Texture" id=2]
 [ext_resource path="res://Scripts/Utils/Gameplay/Entity.gd" type="Script" id=3]
 
 [sub_resource type="CapsuleShape2D" id=3]
-radius = 8.0
-height = 8.0
+radius = 5.0
+height = 16.0
 
 [sub_resource type="SpriteFrames" id=4]
 animations = [ {
@@ -24,6 +24,9 @@ animations = [ {
 [sub_resource type="CircleShape2D" id=5]
 radius = 4.0
 
+[sub_resource type="CircleShape2D" id=6]
+radius = 50.01
+
 [node name="Player" type="KinematicBody2D"]
 script = ExtResource( 1 )
 raycasts = [ NodePath("Rays/RayCast2D"), NodePath("Rays/RayCast2D2"), NodePath("Rays/RayCast2D3") ]
@@ -34,6 +37,7 @@ attack_timer_path = NodePath("Utility/AttackTimer")
 attack_cooldown_path = NodePath("Utility/AttackCooldown")
 dodge_timer_path = NodePath("Utility/DodgeTimer")
 entity_path = NodePath("Combat/Entity")
+teleport_timer_path = NodePath("Utility/TeleportTimer")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource( 3 )
@@ -62,6 +66,13 @@ collision_mask = 4
 collide_with_areas = true
 collide_with_bodies = false
 
+[node name="Charge" type="Node2D" parent="."]
+
+[node name="ChargingArea" type="Area2D" parent="Charge"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Charge/ChargingArea"]
+shape = SubResource( 6 )
+
 [node name="Rays" type="Node2D" parent="."]
 
 [node name="RayCast2D" type="RayCast2D" parent="Rays"]
@@ -70,13 +81,13 @@ cast_to = Vector2( 0, 24 )
 collision_mask = 2
 
 [node name="RayCast2D2" type="RayCast2D" parent="Rays"]
-position = Vector2( 7, 0 )
+position = Vector2( 4, 0 )
 enabled = true
 cast_to = Vector2( 0, 24 )
 collision_mask = 2
 
 [node name="RayCast2D3" type="RayCast2D" parent="Rays"]
-position = Vector2( -7, 0 )
+position = Vector2( -4, 0 )
 enabled = true
 cast_to = Vector2( 0, 24 )
 collision_mask = 2
@@ -91,3 +102,5 @@ one_shot = true
 [node name="AttackCooldown" type="Timer" parent="Utility"]
 
 [node name="DodgeTimer" type="Timer" parent="Utility"]
+
+[node name="TeleportTimer" type="Timer" parent="Utility"]

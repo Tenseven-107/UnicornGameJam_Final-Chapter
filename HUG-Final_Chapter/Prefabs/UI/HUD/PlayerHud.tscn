@@ -1,0 +1,42 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://Sprites/UI/HUD/empty_Stamina-bar.png" type="Texture" id=1]
+[ext_resource path="res://Sprites/UI/HUD/full_Stamina-bar.png" type="Texture" id=2]
+[ext_resource path="res://Scripts/UI/HUD/PlayerHud.gd" type="Script" id=3]
+
+[node name="PlayerHud" type="CanvasLayer"]
+script = ExtResource( 3 )
+
+[node name="Control" type="Control" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="Left" type="Control" parent="Control/HBoxContainer"]
+margin_right = 190.0
+margin_bottom = 216.0
+size_flags_horizontal = 3
+
+[node name="PlayerStats" type="Control" parent="Control/HBoxContainer/Left"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/HBoxContainer/Left/PlayerStats"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="StaminaBar" type="TextureProgress" parent="Control/HBoxContainer/Left/PlayerStats/VBoxContainer"]
+margin_right = 190.0
+margin_bottom = 10.0
+texture_under = ExtResource( 1 )
+texture_progress = ExtResource( 2 )
+
+[node name="Right" type="Control" parent="Control/HBoxContainer"]
+margin_left = 194.0
+margin_right = 384.0
+margin_bottom = 216.0
+size_flags_horizontal = 3

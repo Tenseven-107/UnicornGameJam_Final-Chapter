@@ -32,10 +32,19 @@ onready var dodge_timer: Timer = get_node(dodge_timer_path)
 export (NodePath) var entity_path: NodePath
 onready var entity: Entity = get_node(entity_path)
 
+# - Teleport
+export (NodePath) var teleport_timer_path: NodePath
+onready var teleport_timer: Timer = get_node(teleport_timer_path)
+
+# - Drone
+export var _c_drone_player: String
+export (NodePath) var drone_path: NodePath
+onready var drone: PlayerDroneController = get_node(drone_path)
+
 
 # Movement
 export var _c_movement: String
-export (float) var move_speed: float = 16000
+export (float) var move_speed: float = 12000
 
 # - Jumping
 export var _c_jumping: String
@@ -53,13 +62,15 @@ var coyote: bool = false
 
 # Vectors
 var last_x_input: float = 0
-var x_input: float = 0
-var y_input: float = 0
+var input_vector: Vector2 =  Vector2.ZERO
 var velocity: Vector2 = Vector2.ZERO
 
 
 # Attacking
 export var _c_combat: String
+export (int) var damage: int = 2
+export (int) var damage_team: int = 0
+
 export (float) var attack_ray_reach: float = 50
 export (float) var attack_time: float = 0.1
 export (float) var attack_cooldown_time: float = 0.2
@@ -69,6 +80,21 @@ onready var ATTACK_COOLDOWN: float = attack_time + attack_cooldown_time
 # Dodging
 export var _c_dodge_roll: String
 export (float) var dodge_time: float = 0.36
+
+
+# Teleport
+export var _c_teleport: String
+export (float) var teleport_time: float = 0.2
+
+
+# Stamina
+export var _c_stamina: String
+export (int) var stamina: int = 100
+var current_stamina: int = 0
+
+export (int) var stamina_attack: int = 25
+export (int) var stamina_dodge: int = 50
+export (int) var stamina_teleport: int = 75
 
 
 # States
@@ -94,8 +120,11 @@ export (bool) var has_charge: bool = true
 func _ready():
 	# General setup
 	sprite.flip_h = true
-	x_input = 1
-	last_x_input = x_input
+
+	input_vector.x = 1
+	last_x_input = input_vector.x
+
+	current_stamina = stamina
 
 	# Jumping set up
 	current_gravity = gravity
@@ -123,11 +152,16 @@ func _ready():
 
 	dodge_timer.connect("timeout", self, "finish_dodge")
 
+	# Teleport
+	teleport_timer.wait_time = teleport_time
+	teleport_timer.one_shot = true
+
 
 
 # Processing
 func _physics_process(delta):
 	set_velocity(delta)
+	stamina_regen()
 
 func _process(delta):
 	run_states(delta)
@@ -138,9 +172,10 @@ func run_states(delta):
 	match current_state:
 		STATES.ACTIVE:
 			movement(delta)
-			jumping(delta)
-			attacking()
 			dodging()
+			if has_jump == true: jumping(delta)
+			if has_attack == true: attacking()
+			if has_teleport == true: teleport()
 		STATES.CHARGING:
 			pass
 		STATES.DEAD:
@@ -158,14 +193,14 @@ func switch_state(new_state: int):
 # Movement
 func movement(delta):
 	if attack_cooldown.is_stopped() and dodge_timer.is_stopped():
-		x_input = Input.get_axis("left_player", "right_player")
-	if x_input != 0:  last_x_input = x_input
+		input_vector.x = Input.get_axis("left_player", "right_player")
+	if input_vector.x != 0:  last_x_input = input_vector.normalized().x
 
 	# Turning the players direction
-	if x_input > 0: 
+	if input_vector.x > 0: 
 		sprite.flip_h = true
 		attack_ray.cast_to.x = attack_ray_reach
-	elif x_input < 0: 
+	elif input_vector.x < 0: 
 		sprite.flip_h = false
 		attack_ray.cast_to.x = -attack_ray_reach
 
@@ -183,7 +218,7 @@ func jumping(delta):
 
 	# Jumping
 	if Input.is_action_pressed("jump") and is_jumping == true:
-		y_input = get_jump_force()
+		input_vector.y = get_jump_force()
 
 		if current_gravity > min_gravity:
 			current_gravity -= gravity_depletion
@@ -192,7 +227,7 @@ func jumping(delta):
 	if Input.is_action_just_released("jump") or current_gravity <= min_gravity:
 		is_jumping = false
 		current_gravity = gravity
-		y_input = 0
+		input_vector.y = 0
 
 func get_jump_force():
 	return jump_force if coyote == false else coyote_jump_force
@@ -211,46 +246,61 @@ func check_rays():
 
 # Setting the velocity
 func set_velocity(delta):
-	velocity.x = (x_input * move_speed) * delta
+	velocity.x = (input_vector.x * move_speed) * delta
 	velocity.y += current_gravity * delta
 
 	velocity = move_and_slide(velocity, Vector2.UP)
 
 	if is_on_floor() or coyote == true:
-		velocity.y -= y_input
+		if is_jumping == true: velocity.y -= input_vector.y
+		else: 
+			velocity.y = 0 # nullify the velocity to avoid constant velocity into the ground
 
-		if is_jumping == false: coyote_timer.start()
+			coyote_timer.start()
 		coyote = false
 
 
 
 # Combat
 func attacking():
-	if player_action("attack_player"):
-		x_input = last_x_input
+	if player_action("attack_player") and can_remove_stamina(stamina_attack):
+		input_vector.x = last_x_input
 
 		attack_timer.start()
 		attack_cooldown.start()
 
 		if attack_ray.is_colliding():
 			var colliding_entity = attack_ray.get_collider()
+			if colliding_entity is Entity:
+				colliding_entity.handle_hit(damage_team, damage)
 
 func attack_recovery():
-	x_input = 0
+	input_vector.x = 0
 
 
 
 # ROLLING ROLLING ROLLING ROLLING
 func dodging():
-	if player_action("action_player"):
-		x_input = last_x_input
+	if player_action("action_player") and can_remove_stamina(stamina_dodge):
+		input_vector.x = last_x_input
 
 		entity.invincible = true
 		dodge_timer.start()
 
 func finish_dodge():
-	x_input = 0
+	input_vector.x = 0
 	entity.invincible = false
+
+
+
+# Teleport
+func teleport():
+	if player_action("action_player"):
+		teleport_timer.start()
+	if ((Input.is_action_just_released("action_player") or Input.is_action_pressed("action_player")) 
+	and can_remove_stamina(stamina_teleport) 
+	and teleport_timer.is_stopped()):
+		global_position = drone.get_teleport_pos()
 
 
 
@@ -263,8 +313,33 @@ func player_action(control_action: String):
 
 
 
+# Stamina
+func stamina_regen():
+	if attack_cooldown.is_stopped() and dodge_timer.is_stopped():
+		if current_stamina < stamina:
+			current_stamina += 1
+		else: current_stamina = clamp(current_stamina, 0, stamina)
+
+func can_remove_stamina(removed_stamina: int):
+	if (current_stamina - removed_stamina) >= 0:
+		current_stamina -= removed_stamina
+		return true
+
+	return false
 
 
+# - Getting the stamina
+func get_stamina():
+	return current_stamina
+
+func get_max_stamina():
+	return stamina
+
+
+
+# Getting the entity
+func get_entity():
+	return entity
 
 
 

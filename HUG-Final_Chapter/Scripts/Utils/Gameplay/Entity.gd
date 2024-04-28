@@ -8,11 +8,15 @@ signal dead
 # Objects
 export (NodePath) var destroy_path: NodePath
 
+export (NodePath) var i_timer_path: NodePath
+var i_timer: Timer
+
 
 # Damage handling variables
 export var _c_hitpoints: String
 var current_hp: int = 0
 export (int) var hp: int = 5
+export (float) var i_frames: float = 1
 
 export (bool) var invincible: bool = false
 export (bool) var GODMODE: bool = false
@@ -39,13 +43,22 @@ func _ready():
 	collision_layer = LAYER
 	collision_mask = MASK
 
+	# Set i-frame timer
+	if i_timer_path != "":
+		i_timer = get_node(i_timer_path)
+		i_timer.one_shot = true
+		i_timer.wait_time = i_frames
+
 
 
 # Damage/ healing handling
 func handle_hit(hit_team: int, damage: int):
-	if hit_team != team and current_hp > 0:
+	if hit_team != team and current_hp > 0 and ((is_instance_valid(i_timer) and i_timer.is_stopped()) 
+	or is_instance_valid(i_timer) == false):
 		if invincible == false and GODMODE == false:
 			current_hp -= damage
+
+			if is_instance_valid(i_timer): i_timer.start()
 
 			if current_hp <= 0:
 				die()

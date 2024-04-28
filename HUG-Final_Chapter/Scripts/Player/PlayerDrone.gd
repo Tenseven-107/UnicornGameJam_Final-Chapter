@@ -3,14 +3,23 @@ class_name PlayerDroneController
 
 
 
+# Objects
+export var _c_objects: String
+export (NodePath) var teleport_ray_path: NodePath
+onready var teleport_ray: RayCast2D = get_node(teleport_ray_path)
+
+export (NodePath) var body_path: NodePath
+onready var body: Node2D = get_node(body_path)
+
+export (NodePath) var shooter_path: NodePath
+onready var shooter: BulletShooter = get_node(shooter_path)
+
+
 # Movement stats
 export var _c_movement: String
 export (float) var max_speed: float = 180
 export (float) var acceleration: float = 30
 var current_speed: float = 0
-
-export (float) var move_range: float = 8
-var next_pos: Vector2
 
 # Teleport
 export var _c_teleport: String
@@ -24,7 +33,7 @@ var velocity: Vector2 = Vector2.ZERO
 
 # Setup
 func _ready():
-	pass
+	teleport_ray.cast_to = teleport_offset * 2
 
 
 
@@ -46,7 +55,7 @@ func movement(delta):
 		current_speed = clamp(current_speed, 0, max_speed)
 
 		# Rotating to direction
-		rotation = input_vector.angle()
+		body.rotation = input_vector.angle()
 	else: current_speed = 0
 
 	velocity = move_and_slide(input_vector * current_speed) * delta
@@ -64,7 +73,7 @@ func movement(delta):
 # Attacking
 func attacking():
 	if get_action_input() == true:
-		print("attack")
+		shooter.play_effect()
 
 
 
@@ -97,7 +106,10 @@ func get_move_input():
 func get_teleport_pos():
 	return global_position + teleport_offset
 
-
+func check_can_teleport():
+	if teleport_ray.is_colliding() == false:
+		return true
+	else: return false
 
 
 

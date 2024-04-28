@@ -32,10 +32,6 @@ onready var dodge_timer: Timer = get_node(dodge_timer_path)
 export (NodePath) var entity_path: NodePath
 onready var entity: Entity = get_node(entity_path)
 
-# - Teleport
-export (NodePath) var teleport_timer_path: NodePath
-onready var teleport_timer: Timer = get_node(teleport_timer_path)
-
 # - Drone
 export var _c_drone_player: String
 export (NodePath) var drone_path: NodePath
@@ -48,7 +44,7 @@ export (float) var move_speed: float = 12000
 
 # - Jumping
 export var _c_jumping: String
-export (float) var jump_force: float = 600
+export (float) var jump_force: float = 350
 onready var coyote_jump_force: float = jump_force * 1.5
 export (float) var coyote_time: float = 1
 
@@ -82,26 +78,21 @@ export var _c_dodge_roll: String
 export (float) var dodge_time: float = 0.36
 
 
-# Teleport
-export var _c_teleport: String
-export (float) var teleport_time: float = 0.2
-
-
 # Stamina
 export var _c_stamina: String
 export (int) var stamina: int = 100
 var current_stamina: int = 0
+var tired: bool = false
 
 export (int) var stamina_attack: int = 25
-export (int) var stamina_dodge: int = 50
-export (int) var stamina_teleport: int = 75
+export (int) var stamina_dodge: int = 40
+export (int) var stamina_teleport: int = 100
 
 
 # States
 export var _c_states: String
 enum STATES {
 	ACTIVE,
-	CHARGING,
 	DEAD
 }
 export (STATES) var current_state: int = STATES.ACTIVE
@@ -112,7 +103,18 @@ export var _c_switches: String
 export (bool) var has_jump: bool = true
 export (bool) var has_attack: bool = true
 export (bool) var has_teleport: bool = true
-export (bool) var has_charge: bool = true
+
+
+# Effect players
+export var _c_effect_players: String
+export (Array, NodePath) var effects_teleport_in
+export (Array, NodePath) var effects_teleport_out
+
+export (Array, NodePath) var effects_attack
+export (Array, NodePath) var effects_roll
+export (Array, NodePath) var effects_jump
+export (Array, NodePath) var effects_no_stamina
+export (Array, NodePath) var effects_not_enough_stamina
 
 
 
@@ -125,6 +127,7 @@ func _ready():
 	last_x_input = input_vector.x
 
 	current_stamina = stamina
+	tired = false
 
 	# Jumping set up
 	current_gravity = gravity
@@ -152,9 +155,8 @@ func _ready():
 
 	dodge_timer.connect("timeout", self, "finish_dodge")
 
-	# Teleport
-	teleport_timer.wait_time = teleport_time
-	teleport_timer.one_shot = true
+	# Entity
+	entity.connect("dead", self, "set_dead")
 
 
 
@@ -176,9 +178,9 @@ func run_states(delta):
 			if has_jump == true: jumping(delta)
 			if has_attack == true: attacking()
 			if has_teleport == true: teleport()
-		STATES.CHARGING:
-			pass
 		STATES.DEAD:
+			input_vector = Vector2.ZERO
+			velocity = Vector2.ZERO
 			pass
 
 func switch_state(new_state: int):
@@ -215,6 +217,11 @@ func jumping(delta):
 			coyote = true
 
 		coyote_timer.stop()
+
+		# Play effects on jump
+		for effect in effects_jump:
+			var play_effect: EffectPlayer = get_node(effect)
+			play_effect.play_effect()
 
 	# Jumping
 	if Input.is_action_pressed("jump") and is_jumping == true:
@@ -263,7 +270,7 @@ func set_velocity(delta):
 
 # Combat
 func attacking():
-	if player_action("attack_player") and can_remove_stamina(stamina_attack):
+	if player_action("attack_player", true) and can_remove_stamina(stamina_attack):
 		input_vector.x = last_x_input
 
 		attack_timer.start()
@@ -274,6 +281,11 @@ func attacking():
 			if colliding_entity is Entity:
 				colliding_entity.handle_hit(damage_team, damage)
 
+		# Play effects on attack
+		for effect in effects_attack:
+			var play_effect: EffectPlayer = get_node(effect)
+			play_effect.play_effect()
+
 func attack_recovery():
 	input_vector.x = 0
 
@@ -281,11 +293,16 @@ func attack_recovery():
 
 # ROLLING ROLLING ROLLING ROLLING
 func dodging():
-	if player_action("action_player") and can_remove_stamina(stamina_dodge):
+	if player_action("action_player", true) and can_remove_stamina(stamina_dodge):
 		input_vector.x = last_x_input
 
 		entity.invincible = true
 		dodge_timer.start()
+
+		# Play effects on dodge
+		for effect in effects_roll:
+			var play_effect: EffectPlayer = get_node(effect)
+			play_effect.play_effect()
 
 func finish_dodge():
 	input_vector.x = 0
@@ -295,18 +312,26 @@ func finish_dodge():
 
 # Teleport
 func teleport():
-	if player_action("action_player"):
-		teleport_timer.start()
-	if ((Input.is_action_just_released("action_player") or Input.is_action_pressed("action_player")) 
-	and can_remove_stamina(stamina_teleport) 
-	and teleport_timer.is_stopped()):
-		global_position = drone.get_teleport_pos()
+	if player_action("action_player", false) and drone.check_can_teleport():
+		if can_remove_stamina(stamina_teleport):
+			# Play effects on teleport_in
+			for effect in effects_teleport_in:
+				var play_effect: EffectPlayer = get_node(effect)
+				play_effect.play_effect()
+
+			global_position = drone.get_teleport_pos()
+
+			# Play effects on teleport_out
+			for effect in effects_teleport_out:
+				var play_effect: EffectPlayer = get_node(effect)
+				play_effect.play_effect()
 
 
 
 # Used to check if the player can do a certain action besides simply moving
-func player_action(control_action: String):
-	if (Input.is_action_just_pressed(control_action) and is_on_floor() and attack_cooldown.is_stopped() 
+func player_action(control_action: String, on_floor: bool):
+	if (Input.is_action_just_pressed(control_action) and ((on_floor == true and is_on_floor()) or on_floor == false)
+	and attack_cooldown.is_stopped() 
 	and dodge_timer.is_stopped()):
 		return true
 	return false
@@ -318,28 +343,44 @@ func stamina_regen():
 	if attack_cooldown.is_stopped() and dodge_timer.is_stopped():
 		if current_stamina < stamina:
 			current_stamina += 1
-		else: current_stamina = clamp(current_stamina, 0, stamina)
+		else: 
+			tired = false
+			current_stamina = clamp(current_stamina, 0, stamina)
 
 func can_remove_stamina(removed_stamina: int):
-	if (current_stamina - removed_stamina) >= 0:
+	if (current_stamina - removed_stamina) >= 0 and tired == false:
 		current_stamina -= removed_stamina
+		if current_stamina <= 0:
+			tired = true
+
+			# Play effects on no stamina
+			for effect in effects_no_stamina:
+				var play_effect: EffectPlayer = get_node(effect)
+				play_effect.play_effect()
+
 		return true
+
+	# Play effects on having not enough stamina
+	for effect in effects_not_enough_stamina:
+		var play_effect: EffectPlayer = get_node(effect)
+		play_effect.play_effect()
 
 	return false
 
 
+
+# Set to dead state
+func set_dead(): switch_state(STATES.DEAD)
+
+
+
 # - Getting the stamina
-func get_stamina():
-	return current_stamina
+func get_stamina(): return current_stamina
 
-func get_max_stamina():
-	return stamina
-
-
+func get_max_stamina(): return stamina
 
 # Getting the entity
-func get_entity():
-	return entity
+func get_entity(): return entity
 
 
 

@@ -9,6 +9,16 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "KinematicBody2D",
+"class": "Bullet",
+"language": "GDScript",
+"path": "res://Scripts/Utils/Gameplay/Bullet.gd"
+}, {
+"base": "EffectPlayer",
+"class": "BulletShooter",
+"language": "GDScript",
+"path": "res://Scripts/Utils/Gameplay/BulletShooter.gd"
+}, {
 "base": "EditorProperty",
 "class": "EC_CreateCategory",
 "language": "GDScript",
@@ -29,6 +39,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Scripts/Utils/Gameplay/GameCamera.gd"
 }, {
+"base": "Area2D",
+"class": "Hitbox",
+"language": "GDScript",
+"path": "res://Scripts/Utils/Gameplay/Hitbox.gd"
+}, {
 "base": "Node",
 "class": "MusicPlayer_class",
 "language": "GDScript",
@@ -38,6 +53,11 @@ _global_script_classes=[ {
 "class": "MusicStarter",
 "language": "GDScript",
 "path": "res://Scripts/EffectPlayers/MusicStarter.gd"
+}, {
+"base": "Node2D",
+"class": "NodeContainer",
+"language": "GDScript",
+"path": "res://Scripts/Utils/Backend/NodeContainer.gd"
 }, {
 "base": "KinematicBody2D",
 "class": "PlayerController",
@@ -50,12 +70,16 @@ _global_script_classes=[ {
 "path": "res://Scripts/Player/PlayerDrone.gd"
 } ]
 _global_script_class_icons={
+"Bullet": "",
+"BulletShooter": "",
 "EC_CreateCategory": "",
 "EffectPlayer": "",
 "Entity": "",
 "GameCamera": "",
+"Hitbox": "",
 "MusicPlayer_class": "",
 "MusicStarter": "",
+"NodeContainer": "",
 "PlayerController": "",
 "PlayerDroneController": ""
 }
@@ -195,7 +219,7 @@ down_drone2={
 }
 action_drone2={
 "deadzone": 0.5,
-"events": [ Object(InputEventJoypadButton,"resource_local_to_scene":false,"resource_name":"","device":1,"button_index":7,"pressure":0.0,"pressed":false,"script":null)
+"events": [ Object(InputEventJoypadButton,"resource_local_to_scene":false,"resource_name":"","device":1,"button_index":2,"pressure":0.0,"pressed":false,"script":null)
  ]
 }
 

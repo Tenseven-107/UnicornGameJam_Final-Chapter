@@ -4,7 +4,7 @@
 [ext_resource path="res://Prefabs/Player/Player.tscn" type="PackedScene" id=2]
 
 [sub_resource type="RectangleShape2D" id=2]
-extents = Vector2( 197, 10 )
+extents = Vector2( 1970, 10 )
 
 [sub_resource type="RectangleShape2D" id=4]
 extents = Vector2( 41.5, 41.5 )

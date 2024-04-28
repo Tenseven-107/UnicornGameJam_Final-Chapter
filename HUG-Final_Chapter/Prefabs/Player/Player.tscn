@@ -1,37 +1,93 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Scripts/Player/PlayerController.gd" type="Script" id=1]
+[ext_resource path="res://Sprites/Testing/Player_test_sprite.png" type="Texture" id=2]
+[ext_resource path="res://Scripts/Utils/Gameplay/Entity.gd" type="Script" id=3]
 
 [sub_resource type="CapsuleShape2D" id=3]
+radius = 8.0
+height = 8.0
+
+[sub_resource type="SpriteFrames" id=4]
+animations = [ {
+"frames": [ ExtResource( 2 ) ],
+"loop": true,
+"name": "Test",
+"speed": 5.0
+}, {
+"frames": [  ],
+"loop": true,
+"name": "default",
+"speed": 5.0
+} ]
+
+[sub_resource type="CircleShape2D" id=5]
+radius = 4.0
 
 [node name="Player" type="KinematicBody2D"]
 script = ExtResource( 1 )
 raycasts = [ NodePath("Rays/RayCast2D"), NodePath("Rays/RayCast2D2"), NodePath("Rays/RayCast2D3") ]
 coyote_timer_path = NodePath("Utility/CoyoteTimer")
+sprite_path = NodePath("Visuals/Sprite")
+attack_ray_path = NodePath("Combat/AttackRay")
+attack_timer_path = NodePath("Utility/AttackTimer")
+attack_cooldown_path = NodePath("Utility/AttackCooldown")
+dodge_timer_path = NodePath("Utility/DodgeTimer")
+entity_path = NodePath("Combat/Entity")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource( 3 )
+
+[node name="Visuals" type="Node2D" parent="."]
+
+[node name="Sprite" type="AnimatedSprite" parent="Visuals"]
+frames = SubResource( 4 )
+animation = "Test"
+
+[node name="Combat" type="Node2D" parent="."]
+
+[node name="Entity" type="Area2D" parent="Combat"]
+collision_layer = 4
+collision_mask = 4
+script = ExtResource( 3 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Combat/Entity"]
+modulate = Color( 1, 0, 0, 1 )
+shape = SubResource( 5 )
+
+[node name="AttackRay" type="RayCast2D" parent="Combat"]
+enabled = true
+cast_to = Vector2( 50, 0 )
+collision_mask = 4
+collide_with_areas = true
+collide_with_bodies = false
 
 [node name="Rays" type="Node2D" parent="."]
 
 [node name="RayCast2D" type="RayCast2D" parent="Rays"]
 enabled = true
-cast_to = Vector2( 0, 35 )
+cast_to = Vector2( 0, 24 )
 collision_mask = 2
 
 [node name="RayCast2D2" type="RayCast2D" parent="Rays"]
-position = Vector2( 9, 0 )
+position = Vector2( 7, 0 )
 enabled = true
-cast_to = Vector2( 0, 35 )
+cast_to = Vector2( 0, 24 )
 collision_mask = 2
 
 [node name="RayCast2D3" type="RayCast2D" parent="Rays"]
-position = Vector2( -9, 0 )
+position = Vector2( -7, 0 )
 enabled = true
-cast_to = Vector2( 0, 35 )
+cast_to = Vector2( 0, 24 )
 collision_mask = 2
 
 [node name="Utility" type="Node" parent="."]
 
 [node name="CoyoteTimer" type="Timer" parent="Utility"]
 one_shot = true
+
+[node name="AttackTimer" type="Timer" parent="Utility"]
+
+[node name="AttackCooldown" type="Timer" parent="Utility"]
+
+[node name="DodgeTimer" type="Timer" parent="Utility"]

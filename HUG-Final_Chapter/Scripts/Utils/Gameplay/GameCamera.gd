@@ -18,7 +18,9 @@ export (bool) var snappy_camera: bool = false
 var can_zoom: bool = true
 var shake_multiplier: float = 1
 
-export (float) var x_cam_offset: float = 40
+export (float) var x_cam_offset: float = 60
+export (float) var y_cam_offset: float = 15
+var last_cam_offset: Vector2
 
 # Movement
 export (NodePath) var target_path: NodePath
@@ -76,8 +78,11 @@ func _process(delta):
 
 # Update camera
 func update_cam():
-	var player_input = Vector2(player_target.x_input * x_cam_offset, 0)
-	global_position = lerp(global_position, player_target.global_position + player_input, 1)
+	var player_offset = Vector2(player_target.x_input * x_cam_offset, -y_cam_offset)
+	if player_offset.x != 0:
+		last_cam_offset = player_offset
+
+	global_position = lerp(global_position, player_target.global_position + last_cam_offset, 1)
 
 
 

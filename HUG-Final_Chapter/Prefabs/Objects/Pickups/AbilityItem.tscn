@@ -1,0 +1,79 @@
+[gd_scene load_steps=11 format=2]
+
+[ext_resource path="res://Scripts/EffectPlayers/CameraEffectsPlayer.gd" type="Script" id=1]
+[ext_resource path="res://Scripts/Utils/Gameplay/AbilityItem.gd" type="Script" id=2]
+[ext_resource path="res://Sprites/Objects/Pickups/Ability-Orbs.png" type="Texture" id=3]
+[ext_resource path="res://Scripts/EffectPlayers/AnimEffectPlayer.gd" type="Script" id=4]
+[ext_resource path="res://Sprites/FX/FX_sheet.png" type="Texture" id=5]
+
+[sub_resource type="CircleShape2D" id=1]
+radius = 8.0
+
+[sub_resource type="AtlasTexture" id=2]
+atlas = ExtResource( 3 )
+region = Rect2( 1, 1, 14, 14 )
+
+[sub_resource type="AtlasTexture" id=3]
+atlas = ExtResource( 5 )
+region = Rect2( 17, 1, 6, 6 )
+
+[sub_resource type="Curve" id=4]
+_data = [ Vector2( 0, 0 ), 0.0, 0.0, 0, 0, Vector2( 0.292079, 1 ), 0.0, 0.0, 0, 0, Vector2( 0.990099, 0.0363636 ), 0.0, 0.0, 0, 0 ]
+
+[sub_resource type="Animation" id=5]
+resource_name = "loop"
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2, 0.3, 0.5, 0.8, 0.9, 1 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ), Vector2( 0, -1 ), Vector2( 0, -1.1 ), Vector2( 0, 0 ), Vector2( 0, 1 ), Vector2( 0, 1.1 ), Vector2( 0, 0 ) ]
+}
+
+[node name="AbilityItem" type="Area2D"]
+script = ExtResource( 2 )
+effects_pickup = [ NodePath("FX/cam") ]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource( 1 )
+
+[node name="Visuals" type="Node2D" parent="."]
+
+[node name="Sprite" type="Sprite" parent="Visuals"]
+z_index = 1
+texture = SubResource( 2 )
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="Visuals/Sprite"]
+z_index = -1
+local_coords = false
+texture = SubResource( 3 )
+spread = 180.0
+gravity = Vector2( 0, -98 )
+initial_velocity = 9.17
+scale_amount = 1.5
+scale_amount_random = 1.0
+scale_amount_curve = SubResource( 4 )
+color = Color( 0.776471, 0.847059, 0.192157, 1 )
+
+[node name="Anims" type="AnimationPlayer" parent="Visuals"]
+anims/loop = SubResource( 5 )
+
+[node name="FX" type="Node" parent="."]
+
+[node name="cam" type="Node" parent="FX"]
+script = ExtResource( 1 )
+camera_shake = false
+hitstop = true
+hitstop_time = 0.2
+
+[node name="anims" type="Node" parent="FX"]
+script = ExtResource( 4 )
+on_start = true
+animation_player_path = NodePath("../../Visuals/Anims")
+animation_name = "loop"

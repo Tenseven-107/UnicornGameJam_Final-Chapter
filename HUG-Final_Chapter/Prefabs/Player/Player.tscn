@@ -330,7 +330,6 @@ shape = SubResource( 3 )
 [node name="Sprite" type="AnimatedSprite" parent="Visuals"]
 frames = ExtResource( 2 )
 animation = "Idle"
-frame = 1
 
 [node name="Anims" type="AnimationPlayer" parent="Visuals"]
 anims/Attack = SubResource( 11 )
@@ -388,7 +387,7 @@ enabled = true
 cast_to = Vector2( 0, 24 )
 collision_mask = 2
 
-[node name="AbilityHandler" type="Node" parent="."]
+[node name="AbilityHandler" type="Node" parent="." groups=["AbilityHandler"]]
 script = ExtResource( 8 )
 player_path = NodePath("..")
 variable_abilities = [ "has_jump", "has_attack", "has_teleport" ]

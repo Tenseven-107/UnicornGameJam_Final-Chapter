@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://Prefabs/Utility/Gameplay/GameCamera.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Prefabs/Player/Player.tscn" type="PackedScene" id=2]
@@ -10,6 +10,9 @@
 [ext_resource path="res://Prefabs/Player/PlayerDrone.tscn" type="PackedScene" id=8]
 [ext_resource path="res://Sprites/Testing/Simple_tilemap_16bit.png" type="Texture" id=9]
 [ext_resource path="res://Scripts/Utils/Backend/NodeContainer.gd" type="Script" id=10]
+[ext_resource path="res://Prefabs/Objects/Pickups/TeleportItem.tscn" type="PackedScene" id=11]
+[ext_resource path="res://Prefabs/Objects/Pickups/JumpItem.tscn" type="PackedScene" id=12]
+[ext_resource path="res://Prefabs/Objects/Pickups/AttackItem.tscn" type="PackedScene" id=13]
 
 [sub_resource type="ConvexPolygonShape2D" id=7]
 points = PoolVector2Array( 0, 0, 16, 0, 16, 16, 0, 16 )
@@ -89,3 +92,12 @@ format = 1
 
 [node name="Testhitbox" parent="." instance=ExtResource( 5 )]
 position = Vector2( 226, -99 )
+
+[node name="AbilityItem" parent="." instance=ExtResource( 11 )]
+position = Vector2( -68, -34 )
+
+[node name="AbilityItem2" parent="." instance=ExtResource( 12 )]
+position = Vector2( 54, 5 )
+
+[node name="AbilityItem3" parent="." instance=ExtResource( 13 )]
+position = Vector2( 108, -80 )

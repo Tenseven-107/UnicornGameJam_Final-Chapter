@@ -7,7 +7,6 @@ current = true
 smoothing_enabled = true
 script = ExtResource( 1 )
 snappy_camera = true
-y_cam_offset = 30.0
 
 [node name="Timer" type="Timer" parent="."]
 one_shot = true

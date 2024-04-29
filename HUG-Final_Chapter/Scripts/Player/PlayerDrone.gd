@@ -33,6 +33,10 @@ var velocity: Vector2 = Vector2.ZERO
 # Misc
 const group_name: String = "Drone"
 
+# Effect players
+export var _c_effect_players: String
+export (Array, NodePath) var effects_shoot
+
 
 
 # Setup
@@ -40,7 +44,7 @@ func _ready():
 	add_to_group(group_name)
 
 	teleport_ray.cast_to = teleport_offset * 2
-	global_position += start_offset
+	global_position = global_position + start_offset
 
 
 
@@ -81,6 +85,11 @@ func movement(delta):
 func attacking():
 	if get_action_input() == true:
 		shooter.play_effect()
+
+		# Play effects on shoot
+		for effect in effects_shoot:
+			var play_effect: EffectPlayer = get_node(effect)
+			play_effect.play_effect()
 
 
 

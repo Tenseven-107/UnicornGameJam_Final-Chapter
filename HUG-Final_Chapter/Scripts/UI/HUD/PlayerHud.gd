@@ -5,7 +5,7 @@ extends CanvasLayer
 var player: PlayerController
 
 # Hud objects
-onready var stamina_bar: TextureProgress = $Control/HBoxContainer/Left/PlayerStats/VBoxContainer/StaminaBar
+onready var stamina_bar: TextureProgress = $UI/HBoxContainer/Left/PlayerStats/VBoxContainer/StaminaBar
 
 
 

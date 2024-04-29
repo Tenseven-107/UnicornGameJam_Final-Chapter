@@ -44,6 +44,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Scripts/Utils/Gameplay/GameCamera.gd"
 }, {
+"base": "Node",
+"class": "GameOverHandler",
+"language": "GDScript",
+"path": "res://Scripts/Utils/Backend/GameOverHandler.gd"
+}, {
 "base": "KinematicBody2D",
 "class": "GroundEnemyController",
 "language": "GDScript",
@@ -87,6 +92,7 @@ _global_script_class_icons={
 "EffectPlayer": "",
 "Entity": "",
 "GameCamera": "",
+"GameOverHandler": "",
 "GroundEnemyController": "",
 "Hitbox": "",
 "MusicPlayer_class": "",

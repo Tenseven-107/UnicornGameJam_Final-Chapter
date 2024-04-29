@@ -97,6 +97,8 @@ export (int) var stamina_teleport: int = 100
 export var _c_states: String
 enum STATES {
 	ACTIVE,
+	WALK,
+	UNACTIVE,
 	DEAD
 }
 export (STATES) var current_state: int = STATES.ACTIVE
@@ -189,6 +191,15 @@ func run_states(delta):
 			if has_jump == true: jumping(delta)
 			if has_attack == true: attacking()
 			if has_teleport == true: teleport()
+
+		STATES.WALK:
+			input_vector.y = 0
+			input_vector.x = ceil(last_x_input)
+			anims.travel("Walk")
+			pass # Player has no control anymore
+
+		STATES.UNACTIVE: pass # stand still
+
 		STATES.DEAD:
 			input_vector = Vector2.ZERO
 			velocity = Vector2.ZERO
@@ -391,7 +402,9 @@ func can_remove_stamina(removed_stamina: int):
 
 
 # Set to dead state
-func set_dead(): switch_state(STATES.DEAD)
+func set_dead(): 
+	GlobalSignals.emit_signal("gameover")
+	switch_state(STATES.DEAD)
 
 
 

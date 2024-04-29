@@ -7,36 +7,54 @@
 [node name="PlayerHud" type="CanvasLayer"]
 script = ExtResource( 3 )
 
-[node name="Control" type="Control" parent="."]
+[node name="UI" type="Control" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
 mouse_filter = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Control"]
+[node name="HBoxContainer" type="HBoxContainer" parent="UI"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 
-[node name="Left" type="Control" parent="Control/HBoxContainer"]
+[node name="Left" type="Control" parent="UI/HBoxContainer"]
 margin_right = 190.0
 margin_bottom = 216.0
 size_flags_horizontal = 3
 
-[node name="PlayerStats" type="Control" parent="Control/HBoxContainer/Left"]
+[node name="PlayerStats" type="Control" parent="UI/HBoxContainer/Left"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Control/HBoxContainer/Left/PlayerStats"]
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/HBoxContainer/Left/PlayerStats"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 
-[node name="StaminaBar" type="TextureProgress" parent="Control/HBoxContainer/Left/PlayerStats/VBoxContainer"]
+[node name="StaminaBar" type="TextureProgress" parent="UI/HBoxContainer/Left/PlayerStats/VBoxContainer"]
 margin_right = 190.0
 margin_bottom = 10.0
 texture_under = ExtResource( 1 )
 texture_progress = ExtResource( 2 )
 
-[node name="Right" type="Control" parent="Control/HBoxContainer"]
+[node name="Right" type="Control" parent="UI/HBoxContainer"]
 margin_left = 194.0
 margin_right = 384.0
 margin_bottom = 216.0
 size_flags_horizontal = 3
+
+[node name="Effects" type="Control" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="White" type="ColorRect" parent="Effects"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+
+[node name="Black" type="ColorRect" parent="Effects"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+
+[node name="OverlayFX" type="Node" parent="."]

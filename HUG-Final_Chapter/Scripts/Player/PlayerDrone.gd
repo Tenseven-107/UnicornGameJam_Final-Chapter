@@ -24,6 +24,7 @@ var current_speed: float = 0
 # Teleport
 export var _c_teleport: String
 export (Vector2) var teleport_offset: Vector2 = Vector2(0, 10)
+export (Vector2) var start_offset: Vector2 = Vector2(30, 0)
 
 # Vectors
 var input_vector: Vector2 = Vector2.ZERO
@@ -34,6 +35,7 @@ var velocity: Vector2 = Vector2.ZERO
 # Setup
 func _ready():
 	teleport_ray.cast_to = teleport_offset * 2
+	global_position += start_offset
 
 
 

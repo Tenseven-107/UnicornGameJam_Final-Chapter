@@ -8,7 +8,8 @@ extents = Vector2( 32, 32 )
 
 [node name="Testhitbox" type="Sprite"]
 modulate = Color( 1, 0, 0, 1 )
-scale = Vector2( 0.875, 0.28125 )
+scale = Vector2( 0.546875, 0.28125 )
+z_index = -1
 texture = ExtResource( 1 )
 
 [node name="Hitbox" type="Area2D" parent="."]
@@ -17,5 +18,4 @@ team = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
 position = Vector2( 2.17983e-06, 5.08626e-06 )
-scale = Vector2( 1, 1 )
 shape = SubResource( 1 )

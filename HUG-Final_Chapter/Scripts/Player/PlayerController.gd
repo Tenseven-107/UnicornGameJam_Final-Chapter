@@ -15,6 +15,10 @@ onready var coyote_timer: Timer = get_node(coyote_timer_path)
 export (NodePath) var sprite_path: NodePath
 onready var sprite: AnimatedSprite = get_node(sprite_path)
 
+export (NodePath) var anim_tree_path: NodePath
+onready var anim_tree: AnimationTree = get_node(anim_tree_path)
+var anims: AnimationNodeStateMachinePlayback
+
 # - Combat
 export (NodePath) var attack_ray_path: NodePath
 onready var attack_ray: RayCast2D = get_node(attack_ray_path)
@@ -84,7 +88,7 @@ export (int) var stamina: int = 100
 var current_stamina: int = 0
 var tired: bool = false
 
-export (int) var stamina_attack: int = 25
+export (int) var stamina_attack: int = 20
 export (int) var stamina_dodge: int = 40
 export (int) var stamina_teleport: int = 100
 
@@ -122,6 +126,8 @@ export (Array, NodePath) var effects_not_enough_stamina
 func _ready():
 	# General setup
 	sprite.flip_h = true
+	anim_tree.active = true
+	anims = anim_tree.get("parameters/playback")
 
 	input_vector.x = 1
 	last_x_input = input_vector.x
@@ -196,7 +202,11 @@ func switch_state(new_state: int):
 func movement(delta):
 	if attack_cooldown.is_stopped() and dodge_timer.is_stopped():
 		input_vector.x = Input.get_axis("left_player", "right_player")
-	if input_vector.x != 0:  last_x_input = input_vector.normalized().x
+	if input_vector.x != 0:  
+		last_x_input = input_vector.normalized().x
+
+		if is_on_floor() == true: anims.travel("Walk")
+	else: if is_on_floor() == true: anims.travel("Idle")
 
 	# Turning the players direction
 	if input_vector.x > 0: 
@@ -217,6 +227,7 @@ func jumping(delta):
 			coyote = true
 
 		coyote_timer.stop()
+		anims.start("Jump")
 
 		# Play effects on jump
 		for effect in effects_jump:
@@ -265,6 +276,7 @@ func set_velocity(delta):
 
 			coyote_timer.start()
 		coyote = false
+	else: anims.travel("Fall")
 
 
 
@@ -280,6 +292,8 @@ func attacking():
 			var colliding_entity = attack_ray.get_collider()
 			if colliding_entity is Entity:
 				colliding_entity.handle_hit(damage_team, damage)
+
+		anims.start("Attack")
 
 		# Play effects on attack
 		for effect in effects_attack:
@@ -298,6 +312,8 @@ func dodging():
 
 		entity.invincible = true
 		dodge_timer.start()
+
+		anims.start("Roll")
 
 		# Play effects on dodge
 		for effect in effects_roll:

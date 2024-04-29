@@ -1,10 +1,12 @@
-[gd_scene load_steps=41 format=2]
+[gd_scene load_steps=43 format=2]
 
 [ext_resource path="res://Scripts/Player/PlayerController.gd" type="Script" id=1]
 [ext_resource path="res://Sprites/Player/PlayerAnimMap.tres" type="SpriteFrames" id=2]
 [ext_resource path="res://Scripts/Utils/Gameplay/Entity.gd" type="Script" id=3]
 [ext_resource path="res://Scripts/EffectPlayers/ColorChangeEffectPlayer.gd" type="Script" id=4]
 [ext_resource path="res://Scripts/EffectPlayers/ScaleEffectPlayer.gd" type="Script" id=5]
+[ext_resource path="res://Scripts/EffectPlayers/CameraEffectsPlayer.gd" type="Script" id=6]
+[ext_resource path="res://Scripts/EffectPlayers/VibrationEffectPlayer.gd" type="Script" id=7]
 
 [sub_resource type="CapsuleShape2D" id=3]
 radius = 5.0
@@ -301,7 +303,7 @@ graph_offset = Vector2( -53, 42 )
 [sub_resource type="CircleShape2D" id=5]
 radius = 4.0
 
-[node name="Player" type="KinematicBody2D"]
+[node name="Player" type="KinematicBody2D" groups=["Player"]]
 script = ExtResource( 1 )
 raycasts = [ NodePath("Rays/RayCast2D"), NodePath("Rays/RayCast2D2"), NodePath("Rays/RayCast2D3") ]
 coyote_timer_path = NodePath("Utility/CoyoteTimer")
@@ -324,7 +326,6 @@ shape = SubResource( 3 )
 [node name="Sprite" type="AnimatedSprite" parent="Visuals"]
 frames = ExtResource( 2 )
 animation = "Idle"
-frame = 3
 
 [node name="Anims" type="AnimationPlayer" parent="Visuals"]
 anims/Attack = SubResource( 11 )
@@ -348,8 +349,9 @@ collision_layer = 4
 collision_mask = 4
 script = ExtResource( 3 )
 i_timer_path = NodePath("../../Utility/I-Timer")
+hp = 6
 i_frames = 0.5
-effects_hit = [ NodePath("../../FX/Hit") ]
+effects_hit = [ NodePath("../../FX/Hit"), NodePath("../../FX/Hit-cam"), NodePath("../../FX/Hit-controller") ]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Combat/Entity"]
 modulate = Color( 1, 0, 0, 1 )
@@ -357,7 +359,7 @@ shape = SubResource( 5 )
 
 [node name="AttackRay" type="RayCast2D" parent="Combat"]
 enabled = true
-cast_to = Vector2( 50, 0 )
+cast_to = Vector2( 40, 0 )
 collision_mask = 4
 collide_with_areas = true
 collide_with_bodies = false
@@ -424,3 +426,14 @@ object_path = NodePath("../../Visuals")
 duration = 0.5
 start_color = Color( 1, 1, 1, 0 )
 ease_type = 2
+
+[node name="Hit-cam" type="Node" parent="FX"]
+script = ExtResource( 6 )
+new_cam_shake = 250
+hitstop = true
+hitstop_time = 0.25
+
+[node name="Hit-controller" type="Node" parent="FX"]
+script = ExtResource( 7 )
+vibration = 0.5
+strong_vibration = 1.0

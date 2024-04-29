@@ -30,10 +30,15 @@ export (Vector2) var start_offset: Vector2 = Vector2(30, 0)
 var input_vector: Vector2 = Vector2.ZERO
 var velocity: Vector2 = Vector2.ZERO
 
+# Misc
+const group_name: String = "Drone"
+
 
 
 # Setup
 func _ready():
+	add_to_group(group_name)
+
 	teleport_ray.cast_to = teleport_offset * 2
 	global_position += start_offset
 

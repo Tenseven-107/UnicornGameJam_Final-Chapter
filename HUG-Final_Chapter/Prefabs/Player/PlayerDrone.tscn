@@ -8,7 +8,7 @@
 [sub_resource type="CircleShape2D" id=1]
 radius = 1.0
 
-[node name="PlayerDrone" type="KinematicBody2D"]
+[node name="PlayerDrone" type="KinematicBody2D" groups=["Drone"]]
 script = ExtResource( 2 )
 teleport_ray_path = NodePath("Rays/RayCast2D")
 body_path = NodePath("Body")

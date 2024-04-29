@@ -18,8 +18,8 @@ export (bool) var snappy_camera: bool = false
 var can_zoom: bool = true
 var shake_multiplier: float = 1
 
-export (float) var x_cam_offset: float = 60
-export (float) var y_cam_offset: float = 15
+export (float) var x_cam_offset: float = 15
+export (float) var y_cam_offset: float = 30
 var last_cam_offset: Vector2
 
 # Movement

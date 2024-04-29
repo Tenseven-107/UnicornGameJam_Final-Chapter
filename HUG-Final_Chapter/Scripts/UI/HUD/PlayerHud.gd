@@ -2,7 +2,6 @@ extends CanvasLayer
 
 
 # Objects
-export (NodePath) var player_path: NodePath
 var player: PlayerController
 
 # Hud objects
@@ -12,7 +11,8 @@ onready var stamina_bar: TextureProgress = $Control/HBoxContainer/Left/PlayerSta
 
 # Setup
 func _ready():
-	player = get_node(player_path)
+	var players: Array = get_tree().get_nodes_in_group(PlayerController.group_name)
+	player = players[0]
 
 	stamina_bar.max_value = player.get_max_stamina()
 	stamina_bar.value = player.get_stamina()

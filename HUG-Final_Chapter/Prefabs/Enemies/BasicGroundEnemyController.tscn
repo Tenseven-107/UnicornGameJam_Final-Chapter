@@ -1,0 +1,74 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://Scripts/Enemies/GroundEnemyController.gd" type="Script" id=1]
+[ext_resource path="res://icon.png" type="Texture" id=2]
+[ext_resource path="res://Scripts/Utils/Gameplay/Entity.gd" type="Script" id=3]
+[ext_resource path="res://Scripts/Utils/Gameplay/Hitbox.gd" type="Script" id=4]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 10, 6 )
+
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 10, 6 )
+
+[sub_resource type="RectangleShape2D" id=3]
+extents = Vector2( 9, 4 )
+
+[node name="GroundEnemyController" type="KinematicBody2D"]
+script = ExtResource( 1 )
+right_ray_path = NodePath("Rays/RayCast2D")
+left_ray_path = NodePath("Rays/RayCast2D2")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource( 1 )
+
+[node name="Rays" type="Node2D" parent="."]
+
+[node name="RayCast2D" type="RayCast2D" parent="Rays"]
+enabled = true
+cast_to = Vector2( 20, 0 )
+collision_mask = 2
+
+[node name="RayCast2D2" type="RayCast2D" parent="Rays"]
+enabled = true
+cast_to = Vector2( -20, 0 )
+collision_mask = 2
+
+[node name="Visual" type="Node2D" parent="."]
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="Visual"]
+
+[node name="Sprite" type="Sprite" parent="Visual"]
+scale = Vector2( 0.328125, 0.1875 )
+texture = ExtResource( 2 )
+
+[node name="Combat" type="Node2D" parent="."]
+
+[node name="Entity" type="Area2D" parent="Combat"]
+script = ExtResource( 3 )
+destroy_path = NodePath("../..")
+i_timer_path = NodePath("../../Utils/I-Frames")
+i_frames = 0.2
+team = 1
+destroy_on_death = true
+activity_objects_paths = [ NodePath("../.."), NodePath("../Hitbox") ]
+inactive_timer_path = NodePath("../../Utils/Inactivity")
+inactive_time = 0.5
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Combat/Entity"]
+modulate = Color( 0.101961, 1, 0, 1 )
+shape = SubResource( 2 )
+
+[node name="Hitbox" type="Area2D" parent="Combat"]
+script = ExtResource( 4 )
+team = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Combat/Hitbox"]
+modulate = Color( 1, 0, 0, 1 )
+shape = SubResource( 3 )
+
+[node name="Utils" type="Node" parent="."]
+
+[node name="I-Frames" type="Timer" parent="Utils"]
+
+[node name="Inactivity" type="Timer" parent="Utils"]

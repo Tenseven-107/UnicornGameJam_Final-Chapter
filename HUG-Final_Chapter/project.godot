@@ -39,6 +39,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Scripts/Utils/Gameplay/GameCamera.gd"
 }, {
+"base": "KinematicBody2D",
+"class": "GroundEnemyController",
+"language": "GDScript",
+"path": "res://Scripts/Enemies/GroundEnemyController.gd"
+}, {
 "base": "Area2D",
 "class": "Hitbox",
 "language": "GDScript",
@@ -76,6 +81,7 @@ _global_script_class_icons={
 "EffectPlayer": "",
 "Entity": "",
 "GameCamera": "",
+"GroundEnemyController": "",
 "Hitbox": "",
 "MusicPlayer_class": "",
 "MusicStarter": "",

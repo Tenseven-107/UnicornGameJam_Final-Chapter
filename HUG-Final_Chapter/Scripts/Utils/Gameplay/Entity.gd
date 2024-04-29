@@ -33,10 +33,25 @@ export var _c_effect_players: String
 export (Array, NodePath) var effects_hit
 export (Array, NodePath) var effects_death
 
+# Inactivity
+export var _c_inactivity: String
+
+export (Array, NodePath) var activity_objects_paths: Array
+var activity_objects: Array
+
+export (NodePath) var inactive_timer_path: NodePath
+var inactive_timer: Timer
+export (float) var inactive_time: float = 1
+export (String) var activity_bool: String = "active"
+
+# group
+const group_name: String = "Entity"
+
 
 
 # Setup
 func _ready():
+	add_to_group(group_name)
 	current_hp = hp
 
 	# Setting up physics layers
@@ -49,6 +64,16 @@ func _ready():
 		i_timer.one_shot = true
 		i_timer.wait_time = i_frames
 
+	# Set up inactive timer
+	if inactive_timer_path != "":
+		for object in activity_objects_paths:
+			activity_objects.append(get_node(object))
+
+		inactive_timer = get_node(inactive_timer_path)
+		inactive_timer.one_shot = true
+		inactive_timer.wait_time = inactive_time
+		inactive_timer.connect("timeout", self, "set_active")
+
 
 
 # Damage/ healing handling
@@ -59,6 +84,9 @@ func handle_hit(hit_team: int, damage: int):
 			current_hp -= damage
 
 			if is_instance_valid(i_timer): i_timer.start()
+			if is_instance_valid(inactive_timer): 
+				for object in activity_objects: object.set(activity_bool, false)
+				inactive_timer.start()
 
 			if current_hp <= 0:
 				die()
@@ -99,6 +127,15 @@ func get_hp():
 
 func get_max_hp():
 	return hp
+
+
+
+# Setting active again
+func set_active():
+	for object in activity_objects: object.set(activity_bool, true)
+
+
+
 
 
 

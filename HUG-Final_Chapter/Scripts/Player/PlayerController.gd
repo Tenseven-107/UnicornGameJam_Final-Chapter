@@ -71,7 +71,7 @@ export var _c_combat: String
 export (int) var damage: int = 2
 export (int) var damage_team: int = 0
 
-export (float) var attack_ray_reach: float = 50
+export (float) var attack_ray_reach: float = 40
 export (float) var attack_time: float = 0.1
 export (float) var attack_cooldown_time: float = 0.2
 onready var ATTACK_COOLDOWN: float = attack_time + attack_cooldown_time
@@ -120,10 +120,15 @@ export (Array, NodePath) var effects_jump
 export (Array, NodePath) var effects_no_stamina
 export (Array, NodePath) var effects_not_enough_stamina
 
+# Misc
+const group_name: String = "Player"
+
 
 
 # Set up
 func _ready():
+	add_to_group(group_name)
+
 	# General setup
 	sprite.flip_h = true
 	anim_tree.active = true
@@ -290,7 +295,7 @@ func attacking():
 
 		if attack_ray.is_colliding():
 			var colliding_entity = attack_ray.get_collider()
-			if colliding_entity is Entity:
+			if colliding_entity.is_in_group(Entity.group_name):
 				colliding_entity.handle_hit(damage_team, damage)
 
 		anims.start("Attack")

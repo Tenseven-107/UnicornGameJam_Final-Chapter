@@ -3,6 +3,7 @@ class_name Entity
 
 # Signals
 signal dead
+signal update_hp(hp, max_hp)
 
 
 # Objects
@@ -90,6 +91,9 @@ func handle_hit(hit_team: int, damage: int):
 
 			if current_hp <= 0:
 				die()
+
+			# Emit a signal when hit
+			emit_signal("update_hp", current_hp, hp)
 
 			# Play effects on hit
 			for effect in effects_hit:

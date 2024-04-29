@@ -23,6 +23,9 @@ func _ready():
 
 	self.connect("body_entered", self, "check_pickup")
 
+	# Check if already picked up
+	check_is_already_picked()
+
 
 
 # Pick up
@@ -36,3 +39,43 @@ func check_pickup(body: Node):
 			play_effect.play_effect()
 
 		self.call_deferred("queue_free")
+
+
+
+# Check if the item is already picked up
+func check_is_already_picked():
+	var save_path: String = AbilityHandler.save_path
+
+	var save_file: File = File.new()
+	save_file.open(save_path, File.READ)
+
+	if save_file.file_exists(save_path) == true and save_file.get_len() > 0:
+		var current_abilities: Array = str2var(save_file.get_line())
+
+		for c_ability in current_abilities:
+			if c_ability == ability:
+				save_file.close()
+
+				call_deferred("queue_free")
+
+	save_file.close()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

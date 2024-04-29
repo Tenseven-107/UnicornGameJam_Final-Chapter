@@ -7,10 +7,7 @@ signal camera_zoom(new_zoom, zoom_time, zoom_limit)
 signal hitstop(time)
 
 # Overlay FX
-signal black_in(time)
-signal black_out(time)
-signal flash(time)
-signal glitch(time)
+signal screen_effect(in_color, out_color, time, reset)
 
 # Gameplay
 signal gameover

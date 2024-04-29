@@ -36,10 +36,23 @@ onready var dodge_timer: Timer = get_node(dodge_timer_path)
 export (NodePath) var entity_path: NodePath
 onready var entity: Entity = get_node(entity_path)
 
+# - Other
+export (NodePath) var dead_cooldown_path: NodePath
+onready var dead_cooldown: Timer = get_node(dead_cooldown_path)
+
+export (NodePath) var start_timer_path: NodePath
+onready var start_timer: Timer = get_node(start_timer_path)
+
+
 # - Drone
 export var _c_drone_player: String
 export (NodePath) var drone_path: NodePath
 onready var drone: PlayerDroneController = get_node(drone_path)
+
+# - HUD
+export var _c_hud: String
+export (NodePath) var hud_path: NodePath
+onready var hud: PlayerHud = get_node(hud_path)
 
 
 # Movement
@@ -48,7 +61,7 @@ export (float) var move_speed: float = 12000
 
 # - Jumping
 export var _c_jumping: String
-export (float) var jump_force: float = 350
+export (float) var jump_force: float = 380
 onready var coyote_jump_force: float = jump_force * 1.5
 export (float) var coyote_time: float = 1
 
@@ -98,8 +111,7 @@ export var _c_states: String
 enum STATES {
 	ACTIVE,
 	WALK,
-	UNACTIVE,
-	DEAD
+	UNACTIVE
 }
 export (STATES) var current_state: int = STATES.ACTIVE
 
@@ -123,6 +135,10 @@ export (Array, NodePath) var effects_no_stamina
 export (Array, NodePath) var effects_not_enough_stamina
 
 # Misc
+export var _c_misc: String
+export (float) var start_time: float = 1.5
+export (float) var dead_time: float = 2
+
 const group_name: String = "Player"
 
 
@@ -132,9 +148,12 @@ func _ready():
 	add_to_group(group_name)
 
 	# General setup
+	switch_state(STATES.UNACTIVE) # Starts in the unactive state to transition smoothly into gameplay
+
 	sprite.flip_h = true
 	anim_tree.active = true
 	anims = anim_tree.get("parameters/playback")
+	anims.start("Start")
 
 	input_vector.x = 1
 	last_x_input = input_vector.x
@@ -171,6 +190,21 @@ func _ready():
 	# Entity
 	entity.connect("dead", self, "set_dead")
 
+	# Misc
+	start_timer.connect("timeout", self, "set_active")
+	start_timer.wait_time = start_time
+	start_timer.one_shot = true
+	start_timer.start() # countdown till active when spawned in
+
+	dead_cooldown.wait_time = dead_time
+	dead_cooldown.one_shot = true
+	dead_cooldown.connect("timeout", self, "signal_dead")
+
+	# Update Hud
+	entity.connect("update_hp", hud, "set_hp")
+	entity.emit_signal("update_hp", entity.get_hp(), entity.get_max_hp())
+	hud.set_stamina(current_stamina, stamina)
+
 
 
 # Processing
@@ -191,19 +225,19 @@ func run_states(delta):
 			if has_jump == true: jumping(delta)
 			if has_attack == true: attacking()
 			if has_teleport == true: teleport()
+			return
 
-		STATES.WALK:
+		STATES.WALK: # Player has no control anymore
+			current_gravity = gravity
 			input_vector.y = 0
 			input_vector.x = ceil(last_x_input)
 			anims.travel("Walk")
-			pass # Player has no control anymore
+			return
 
-		STATES.UNACTIVE: pass # stand still
-
-		STATES.DEAD:
+		STATES.UNACTIVE:
 			input_vector = Vector2.ZERO
 			velocity = Vector2.ZERO
-			pass
+			return
 
 func switch_state(new_state: int):
 	if new_state > STATES.size() - 1:
@@ -375,6 +409,8 @@ func stamina_regen():
 	if attack_cooldown.is_stopped() and dodge_timer.is_stopped():
 		if current_stamina < stamina:
 			current_stamina += 1
+
+			hud.set_stamina(current_stamina, stamina) # Set the hud_stamina
 		else: 
 			tired = false
 			current_stamina = clamp(current_stamina, 0, stamina)
@@ -382,6 +418,9 @@ func stamina_regen():
 func can_remove_stamina(removed_stamina: int):
 	if (current_stamina - removed_stamina) >= 0 and tired == false:
 		current_stamina -= removed_stamina
+
+		hud.set_stamina(current_stamina, stamina) # Set the hud_stamina
+
 		if current_stamina <= 0:
 			tired = true
 
@@ -403,19 +442,15 @@ func can_remove_stamina(removed_stamina: int):
 
 # Set to dead state
 func set_dead(): 
-	GlobalSignals.emit_signal("gameover")
-	switch_state(STATES.DEAD)
+	switch_state(STATES.UNACTIVE)
+	dead_cooldown.start()
+
+func signal_dead():GlobalSignals.emit_signal("gameover")
 
 
-
-# - Getting the stamina
-func get_stamina(): return current_stamina
-
-func get_max_stamina(): return stamina
-
-# Getting the entity
-func get_entity(): return entity
-
+#Set to active
+func set_active(): 
+	switch_state(STATES.ACTIVE)
 
 
 

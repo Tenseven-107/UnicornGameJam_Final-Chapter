@@ -1,4 +1,4 @@
-[gd_scene load_steps=44 format=2]
+[gd_scene load_steps=43 format=2]
 
 [ext_resource path="res://Scripts/Player/PlayerController.gd" type="Script" id=1]
 [ext_resource path="res://Sprites/Player/PlayerAnimMap.tres" type="SpriteFrames" id=2]
@@ -8,6 +8,7 @@
 [ext_resource path="res://Scripts/EffectPlayers/CameraEffectsPlayer.gd" type="Script" id=6]
 [ext_resource path="res://Scripts/EffectPlayers/VibrationEffectPlayer.gd" type="Script" id=7]
 [ext_resource path="res://Scripts/Utils/Backend/AbilityHandler.gd" type="Script" id=8]
+[ext_resource path="res://Scripts/EffectPlayers/ScreenFXEffectPlayer.gd" type="Script" id=9]
 
 [sub_resource type="CapsuleShape2D" id=3]
 radius = 5.0
@@ -160,7 +161,7 @@ tracks/1/keys = {
 
 [sub_resource type="Animation" id=12]
 resource_name = "Teleport"
-length = 0.3
+length = 1.5
 step = 0.05
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:animation")
@@ -181,7 +182,7 @@ tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0, 0.15, 0.25 ),
+"times": PoolRealArray( 0, 1, 1.35 ),
 "transitions": PoolRealArray( 1, 1, 1 ),
 "update": 1,
 "values": [ 0, 1, 2 ]
@@ -270,15 +271,11 @@ auto_advance = true
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=32]
 
-[sub_resource type="AnimationNodeStateMachineTransition" id=33]
-
-[sub_resource type="AnimationNodeStateMachineTransition" id=34]
-switch_mode = 2
-auto_advance = true
-
 [sub_resource type="AnimationNodeStateMachineTransition" id=37]
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=38]
+switch_mode = 2
+auto_advance = true
 
 [sub_resource type="AnimationNodeStateMachine" id=35]
 states/Attack/node = SubResource( 13 )
@@ -291,13 +288,13 @@ states/Jump/node = SubResource( 16 )
 states/Jump/position = Vector2( 834, 269 )
 states/Roll/node = SubResource( 17 )
 states/Roll/position = Vector2( 592, 401 )
-states/Teleport/node = SubResource( 18 )
-states/Teleport/position = Vector2( 834, 144 )
+states/Start/node = SubResource( 18 )
+states/Start/position = Vector2( 373, 558 )
 states/Walk/node = SubResource( 19 )
 states/Walk/position = Vector2( 834, 401 )
-transitions = [ "Attack", "Idle", SubResource( 20 ), "Idle", "Attack", SubResource( 21 ), "Walk", "Attack", SubResource( 22 ), "Idle", "Walk", SubResource( 23 ), "Walk", "Idle", SubResource( 24 ), "Walk", "Roll", SubResource( 25 ), "Roll", "Idle", SubResource( 26 ), "Idle", "Roll", SubResource( 27 ), "Walk", "Fall", SubResource( 28 ), "Walk", "Jump", SubResource( 29 ), "Jump", "Fall", SubResource( 30 ), "Fall", "Idle", SubResource( 31 ), "Idle", "Jump", SubResource( 32 ), "Jump", "Teleport", SubResource( 33 ), "Teleport", "Fall", SubResource( 34 ), "Idle", "Fall", SubResource( 37 ), "Fall", "Teleport", SubResource( 38 ) ]
-start_node = "Idle"
-graph_offset = Vector2( -53, 42 )
+transitions = [ "Attack", "Idle", SubResource( 20 ), "Idle", "Attack", SubResource( 21 ), "Walk", "Attack", SubResource( 22 ), "Idle", "Walk", SubResource( 23 ), "Walk", "Idle", SubResource( 24 ), "Walk", "Roll", SubResource( 25 ), "Roll", "Idle", SubResource( 26 ), "Idle", "Roll", SubResource( 27 ), "Walk", "Fall", SubResource( 28 ), "Walk", "Jump", SubResource( 29 ), "Jump", "Fall", SubResource( 30 ), "Fall", "Idle", SubResource( 31 ), "Idle", "Jump", SubResource( 32 ), "Idle", "Fall", SubResource( 37 ), "Start", "Idle", SubResource( 38 ) ]
+start_node = "Start"
+graph_offset = Vector2( -33, 356 )
 
 [sub_resource type="AnimationNodeStateMachinePlayback" id=36]
 
@@ -315,6 +312,8 @@ attack_timer_path = NodePath("Utility/AttackTimer")
 attack_cooldown_path = NodePath("Utility/AttackCooldown")
 dodge_timer_path = NodePath("Utility/DodgeTimer")
 entity_path = NodePath("Combat/Entity")
+dead_cooldown_path = NodePath("Utility/DeadCooldown")
+start_timer_path = NodePath("Utility/ActiveTimer")
 has_jump = false
 has_attack = false
 has_teleport = false
@@ -330,6 +329,7 @@ shape = SubResource( 3 )
 [node name="Sprite" type="AnimatedSprite" parent="Visuals"]
 frames = ExtResource( 2 )
 animation = "Idle"
+frame = 3
 
 [node name="Anims" type="AnimationPlayer" parent="Visuals"]
 anims/Attack = SubResource( 11 )
@@ -356,6 +356,7 @@ i_timer_path = NodePath("../../Utility/I-Timer")
 hp = 6
 i_frames = 0.5
 effects_hit = [ NodePath("../../FX/Hit"), NodePath("../../FX/Hit-cam"), NodePath("../../FX/Hit-controller") ]
+effects_death = [ NodePath("../../FX/Screen-dead") ]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Combat/Entity"]
 modulate = Color( 1, 0, 0, 1 )
@@ -405,6 +406,10 @@ one_shot = true
 
 [node name="I-Timer" type="Timer" parent="Utility"]
 
+[node name="DeadCooldown" type="Timer" parent="Utility"]
+
+[node name="ActiveTimer" type="Timer" parent="Utility"]
+
 [node name="FX" type="Node" parent="."]
 
 [node name="no_stamina" type="Node" parent="FX"]
@@ -446,3 +451,10 @@ hitstop_time = 0.25
 script = ExtResource( 7 )
 vibration = 0.5
 strong_vibration = 1.0
+
+[node name="Screen-dead" type="Node" parent="FX"]
+script = ExtResource( 9 )
+in_color = Color( 0, 0, 0, 0 )
+out_color = Color( 0, 0, 0, 1 )
+time = 1.8
+resets = false

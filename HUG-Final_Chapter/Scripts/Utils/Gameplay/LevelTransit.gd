@@ -20,6 +20,10 @@ export (bool) var right: bool = true
 export (Vector2) var next_scene_pos: Vector2 = Vector2.ZERO
 export (String, FILE, "*.tscn") var next_scene: String = "res://Scenes/Testing/Testing2.tscn"
 
+# Effect players
+export var _c_effect_players: String
+export (Array, NodePath) var effects_enter
+
 
 
 # Setup
@@ -43,6 +47,11 @@ func transit(body: Node):
 		player.switch_state(PlayerController.STATES.WALK)
 
 		transit_timer.start()
+
+		# Play effects on enter
+		for effect in effects_enter:
+			var play_effect: EffectPlayer = get_node(effect)
+			play_effect.play_effect()
 
 
 

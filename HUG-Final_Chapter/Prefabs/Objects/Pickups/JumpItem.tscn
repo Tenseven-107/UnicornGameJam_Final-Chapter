@@ -1,10 +1,11 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://Scripts/EffectPlayers/CameraEffectsPlayer.gd" type="Script" id=1]
 [ext_resource path="res://Scripts/Utils/Gameplay/AbilityItem.gd" type="Script" id=2]
 [ext_resource path="res://Sprites/Objects/Pickups/Ability-Orbs.png" type="Texture" id=3]
 [ext_resource path="res://Scripts/EffectPlayers/AnimEffectPlayer.gd" type="Script" id=4]
 [ext_resource path="res://Sprites/FX/FX_sheet.png" type="Texture" id=5]
+[ext_resource path="res://Scripts/EffectPlayers/ScreenFXEffectPlayer.gd" type="Script" id=6]
 
 [sub_resource type="CircleShape2D" id=1]
 radius = 8.0
@@ -39,7 +40,7 @@ tracks/0/keys = {
 [node name="AbilityItem" type="Area2D"]
 script = ExtResource( 2 )
 ability = "has_jump"
-effects_pickup = [ NodePath("FX/cam") ]
+effects_pickup = [ NodePath("FX/cam"), NodePath("FX/Screen-FX") ]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource( 1 )
@@ -78,3 +79,7 @@ script = ExtResource( 4 )
 on_start = true
 animation_player_path = NodePath("../../Visuals/Anims")
 animation_name = "loop"
+
+[node name="Screen-FX" type="Node" parent="FX"]
+script = ExtResource( 6 )
+time = 0.1

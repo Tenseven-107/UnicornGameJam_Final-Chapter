@@ -1,4 +1,4 @@
-[gd_scene load_steps=43 format=2]
+[gd_scene load_steps=44 format=2]
 
 [ext_resource path="res://Scripts/Player/PlayerController.gd" type="Script" id=1]
 [ext_resource path="res://Sprites/Player/PlayerAnimMap.tres" type="SpriteFrames" id=2]
@@ -7,6 +7,7 @@
 [ext_resource path="res://Scripts/EffectPlayers/ScaleEffectPlayer.gd" type="Script" id=5]
 [ext_resource path="res://Scripts/EffectPlayers/CameraEffectsPlayer.gd" type="Script" id=6]
 [ext_resource path="res://Scripts/EffectPlayers/VibrationEffectPlayer.gd" type="Script" id=7]
+[ext_resource path="res://Scripts/Utils/Backend/AbilityHandler.gd" type="Script" id=8]
 
 [sub_resource type="CapsuleShape2D" id=3]
 radius = 5.0
@@ -314,6 +315,9 @@ attack_timer_path = NodePath("Utility/AttackTimer")
 attack_cooldown_path = NodePath("Utility/AttackCooldown")
 dodge_timer_path = NodePath("Utility/DodgeTimer")
 entity_path = NodePath("Combat/Entity")
+has_jump = false
+has_attack = false
+has_teleport = false
 effects_teleport_out = [ NodePath("FX/teleport") ]
 effects_no_stamina = [ NodePath("FX/no_stamina") ]
 effects_not_enough_stamina = [ NodePath("FX/not_enough_stamina") ]
@@ -326,6 +330,7 @@ shape = SubResource( 3 )
 [node name="Sprite" type="AnimatedSprite" parent="Visuals"]
 frames = ExtResource( 2 )
 animation = "Idle"
+frame = 1
 
 [node name="Anims" type="AnimationPlayer" parent="Visuals"]
 anims/Attack = SubResource( 11 )
@@ -382,6 +387,11 @@ position = Vector2( -4, 0 )
 enabled = true
 cast_to = Vector2( 0, 24 )
 collision_mask = 2
+
+[node name="AbilityHandler" type="Node" parent="."]
+script = ExtResource( 8 )
+player_path = NodePath("..")
+variable_abilities = [ "has_jump", "has_attack", "has_teleport" ]
 
 [node name="Utility" type="Node" parent="."]
 

@@ -9,6 +9,11 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "Node",
+"class": "AbilityHandler",
+"language": "GDScript",
+"path": "res://Scripts/Utils/Backend/AbilityHandler.gd"
+}, {
 "base": "KinematicBody2D",
 "class": "Bullet",
 "language": "GDScript",
@@ -75,6 +80,7 @@ _global_script_classes=[ {
 "path": "res://Scripts/Player/PlayerDrone.gd"
 } ]
 _global_script_class_icons={
+"AbilityHandler": "",
 "Bullet": "",
 "BulletShooter": "",
 "EC_CreateCategory": "",

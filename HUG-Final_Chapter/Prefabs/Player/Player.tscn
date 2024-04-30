@@ -302,6 +302,8 @@ graph_offset = Vector2( -33, 356 )
 radius = 4.0
 
 [node name="Player" type="KinematicBody2D" groups=["Player"]]
+collision_layer = 17
+collision_mask = 17
 script = ExtResource( 1 )
 raycasts = [ NodePath("Rays/RayCast2D"), NodePath("Rays/RayCast2D2"), NodePath("Rays/RayCast2D3") ]
 coyote_timer_path = NodePath("Utility/CoyoteTimer")
@@ -329,7 +331,6 @@ shape = SubResource( 3 )
 [node name="Sprite" type="AnimatedSprite" parent="Visuals"]
 frames = ExtResource( 2 )
 animation = "Idle"
-frame = 3
 
 [node name="Anims" type="AnimationPlayer" parent="Visuals"]
 anims/Attack = SubResource( 11 )
@@ -374,19 +375,19 @@ collide_with_bodies = false
 [node name="RayCast2D" type="RayCast2D" parent="Rays"]
 enabled = true
 cast_to = Vector2( 0, 24 )
-collision_mask = 2
+collision_mask = 18
 
 [node name="RayCast2D2" type="RayCast2D" parent="Rays"]
 position = Vector2( 4, 0 )
 enabled = true
 cast_to = Vector2( 0, 24 )
-collision_mask = 2
+collision_mask = 18
 
 [node name="RayCast2D3" type="RayCast2D" parent="Rays"]
 position = Vector2( -4, 0 )
 enabled = true
 cast_to = Vector2( 0, 24 )
-collision_mask = 2
+collision_mask = 18
 
 [node name="AbilityHandler" type="Node" parent="." groups=["AbilityHandler"]]
 script = ExtResource( 8 )

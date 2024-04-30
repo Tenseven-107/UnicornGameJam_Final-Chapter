@@ -205,6 +205,10 @@ func _ready():
 	entity.emit_signal("update_hp", entity.get_hp(), entity.get_max_hp())
 	hud.set_stamina(current_stamina, stamina)
 
+	# Set up rays
+	for ray in raycasts:
+		get_node(ray).add_exception(self)
+
 
 
 # Processing
@@ -255,8 +259,8 @@ func movement(delta):
 	if input_vector.x != 0:  
 		last_x_input = input_vector.normalized().x
 
-		if check_rays() == true: anims.travel("Walk")
-	else: if check_rays() == true: anims.travel("Idle")
+		if check_rays(false) == true: anims.travel("Walk")
+	else: if check_rays(false) == true: anims.travel("Idle")
 
 	# Turning the players direction
 	if input_vector.x > 0: 
@@ -269,11 +273,11 @@ func movement(delta):
 
 func jumping(delta):
 	# Initiating jump
-	if Input.is_action_just_pressed("jump") and (check_rays() == true or coyote_timer.is_stopped() == false):
+	if Input.is_action_just_pressed("jump") and (check_rays(false) == true or coyote_timer.is_stopped() == false):
 		is_jumping = true
 
 		# Coyote jump
-		if coyote_timer.is_stopped() == false and is_on_floor() == false and check_rays() == false:
+		if coyote_timer.is_stopped() == false and is_on_floor() == false and check_rays(false) == false:
 			coyote = true
 
 		coyote_timer.stop()
@@ -303,10 +307,12 @@ func get_jump_force():
 
 
 # Check is raycasts are colliding
-func check_rays():
+func check_rays(check_if_drone: bool):
 	for raycast in raycasts:
 		var object: RayCast2D = get_node(raycast)
-		if object.is_colliding():
+		if (object.is_colliding() and check_if_drone == false or 
+		(check_if_drone == true and object.get_collider() is PlayerDroneController)):
+
 			return true
 	return false
 
@@ -315,7 +321,7 @@ func check_rays():
 # Setting the velocity
 func set_velocity(delta):
 	velocity.x = (input_vector.x * move_speed) * delta
-	if is_on_floor() == false: velocity.y += current_gravity * delta
+	if is_on_floor() == false or check_rays(true) == true: velocity.y += current_gravity * delta
 
 	velocity = move_and_slide(velocity, Vector2.UP)
 
@@ -326,7 +332,7 @@ func set_velocity(delta):
 
 			coyote_timer.start()
 		coyote = false
-	else: if check_rays() == false: anims.travel("Fall")
+	else: if check_rays(false) == false: anims.travel("Fall")
 
 
 

@@ -17,8 +17,8 @@ onready var shooter: BulletShooter = get_node(shooter_path)
 
 # Movement stats
 export var _c_movement: String
-export (float) var max_speed: float = 180
-export (float) var acceleration: float = 30
+export (float) var max_speed: float = 200
+export (float) var acceleration: float = 20
 var current_speed: float = 0
 
 # Teleport

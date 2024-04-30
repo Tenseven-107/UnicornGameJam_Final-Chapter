@@ -8,6 +8,7 @@ signal hitstop(time)
 
 # Overlay FX
 signal screen_effect(in_color, out_color, time, reset)
+signal text_effect(text, text_color, time)
 
 # Gameplay
 signal gameover

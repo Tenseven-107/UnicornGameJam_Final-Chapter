@@ -24,6 +24,7 @@ var body: Node2D
 export (NodePath) var action_timer_path: NodePath
 var action_timer: Timer
 export (float) var action_time: float = 0.5
+export (bool) var unactive_before_action: bool = false
 
 
 # Movement stats
@@ -127,12 +128,17 @@ func aditional_detect():
 
 		# Start action if there is a timer
 		if is_instance_valid(action_timer) == true:
-			action_timer.start()
+			if action_timer.is_stopped():
+				action_timer.start()
+
+				if unactive_before_action == true: active = false
 
 
 
 # Do action
 func action():
+	if unactive_before_action == true: active = true
+
 	# Play effects on action
 	for effect in effects_action:
 		var play_effect: EffectPlayer = get_node(effect)

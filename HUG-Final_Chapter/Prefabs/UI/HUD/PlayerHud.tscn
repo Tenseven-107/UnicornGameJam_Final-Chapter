@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://Sprites/UI/HUD/empty_Stamina-bar.png" type="Texture" id=1]
 [ext_resource path="res://Sprites/UI/HUD/full_Stamina-bar.png" type="Texture" id=2]
@@ -6,6 +6,7 @@
 [ext_resource path="res://Scripts/Utils/Gamefeel/OverlayFX.gd" type="Script" id=4]
 [ext_resource path="res://Sprites/UI/HUD/HP-empty.png" type="Texture" id=5]
 [ext_resource path="res://Sprites/UI/HUD/HP-full.png" type="Texture" id=6]
+[ext_resource path="res://Sprites/UI/Fonts/Default-font.tres" type="DynamicFont" id=7]
 
 [node name="PlayerHud" type="CanvasLayer"]
 script = ExtResource( 3 )
@@ -73,6 +74,32 @@ size_flags_horizontal = 3
 anchor_right = 1.0
 anchor_bottom = 1.0
 
+[node name="Text" type="Control" parent="Effects"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Effects/Text"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="Control" type="Control" parent="Effects/Text/VBoxContainer"]
+margin_right = 384.0
+margin_bottom = 167.0
+size_flags_vertical = 3
+size_flags_stretch_ratio = 3.78
+
+[node name="Text" type="Label" parent="Effects/Text/VBoxContainer"]
+margin_top = 185.0
+margin_right = 384.0
+margin_bottom = 201.0
+size_flags_vertical = 6
+custom_fonts/font = ExtResource( 7 )
+text = "aaaaaaaaaaaaaaaaaaaaaaaa"
+align = 1
+valign = 1
+autowrap = true
+
 [node name="Screen" type="ColorRect" parent="Effects"]
 visible = false
 anchor_right = 1.0
@@ -83,8 +110,11 @@ color = Color( 0, 0, 0, 1 )
 [node name="OverlayFX" type="Node" parent="."]
 script = ExtResource( 4 )
 screen_path = NodePath("../Effects/Screen")
+text_path = NodePath("../Effects/Text/VBoxContainer/Text")
 
 [node name="Timer" type="Timer" parent="OverlayFX"]
+
+[node name="TextTimer" type="Timer" parent="OverlayFX"]
 
 [node name="StartTimer" type="Timer" parent="OverlayFX"]
 

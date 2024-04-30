@@ -109,6 +109,9 @@ func handle_heal(hit_team: int, healed_hp: int):
 		else:
 			current_hp += (hp - healed_hp)
 
+		# Emit a signal when healed
+		emit_signal("update_hp", current_hp, hp)
+
 
 
 # Death

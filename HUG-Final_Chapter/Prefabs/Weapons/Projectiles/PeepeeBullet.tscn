@@ -1,0 +1,52 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://Scripts/Utils/Gameplay/Bullet.gd" type="Script" id=1]
+[ext_resource path="res://Sprites/FX/FX_sheet.png" type="Texture" id=2]
+[ext_resource path="res://Scripts/Utils/Gameplay/Hitbox.gd" type="Script" id=3]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 4, 2.5 )
+
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 2.5, 1.5 )
+
+[sub_resource type="AtlasTexture" id=3]
+atlas = ExtResource( 2 )
+region = Rect2( 1, 9, 5, 8 )
+
+[node name="Bullet" type="KinematicBody2D"]
+collision_layer = 2
+collision_mask = 2
+script = ExtResource( 1 )
+can_ricochet = false
+speed = 200
+dropoff_time = 5.0
+
+[node name="Collider" type="CollisionShape2D" parent="."]
+position = Vector2( 0, 0.5 )
+shape = SubResource( 1 )
+
+[node name="Hitbox" type="Area2D" parent="."]
+collision_layer = 4
+collision_mask = 4
+script = ExtResource( 3 )
+destroy_path = NodePath("..")
+team = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
+position = Vector2( -0.5, 0.5 )
+shape = SubResource( 2 )
+
+[node name="Sprites" type="Node2D" parent="."]
+
+[node name="Sprite" type="Sprite" parent="Sprites"]
+rotation = -1.5708
+z_index = 2
+texture = SubResource( 3 )
+
+[node name="Dropoff_timer" type="Timer" parent="."]
+one_shot = true
+
+[node name="Collision_tween" type="Tween" parent="."]
+
+[node name="Dropoff_tween" type="Tween" parent="."]

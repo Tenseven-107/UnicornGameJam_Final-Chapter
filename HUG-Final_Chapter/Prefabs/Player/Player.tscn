@@ -320,6 +320,7 @@ has_jump = false
 has_attack = false
 has_teleport = false
 effects_teleport_out = [ NodePath("FX/teleport") ]
+effects_attack_hit = [ NodePath("FX/Attack-hit-cam") ]
 effects_no_stamina = [ NodePath("FX/no_stamina") ]
 effects_not_enough_stamina = [ NodePath("FX/not_enough_stamina") ]
 
@@ -447,6 +448,12 @@ script = ExtResource( 6 )
 new_cam_shake = 250
 hitstop = true
 hitstop_time = 0.25
+
+[node name="Attack-hit-cam" type="Node" parent="FX"]
+script = ExtResource( 6 )
+new_cam_shake = 100
+hitstop = true
+hitstop_time = 0.05
 
 [node name="Hit-controller" type="Node" parent="FX"]
 script = ExtResource( 7 )

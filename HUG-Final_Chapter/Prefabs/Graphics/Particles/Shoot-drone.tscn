@@ -1,0 +1,42 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://Scripts/EffectPlayers/Destroy.gd" type="Script" id=1]
+[ext_resource path="res://Scripts/EffectPlayers/ParticleEffectPlayer.gd" type="Script" id=2]
+[ext_resource path="res://Sprites/FX/FX_sheet.png" type="Texture" id=3]
+
+[sub_resource type="AtlasTexture" id=3]
+atlas = ExtResource( 3 )
+region = Rect2( 35, 2, 4, 4 )
+
+[sub_resource type="Curve" id=2]
+_data = [ Vector2( 0, 1 ), 0.0, 0.0, 0, 0, Vector2( 0.415842, 1 ), 0.0, 0.0, 0, 0, Vector2( 1, 0 ), 0.0, 0.0, 0, 0 ]
+
+[node name="Particle" type="Node2D"]
+z_index = 2
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="."]
+emitting = false
+lifetime = 0.5
+one_shot = true
+explosiveness = 1.0
+texture = SubResource( 3 )
+spread = 180.0
+gravity = Vector2( 0, 0 )
+initial_velocity = 25.0
+initial_velocity_random = 0.5
+scale_amount_random = 1.0
+scale_amount_curve = SubResource( 2 )
+
+[node name="Timer" type="Timer" parent="."]
+
+[node name="Player" type="Node" parent="."]
+script = ExtResource( 2 )
+on_start = true
+particle_paths = [ NodePath("../CPUParticles2D") ]
+
+[node name="Destroyer" type="Node" parent="."]
+script = ExtResource( 1 )
+on_start = true
+timer_path = NodePath("../Timer")
+destroy_object_path = NodePath("..")
+stay_time = 0.5

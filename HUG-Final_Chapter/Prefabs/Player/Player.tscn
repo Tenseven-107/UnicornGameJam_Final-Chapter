@@ -1,4 +1,4 @@
-[gd_scene load_steps=43 format=2]
+[gd_scene load_steps=50 format=2]
 
 [ext_resource path="res://Scripts/Player/PlayerController.gd" type="Script" id=1]
 [ext_resource path="res://Sprites/Player/PlayerAnimMap.tres" type="SpriteFrames" id=2]
@@ -9,6 +9,13 @@
 [ext_resource path="res://Scripts/EffectPlayers/VibrationEffectPlayer.gd" type="Script" id=7]
 [ext_resource path="res://Scripts/Utils/Backend/AbilityHandler.gd" type="Script" id=8]
 [ext_resource path="res://Scripts/EffectPlayers/ScreenFXEffectPlayer.gd" type="Script" id=9]
+[ext_resource path="res://Scripts/EffectPlayers/SpawnerEffectPlayer.gd" type="Script" id=10]
+[ext_resource path="res://Prefabs/Graphics/Particles/Stamina-stars.tscn" type="PackedScene" id=11]
+[ext_resource path="res://Prefabs/Graphics/Particles/NoStamina-stars.tscn" type="PackedScene" id=12]
+[ext_resource path="res://Prefabs/Graphics/Particles/Cloud.tscn" type="PackedScene" id=13]
+[ext_resource path="res://Prefabs/Graphics/Particles/HitAttack-player.tscn" type="PackedScene" id=14]
+[ext_resource path="res://Prefabs/Graphics/Particles/HitPlayer.tscn" type="PackedScene" id=15]
+[ext_resource path="res://Prefabs/Graphics/Particles/TeleportCloud.tscn" type="PackedScene" id=16]
 
 [sub_resource type="CapsuleShape2D" id=3]
 radius = 5.0
@@ -319,10 +326,14 @@ start_timer_path = NodePath("Utility/ActiveTimer")
 has_jump = false
 has_attack = false
 has_teleport = false
-effects_teleport_out = [ NodePath("FX/teleport") ]
-effects_attack_hit = [ NodePath("FX/Attack-hit-cam") ]
-effects_no_stamina = [ NodePath("FX/no_stamina") ]
-effects_not_enough_stamina = [ NodePath("FX/not_enough_stamina") ]
+effects_teleport_in = [ NodePath("FX/Teleport-cloud"), NodePath("FX/no_stamina") ]
+effects_teleport_out = [ NodePath("FX/teleport"), NodePath("FX/Stars2"), NodePath("FX/Teleport-cloud") ]
+effects_attack_hit = [ NodePath("FX/Attack-hit-cam"), NodePath("FX/HitAttack-particles") ]
+effects_roll = [ NodePath("FX/Roll-cloud") ]
+effects_jump = [ NodePath("FX/Jump-cloud") ]
+effects_ground = [ NodePath("FX/Jump-cloud") ]
+effects_no_stamina = [ NodePath("FX/no_stamina"), NodePath("FX/Stars2") ]
+effects_not_enough_stamina = [ NodePath("FX/not_enough_stamina"), NodePath("FX/Stars") ]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource( 3 )
@@ -332,6 +343,11 @@ shape = SubResource( 3 )
 [node name="Sprite" type="AnimatedSprite" parent="Visuals"]
 frames = ExtResource( 2 )
 animation = "Idle"
+
+[node name="Positions" type="Node2D" parent="Visuals"]
+
+[node name="Feet" type="Position2D" parent="Visuals/Positions"]
+position = Vector2( 0, 12 )
 
 [node name="Anims" type="AnimationPlayer" parent="Visuals"]
 anims/Attack = SubResource( 11 )
@@ -357,7 +373,7 @@ script = ExtResource( 3 )
 i_timer_path = NodePath("../../Utility/I-Timer")
 hp = 6
 i_frames = 0.5
-effects_hit = [ NodePath("../../FX/Hit"), NodePath("../../FX/Hit-cam"), NodePath("../../FX/Hit-controller") ]
+effects_hit = [ NodePath("../../FX/Hit"), NodePath("../../FX/Hit-cam"), NodePath("../../FX/Hit-controller"), NodePath("../../FX/PlayerHit") ]
 effects_death = [ NodePath("../../FX/Screen-dead") ]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Combat/Entity"]
@@ -466,3 +482,38 @@ in_color = Color( 0, 0, 0, 0 )
 out_color = Color( 0, 0, 0, 1 )
 time = 1.8
 resets = false
+
+[node name="Stars" type="Node" parent="FX"]
+script = ExtResource( 10 )
+spawned_effect = ExtResource( 11 )
+position_object = NodePath("../..")
+
+[node name="Stars2" type="Node" parent="FX"]
+script = ExtResource( 10 )
+spawned_effect = ExtResource( 12 )
+position_object = NodePath("../..")
+
+[node name="Jump-cloud" type="Node" parent="FX"]
+script = ExtResource( 10 )
+spawned_effect = ExtResource( 13 )
+position_object = NodePath("../../Visuals/Positions/Feet")
+
+[node name="Roll-cloud" type="Node" parent="FX"]
+script = ExtResource( 10 )
+spawned_effect = ExtResource( 13 )
+position_object = NodePath("../..")
+
+[node name="Teleport-cloud" type="Node" parent="FX"]
+script = ExtResource( 10 )
+spawned_effect = ExtResource( 16 )
+position_object = NodePath("../..")
+
+[node name="HitAttack-particles" type="Node" parent="FX"]
+script = ExtResource( 10 )
+spawned_effect = ExtResource( 14 )
+position_object = NodePath("../..")
+
+[node name="PlayerHit" type="Node" parent="FX"]
+script = ExtResource( 10 )
+spawned_effect = ExtResource( 15 )
+position_object = NodePath("../..")

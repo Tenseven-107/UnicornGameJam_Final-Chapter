@@ -19,6 +19,7 @@ func play_effect():
 	if is_instance_valid(destroy_object) == false:
 		destroy_object = get_node(destroy_object_path)
 
+	timer.wait_time = stay_time
 	timer.one_shot = true
 
 	timer.start()

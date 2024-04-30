@@ -59,6 +59,10 @@ target_path = NodePath("../PlayerContainer/Player")
 script = ExtResource( 10 )
 group_name = "BulletContainer"
 
+[node name="FXContainer" type="Node2D" parent="Containers"]
+script = ExtResource( 10 )
+group_name = "FXContainer"
+
 [node name="EnemyContainer" type="Node2D" parent="Containers"]
 script = ExtResource( 6 )
 

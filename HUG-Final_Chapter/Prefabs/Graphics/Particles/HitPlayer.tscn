@@ -1,0 +1,101 @@
+[gd_scene load_steps=10 format=2]
+
+[ext_resource path="res://Scripts/EffectPlayers/Destroy.gd" type="Script" id=1]
+[ext_resource path="res://Scripts/EffectPlayers/ParticleEffectPlayer.gd" type="Script" id=2]
+[ext_resource path="res://Sprites/FX/FX_sheet.png" type="Texture" id=3]
+
+[sub_resource type="AtlasTexture" id=3]
+atlas = ExtResource( 3 )
+region = Rect2( 2, 19, 5, 5 )
+
+[sub_resource type="Curve" id=2]
+_data = [ Vector2( 0, 0 ), 0.0, 0.0, 0, 0, Vector2( 0.183168, 1 ), 0.0, 0.0, 0, 0, Vector2( 0.534653, 1 ), 0.0, 0.0, 0, 0, Vector2( 1, 0 ), 0.0, 0.0, 0, 0 ]
+
+[sub_resource type="AtlasTexture" id=4]
+atlas = ExtResource( 3 )
+region = Rect2( 2, 25, 5, 5 )
+
+[sub_resource type="AtlasTexture" id=5]
+atlas = ExtResource( 3 )
+region = Rect2( 2, 31, 5, 5 )
+
+[sub_resource type="AtlasTexture" id=6]
+atlas = ExtResource( 3 )
+region = Rect2( 24, 9, 8, 8 )
+
+[sub_resource type="Curve" id=7]
+_data = [ Vector2( 0, 0 ), 0.0, 0.0, 0, 0, Vector2( 0.183168, 1 ), 0.0, 0.0, 0, 0, Vector2( 0.534653, 1 ), 0.0, 0.0, 0, 0, Vector2( 1, 0 ), 0.0, 0.0, 0, 0 ]
+
+[node name="HitPlayer" type="Node2D"]
+z_index = 2
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="."]
+emitting = false
+amount = 3
+one_shot = true
+explosiveness = 1.0
+texture = SubResource( 3 )
+direction = Vector2( 0, -1 )
+spread = 120.0
+gravity = Vector2( 0, 50 )
+initial_velocity = 50.0
+damping = 50.0
+angle = 720.0
+angle_random = 1.0
+scale_amount_curve = SubResource( 2 )
+
+[node name="CPUParticles2D2" type="CPUParticles2D" parent="."]
+emitting = false
+amount = 3
+one_shot = true
+explosiveness = 1.0
+texture = SubResource( 4 )
+direction = Vector2( 0, -1 )
+spread = 120.0
+gravity = Vector2( 0, 50 )
+initial_velocity = 50.0
+damping = 50.0
+angle = 720.0
+angle_random = 1.0
+scale_amount_curve = SubResource( 2 )
+
+[node name="CPUParticles2D3" type="CPUParticles2D" parent="."]
+emitting = false
+amount = 3
+one_shot = true
+explosiveness = 1.0
+texture = SubResource( 5 )
+direction = Vector2( 0, -1 )
+spread = 120.0
+gravity = Vector2( 0, 50 )
+initial_velocity = 50.0
+damping = 50.0
+angle = 720.0
+angle_random = 1.0
+scale_amount_curve = SubResource( 2 )
+
+[node name="CPUParticles2D4" type="CPUParticles2D" parent="."]
+emitting = false
+amount = 1
+one_shot = true
+explosiveness = 1.0
+texture = SubResource( 6 )
+direction = Vector2( 0, -1 )
+spread = 20.0
+gravity = Vector2( 0, -98 )
+initial_velocity = 20.0
+damping = 50.0
+scale_amount_curve = SubResource( 7 )
+
+[node name="Timer" type="Timer" parent="."]
+
+[node name="Player" type="Node" parent="."]
+script = ExtResource( 2 )
+on_start = true
+particle_paths = [ NodePath("../CPUParticles2D"), NodePath("../CPUParticles2D2"), NodePath("../CPUParticles2D3"), NodePath("../CPUParticles2D4") ]
+
+[node name="Destroyer" type="Node" parent="."]
+script = ExtResource( 1 )
+on_start = true
+timer_path = NodePath("../Timer")
+destroy_object_path = NodePath("..")

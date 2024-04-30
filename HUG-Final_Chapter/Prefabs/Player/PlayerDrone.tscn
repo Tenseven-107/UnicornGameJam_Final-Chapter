@@ -1,9 +1,11 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://Sprites/Player/PlayerDrone.png" type="Texture" id=1]
 [ext_resource path="res://Scripts/Player/PlayerDrone.gd" type="Script" id=2]
 [ext_resource path="res://Scripts/Utils/Gameplay/BulletShooter.gd" type="Script" id=3]
 [ext_resource path="res://Prefabs/Weapons/Projectiles/DroneBullet.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Scripts/EffectPlayers/SpawnerEffectPlayer.gd" type="Script" id=5]
+[ext_resource path="res://Prefabs/Graphics/Particles/Shoot-drone.tscn" type="PackedScene" id=6]
 
 [sub_resource type="CircleShape2D" id=1]
 radius = 4.0
@@ -34,6 +36,7 @@ script = ExtResource( 3 )
 projectile = ExtResource( 4 )
 firerate_cooldown = 0.01
 muzzle_path = NodePath("Muzzle")
+effects_on_fire = [ NodePath("../../FX/ShootParticle") ]
 
 [node name="Muzzle" type="Position2D" parent="Body/Bulletshooter"]
 position = Vector2( 8, 0 )
@@ -44,3 +47,10 @@ position = Vector2( 8, 0 )
 enabled = true
 cast_to = Vector2( 0, 10 )
 collision_mask = 2
+
+[node name="FX" type="Node" parent="."]
+
+[node name="ShootParticle" type="Node" parent="FX"]
+script = ExtResource( 5 )
+spawned_effect = ExtResource( 6 )
+position_object = NodePath("../../Body/Bulletshooter/Muzzle")

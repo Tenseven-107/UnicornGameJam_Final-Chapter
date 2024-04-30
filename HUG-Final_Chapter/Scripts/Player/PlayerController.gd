@@ -101,8 +101,8 @@ export (int) var stamina: int = 100
 var current_stamina: int = 0
 var tired: bool = false
 
-export (int) var stamina_attack: int = 20
-export (int) var stamina_dodge: int = 40
+export (int) var stamina_attack: int = 15
+export (int) var stamina_dodge: int = 30
 export (int) var stamina_teleport: int = 100
 
 
@@ -132,6 +132,10 @@ export (Array, NodePath) var effects_attack
 export (Array, NodePath) var effects_attack_hit
 export (Array, NodePath) var effects_roll
 export (Array, NodePath) var effects_jump
+
+export (Array, NodePath) var effects_ground
+var effect_grounded: bool = false
+
 export (Array, NodePath) var effects_no_stamina
 export (Array, NodePath) var effects_not_enough_stamina
 
@@ -333,13 +337,24 @@ func set_velocity(delta):
 
 			coyote_timer.start()
 		coyote = false
-	else: if check_rays(false) == false: anims.travel("Fall")
+
+		# Play effects on grounded
+		if effect_grounded == false and check_rays(false) == true:
+			effect_grounded = true
+			for effect in effects_ground:
+				var play_effect: EffectPlayer = get_node(effect)
+				play_effect.play_effect()
+
+	else: 
+		if check_rays(false) == false: 
+			anims.travel("Fall")
+			effect_grounded = false
 
 
 
 # Combat
 func attacking():
-	if player_action("attack_player", true) and can_remove_stamina(stamina_attack):
+	if player_action("attack_player", true) and can_remove_stamina(stamina_attack, true):
 		input_vector.x = last_x_input
 
 		attack_timer.start()
@@ -369,7 +384,7 @@ func attack_recovery():
 
 # ROLLING ROLLING ROLLING ROLLING
 func dodging():
-	if player_action("action_player", true) and can_remove_stamina(stamina_dodge):
+	if player_action("action_player", true) and can_remove_stamina(stamina_dodge, true):
 		input_vector.x = last_x_input
 
 		entity.invincible = true
@@ -391,7 +406,7 @@ func finish_dodge():
 # Teleport
 func teleport():
 	if player_action("action_player", false) and drone.check_can_teleport():
-		if can_remove_stamina(stamina_teleport):
+		if can_remove_stamina(stamina_teleport, false):
 			# Play effects on teleport_in
 			for effect in effects_teleport_in:
 				var play_effect: EffectPlayer = get_node(effect)
@@ -427,7 +442,7 @@ func stamina_regen():
 			tired = false
 			current_stamina = clamp(current_stamina, 0, stamina)
 
-func can_remove_stamina(removed_stamina: int):
+func can_remove_stamina(removed_stamina: int, can_play_effect: bool):
 	if (current_stamina - removed_stamina) >= 0 and tired == false:
 		current_stamina -= removed_stamina
 
@@ -437,9 +452,10 @@ func can_remove_stamina(removed_stamina: int):
 			tired = true
 
 			# Play effects on no stamina
-			for effect in effects_no_stamina:
-				var play_effect: EffectPlayer = get_node(effect)
-				play_effect.play_effect()
+			if can_play_effect == true:
+				for effect in effects_no_stamina:
+					var play_effect: EffectPlayer = get_node(effect)
+					play_effect.play_effect()
 
 		return true
 

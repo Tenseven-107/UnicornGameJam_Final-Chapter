@@ -57,7 +57,7 @@ onready var hud: PlayerHud = get_node(hud_path)
 
 # Movement
 export var _c_movement: String
-export (float) var move_speed: float = 12000
+export (float) var move_speed: float = 10000
 
 # - Jumping
 export var _c_jumping: String
@@ -255,8 +255,8 @@ func movement(delta):
 	if input_vector.x != 0:  
 		last_x_input = input_vector.normalized().x
 
-		if is_on_floor() == true: anims.travel("Walk")
-	else: if is_on_floor() == true: anims.travel("Idle")
+		if check_rays() == true: anims.travel("Walk")
+	else: if check_rays() == true: anims.travel("Idle")
 
 	# Turning the players direction
 	if input_vector.x > 0: 
@@ -315,18 +315,18 @@ func check_rays():
 # Setting the velocity
 func set_velocity(delta):
 	velocity.x = (input_vector.x * move_speed) * delta
-	velocity.y += current_gravity * delta
+	if is_on_floor() == false: velocity.y += current_gravity * delta
 
 	velocity = move_and_slide(velocity, Vector2.UP)
 
-	if is_on_floor() or coyote == true:
+	if is_on_floor() == true or coyote == true:
 		if is_jumping == true: velocity.y -= input_vector.y
 		else: 
 			velocity.y = 0 # nullify the velocity to avoid constant velocity into the ground
 
 			coyote_timer.start()
 		coyote = false
-	else: anims.travel("Fall")
+	else: if check_rays() == false: anims.travel("Fall")
 
 
 

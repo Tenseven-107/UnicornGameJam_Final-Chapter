@@ -21,16 +21,20 @@ export (String) var detection_group: String = "Player"
 export (NodePath) var body_path: NodePath
 var body: Node2D
 
+export (NodePath) var action_timer_path: NodePath
+var action_timer: Timer
+export (float) var action_time: float = 0.5
+
 
 # Movement stats
 export var _c_movement: String
 export (float) var movement_speed: float = 25
 export (float) var gravity: float = 10
-var right_direction: bool = false
 
 var velocity: Vector2 = Vector2.ZERO
 onready var start_pos: Vector2 = global_position
 
+var right_direction: bool = false
 var active: bool = true
 
 
@@ -44,6 +48,7 @@ export (float) var turn_distance: float = 100
 export var _c_effect_players: String
 export (Array, NodePath) var effects_turn
 export (Array, NodePath) var effects_detect
+export (Array, NodePath) var effects_action
 
 
 
@@ -60,6 +65,14 @@ func _ready():
 
 		if right_direction == true: body.scale.x = 1
 		else: body.scale.x = -1
+
+	if action_timer_path != "":
+		action_timer = get_node(action_timer_path)
+
+		action_timer.one_shot = true
+		action_timer.wait_time = action_time
+
+		action_timer.connect("timeout", self, "action")
 
 
 
@@ -111,6 +124,22 @@ func aditional_detect():
 		for effect in effects_detect:
 			var play_effect: EffectPlayer = get_node(effect)
 			play_effect.play_effect()
+
+		# Start action if there is a timer
+		if is_instance_valid(action_timer) == true:
+			action_timer.start()
+
+
+
+# Do action
+func action():
+	# Play effects on action
+	for effect in effects_action:
+		var play_effect: EffectPlayer = get_node(effect)
+		play_effect.play_effect()
+
+
+
 
 
 

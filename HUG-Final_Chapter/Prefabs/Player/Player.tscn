@@ -1,4 +1,4 @@
-[gd_scene load_steps=54 format=2]
+[gd_scene load_steps=58 format=2]
 
 [ext_resource path="res://Scripts/Player/PlayerController.gd" type="Script" id=1]
 [ext_resource path="res://Sprites/Player/PlayerAnimMap.tres" type="SpriteFrames" id=2]
@@ -60,6 +60,34 @@ tracks/1/keys = {
 "transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
 "update": 1,
 "values": [ 0, 1, 2, 3, 0 ]
+}
+
+[sub_resource type="Animation" id=43]
+resource_name = "Die"
+step = 0.01
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ "Die" ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Sprite:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.12, 0.24, 0.36, 0.48, 0.64, 0.67, 0.71, 0.75, 0.79, 0.83, 0.87, 0.91, 0.95, 0.99 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 1, 2, 3, 4, 5, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16 ]
 }
 
 [sub_resource type="Animation" id=7]
@@ -240,6 +268,9 @@ tracks/1/keys = {
 [sub_resource type="AnimationNodeAnimation" id=13]
 animation = "Attack"
 
+[sub_resource type="AnimationNodeAnimation" id=44]
+animation = "Die"
+
 [sub_resource type="AnimationNodeAnimation" id=14]
 animation = "Fall"
 
@@ -296,9 +327,15 @@ auto_advance = true
 switch_mode = 2
 auto_advance = true
 
+[sub_resource type="AnimationNodeStateMachineTransition" id=45]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=46]
+
 [sub_resource type="AnimationNodeStateMachine" id=35]
 states/Attack/node = SubResource( 13 )
 states/Attack/position = Vector2( 834, 558 )
+states/Die/node = SubResource( 44 )
+states/Die/position = Vector2( 592, 646 )
 states/Fall/node = SubResource( 14 )
 states/Fall/position = Vector2( 425, 269 )
 states/Idle/node = SubResource( 15 )
@@ -311,9 +348,10 @@ states/Start/node = SubResource( 18 )
 states/Start/position = Vector2( 373, 558 )
 states/Walk/node = SubResource( 19 )
 states/Walk/position = Vector2( 834, 401 )
-transitions = [ "Attack", "Idle", SubResource( 20 ), "Idle", "Attack", SubResource( 21 ), "Walk", "Attack", SubResource( 22 ), "Idle", "Walk", SubResource( 23 ), "Walk", "Idle", SubResource( 24 ), "Walk", "Roll", SubResource( 25 ), "Roll", "Idle", SubResource( 26 ), "Idle", "Roll", SubResource( 27 ), "Walk", "Fall", SubResource( 28 ), "Walk", "Jump", SubResource( 29 ), "Jump", "Fall", SubResource( 30 ), "Fall", "Idle", SubResource( 31 ), "Idle", "Jump", SubResource( 32 ), "Idle", "Fall", SubResource( 37 ), "Start", "Idle", SubResource( 38 ) ]
+transitions = [ "Attack", "Idle", SubResource( 20 ), "Idle", "Attack", SubResource( 21 ), "Walk", "Attack", SubResource( 22 ), "Idle", "Walk", SubResource( 23 ), "Walk", "Idle", SubResource( 24 ), "Walk", "Roll", SubResource( 25 ), "Roll", "Idle", SubResource( 26 ), "Idle", "Roll", SubResource( 27 ), "Walk", "Fall", SubResource( 28 ), "Walk", "Jump", SubResource( 29 ), "Jump", "Fall", SubResource( 30 ), "Fall", "Idle", SubResource( 31 ), "Idle", "Jump", SubResource( 32 ), "Idle", "Fall", SubResource( 37 ), "Start", "Idle", SubResource( 38 ), "Idle", "Die", SubResource( 45 ), "Die", "Idle", SubResource( 46 ) ]
 start_node = "Start"
-graph_offset = Vector2( -33, 356 )
+end_node = "Die"
+graph_offset = Vector2( -28, 488 )
 
 [sub_resource type="AnimationNodeStateMachinePlayback" id=36]
 
@@ -369,7 +407,7 @@ texture = SubResource( 41 )
 [node name="Sprite" type="AnimatedSprite" parent="Visuals"]
 frames = ExtResource( 2 )
 animation = "Idle"
-frame = 1
+frame = 2
 
 [node name="Positions" type="Node2D" parent="Visuals"]
 
@@ -378,6 +416,7 @@ position = Vector2( 0, 12 )
 
 [node name="Anims" type="AnimationPlayer" parent="Visuals"]
 anims/Attack = SubResource( 11 )
+anims/Die = SubResource( 43 )
 anims/Fall = SubResource( 7 )
 anims/Idle = SubResource( 6 )
 anims/Jump = SubResource( 8 )

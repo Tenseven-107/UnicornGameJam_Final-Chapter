@@ -474,6 +474,8 @@ func set_dead():
 	switch_state(STATES.UNACTIVE)
 	dead_cooldown.start()
 
+	anims.start("Die")
+
 func signal_dead():GlobalSignals.emit_signal("gameover")
 
 

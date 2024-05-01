@@ -37,5 +37,5 @@ func check_hit():
 			if area.is_in_group(Entity.group_name):
 				area.handle_hit(team, damage)
 
-				if destroy_path != "":
+				if destroy_path != "" and area.invincible == false:
 					get_node(destroy_path).call_deferred("queue_free")

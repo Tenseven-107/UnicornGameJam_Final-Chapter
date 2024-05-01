@@ -21,9 +21,15 @@ export (String) var detection_group: String = "Player"
 export (NodePath) var body_path: NodePath
 var body: Node2D
 
+# Actions
 export (NodePath) var action_timer_path: NodePath
 var action_timer: Timer
+
+export (NodePath) var action_cooldown_timer_path: NodePath
+var action_cooldown_timer: Timer
+
 export (float) var action_time: float = 0.5
+export (float) var action_cooldown: float = 0.5
 export (bool) var unactive_before_action: bool = false
 
 
@@ -58,15 +64,18 @@ func _ready():
 	active = true
 	right_direction = starts_right
 
+	# Aditional detection
 	if detection_path != "":
 		detection = get_node(detection_path)
 
+	# Body
 	if body_path != "":
 		body = get_node(body_path)
 
 		if right_direction == true: body.scale.x = 1
 		else: body.scale.x = -1
 
+	# Action timers
 	if action_timer_path != "":
 		action_timer = get_node(action_timer_path)
 
@@ -74,6 +83,14 @@ func _ready():
 		action_timer.wait_time = action_time
 
 		action_timer.connect("timeout", self, "action")
+
+	if action_cooldown_timer_path != "":
+		action_cooldown_timer = get_node(action_cooldown_timer_path)
+
+		action_cooldown_timer.one_shot = true
+		action_cooldown_timer.wait_time = action_cooldown
+
+		action_cooldown_timer.connect("timeout", self, "reactivate_action")
 
 
 
@@ -128,7 +145,10 @@ func aditional_detect():
 
 		# Start action if there is a timer
 		if is_instance_valid(action_timer) == true:
-			if action_timer.is_stopped():
+			if (action_timer.is_stopped() == true and 
+			(is_instance_valid(action_cooldown_timer) == false or 
+			(is_instance_valid(action_cooldown_timer) == true and action_cooldown_timer.is_stopped()))):
+
 				action_timer.start()
 
 				if unactive_before_action == true: active = false
@@ -137,14 +157,22 @@ func aditional_detect():
 
 # Do action
 func action():
-	if unactive_before_action == true: active = true
+	reactivate_action()
 
 	# Play effects on action
 	for effect in effects_action:
 		var play_effect: EffectPlayer = get_node(effect)
 		play_effect.play_effect()
 
+	if is_instance_valid(action_cooldown_timer) == true: action_cooldown_timer.start()
 
+
+
+# Reactivate after action
+func reactivate_action():
+	if (unactive_before_action == true and (detection.is_colliding() == false or (detection.is_colliding() == true and 
+	detection.get_collider().is_in_group(detection_group) == false))): 
+		active = true
 
 
 

@@ -1,78 +1,101 @@
-[gd_scene load_steps=34 format=2]
+[gd_scene load_steps=44 format=2]
 
 [ext_resource path="res://Scripts/Enemies/GroundEnemyController.gd" type="Script" id=1]
-[ext_resource path="res://Sprites/Enemies/Peepee-fly.png" type="Texture" id=2]
+[ext_resource path="res://Scripts/Utils/Gamefeel/RandomSprite.gd" type="Script" id=2]
 [ext_resource path="res://Scripts/Utils/Gameplay/Entity.gd" type="Script" id=3]
 [ext_resource path="res://Scripts/Utils/Gameplay/Hitbox.gd" type="Script" id=4]
 [ext_resource path="res://Scripts/EffectPlayers/AnimTreeEffectPlayer.gd" type="Script" id=5]
 [ext_resource path="res://Scripts/EffectPlayers/ColorChangeEffectPlayer.gd" type="Script" id=6]
 [ext_resource path="res://Scripts/EffectPlayers/ScaleEffectPlayer.gd" type="Script" id=7]
 [ext_resource path="res://Scripts/Utils/Gameplay/BulletShooter.gd" type="Script" id=8]
-[ext_resource path="res://Prefabs/Weapons/Projectiles/PeepeeBullet.tscn" type="PackedScene" id=9]
+[ext_resource path="res://Sprites/Enemies/Orc-heads.png" type="Texture" id=9]
 [ext_resource path="res://Prefabs/Graphics/Particles/Enemy-kill.tscn" type="PackedScene" id=10]
 [ext_resource path="res://Prefabs/Graphics/Particles/Enemy-hit.tscn" type="PackedScene" id=11]
 [ext_resource path="res://Scripts/EffectPlayers/SpawnerEffectPlayer.gd" type="Script" id=12]
+[ext_resource path="res://Sprites/Enemies/Orc.png" type="Texture" id=13]
+[ext_resource path="res://Prefabs/Weapons/Projectiles/OrcBullet.tscn" type="PackedScene" id=14]
+[ext_resource path="res://Sprites/Enemies/OrcHead4.tres" type="Texture" id=15]
+[ext_resource path="res://Sprites/Enemies/OrcHead.tres" type="Texture" id=16]
+[ext_resource path="res://Sprites/Enemies/OrcHead2.tres" type="Texture" id=17]
+[ext_resource path="res://Sprites/Enemies/OrcHead3.tres" type="Texture" id=18]
 
 [sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 8, 11.5 )
+extents = Vector2( 4, 10.5 )
 
-[sub_resource type="AtlasTexture" id=4]
-atlas = ExtResource( 2 )
-region = Rect2( 96, 48, 48, 48 )
+[sub_resource type="AtlasTexture" id=19]
+atlas = ExtResource( 13 )
+region = Rect2( 96, 32, 32, 32 )
 
-[sub_resource type="AtlasTexture" id=5]
-atlas = ExtResource( 2 )
-region = Rect2( 144, 48, 48, 48 )
+[sub_resource type="AtlasTexture" id=20]
+atlas = ExtResource( 13 )
+region = Rect2( 128, 32, 32, 32 )
 
-[sub_resource type="AtlasTexture" id=6]
-atlas = ExtResource( 2 )
-region = Rect2( 192, 48, 48, 48 )
+[sub_resource type="AtlasTexture" id=21]
+atlas = ExtResource( 13 )
+region = Rect2( 0, 64, 32, 32 )
 
-[sub_resource type="AtlasTexture" id=7]
-atlas = ExtResource( 2 )
-region = Rect2( 0, 96, 48, 48 )
+[sub_resource type="AtlasTexture" id=22]
+atlas = ExtResource( 13 )
+region = Rect2( 32, 64, 32, 32 )
 
-[sub_resource type="AtlasTexture" id=8]
-atlas = ExtResource( 2 )
-region = Rect2( 48, 96, 48, 48 )
+[sub_resource type="AtlasTexture" id=23]
+atlas = ExtResource( 13 )
+region = Rect2( 64, 64, 32, 32 )
 
-[sub_resource type="AtlasTexture" id=9]
-atlas = ExtResource( 2 )
-region = Rect2( 144, 0, 48, 48 )
+[sub_resource type="AtlasTexture" id=24]
+atlas = ExtResource( 13 )
+region = Rect2( 96, 64, 32, 32 )
 
-[sub_resource type="AtlasTexture" id=10]
-atlas = ExtResource( 2 )
-region = Rect2( 192, 0, 48, 48 )
+[sub_resource type="AtlasTexture" id=25]
+atlas = ExtResource( 13 )
+region = Rect2( 128, 64, 32, 32 )
 
-[sub_resource type="AtlasTexture" id=11]
-atlas = ExtResource( 2 )
-region = Rect2( 0, 48, 48, 48 )
+[sub_resource type="AtlasTexture" id=26]
+atlas = ExtResource( 13 )
+region = Rect2( 96, 0, 32, 32 )
 
-[sub_resource type="AtlasTexture" id=12]
-atlas = ExtResource( 2 )
-region = Rect2( 0, 0, 48, 48 )
+[sub_resource type="AtlasTexture" id=27]
+atlas = ExtResource( 13 )
+region = Rect2( 128, 0, 32, 32 )
 
-[sub_resource type="SpriteFrames" id=13]
+[sub_resource type="AtlasTexture" id=28]
+atlas = ExtResource( 13 )
+region = Rect2( 0, 32, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=29]
+atlas = ExtResource( 13 )
+region = Rect2( 32, 32, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=30]
+atlas = ExtResource( 13 )
+region = Rect2( 0, 0, 32, 32 )
+
+[sub_resource type="SpriteFrames" id=31]
 animations = [ {
-"frames": [ SubResource( 4 ), SubResource( 5 ), SubResource( 6 ), SubResource( 7 ), SubResource( 8 ) ],
+"frames": [ SubResource( 19 ), SubResource( 20 ), SubResource( 21 ), SubResource( 22 ), SubResource( 23 ), SubResource( 24 ), SubResource( 25 ) ],
 "loop": true,
 "name": "Attack",
 "speed": 5.0
 }, {
-"frames": [ SubResource( 9 ), SubResource( 10 ), SubResource( 11 ) ],
+"frames": [ SubResource( 26 ), SubResource( 27 ), SubResource( 28 ), SubResource( 29 ) ],
 "loop": true,
-"name": "Fly",
+"name": "Walk",
 "speed": 5.0
 }, {
-"frames": [ SubResource( 12 ) ],
+"frames": [ SubResource( 30 ) ],
 "loop": true,
 "name": "default",
 "speed": 5.0
 } ]
 
-[sub_resource type="Animation" id=14]
+[sub_resource type="AtlasTexture" id=32]
+atlas = ExtResource( 9 )
+region = Rect2( 1, 1, 14, 14 )
+
+[sub_resource type="Animation" id=33]
 resource_name = "Attack"
-length = 0.6
+length = 1.4
+step = 0.05
 tracks/0/type = "value"
 tracks/0/path = NodePath("AnimatedSprite:animation")
 tracks/0/interp = 1
@@ -80,10 +103,10 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
+"times": PoolRealArray( 0, 1.3 ),
+"transitions": PoolRealArray( 1, 1 ),
 "update": 1,
-"values": [ "Attack" ]
+"values": [ "Attack", "Walk" ]
 }
 tracks/1/type = "value"
 tracks/1/path = NodePath("AnimatedSprite:frame")
@@ -92,14 +115,26 @@ tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0, 0.2, 0.4, 0.5 ),
-"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"times": PoolRealArray( 0, 0.1, 0.2, 1, 1.05, 1.1, 1.15, 1.2, 1.25, 1.3 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
 "update": 1,
-"values": [ 0, 1, 3, 4 ]
+"values": [ 0, 1, 2, 3, 4, 5, 6, 6, 6, 0 ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Head:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 1, 1.1, 1.15 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ Vector2( 0, -10 ), Vector2( 1, -10 ), Vector2( 1, -9 ), Vector2( 0, -10 ), Vector2( -1, -10 ), Vector2( 0, -10 ) ]
 }
 
-[sub_resource type="Animation" id=15]
-resource_name = "Fly"
+[sub_resource type="Animation" id=34]
+resource_name = "Walk"
 length = 0.4
 loop = true
 step = 0.05
@@ -113,7 +148,7 @@ tracks/0/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ "Fly" ]
+"values": [ "Walk" ]
 }
 tracks/1/type = "value"
 tracks/1/path = NodePath("AnimatedSprite:frame")
@@ -122,95 +157,117 @@ tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0, 0.15, 0.3 ),
-"transitions": PoolRealArray( 1, 1, 1 ),
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
 "update": 1,
-"values": [ 0, 1, 2 ]
+"values": [ 0, 1, 2, 3 ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Head:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.3 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ Vector2( 0, -10 ), Vector2( 0, -8 ) ]
 }
 
-[sub_resource type="AnimationNodeAnimation" id=19]
+[sub_resource type="AnimationNodeAnimation" id=35]
 animation = "Attack"
 
-[sub_resource type="AnimationNodeAnimation" id=16]
-animation = "Fly"
+[sub_resource type="AnimationNodeAnimation" id=36]
+animation = "Walk"
 
-[sub_resource type="AnimationNodeStateMachineTransition" id=20]
+[sub_resource type="AnimationNodeStateMachineTransition" id=37]
 switch_mode = 2
 auto_advance = true
 
-[sub_resource type="AnimationNodeStateMachineTransition" id=21]
+[sub_resource type="AnimationNodeStateMachineTransition" id=38]
 
-[sub_resource type="AnimationNodeStateMachine" id=17]
-states/Attack/node = SubResource( 19 )
-states/Attack/position = Vector2( 252, 141 )
-states/Fly/node = SubResource( 16 )
-states/Fly/position = Vector2( 441, 139 )
-transitions = [ "Attack", "Fly", SubResource( 20 ), "Fly", "Attack", SubResource( 21 ) ]
-start_node = "Fly"
+[sub_resource type="AnimationNodeStateMachine" id=39]
+states/Attack/node = SubResource( 35 )
+states/Attack/position = Vector2( 241, 82 )
+states/Walk/node = SubResource( 36 )
+states/Walk/position = Vector2( 416, 82 )
+transitions = [ "Attack", "Walk", SubResource( 37 ), "Walk", "Attack", SubResource( 38 ) ]
+start_node = "Walk"
 
 [sub_resource type="AnimationNodeStateMachinePlayback" id=18]
 
 [sub_resource type="RectangleShape2D" id=2]
-extents = Vector2( 9, 11.5 )
+extents = Vector2( 11.5, 10.5 )
 
 [sub_resource type="RectangleShape2D" id=3]
-extents = Vector2( 8, 8 )
+extents = Vector2( 5.5, 10.5 )
 
-[node name="Fly" type="KinematicBody2D"]
+[node name="Orc" type="KinematicBody2D"]
 script = ExtResource( 1 )
 right_ray_path = NodePath("Rays/RayCast2D")
 left_ray_path = NodePath("Rays/RayCast2D2")
-detection_path = NodePath("Rays/RayCast2D3")
+detection_path = NodePath("Body/Utility/RayCast2D")
 body_path = NodePath("Body")
 action_timer_path = NodePath("Utils/Timer")
 action_cooldown_timer_path = NodePath("Utils/Timer2")
-action_cooldown = 0.1
+action_time = 1.0
+action_cooldown = 0.4
 unactive_before_action = true
-movement_speed = 30.0
-gravity = 0.0
+movement_speed = 15.0
 effects_detect = [ NodePath("FX/Attack-anim") ]
 effects_action = [ NodePath("Utils/BulletShooter") ]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2( 0, 4.5 )
+position = Vector2( 0, -0.5 )
 shape = SubResource( 1 )
 
 [node name="Rays" type="Node2D" parent="."]
 
 [node name="RayCast2D" type="RayCast2D" parent="Rays"]
 enabled = true
-cast_to = Vector2( 20, 0 )
+cast_to = Vector2( 15, 0 )
 collision_mask = 2
 
 [node name="RayCast2D2" type="RayCast2D" parent="Rays"]
 enabled = true
-cast_to = Vector2( -20, 0 )
+cast_to = Vector2( -15, 0 )
 collision_mask = 2
-
-[node name="RayCast2D3" type="RayCast2D" parent="Rays"]
-position = Vector2( 0, 18 )
-enabled = true
-cast_to = Vector2( 0, 200 )
 
 [node name="Body" type="Node2D" parent="."]
 
 [node name="Visual" type="Node2D" parent="Body"]
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="Body/Visual"]
-frames = SubResource( 13 )
-animation = "Fly"
-frame = 1
-flip_h = true
+frames = SubResource( 31 )
+animation = "Walk"
+frame = 3
+
+[node name="Head" type="Sprite" parent="Body/Visual"]
+position = Vector2( 0, -8 )
+texture = SubResource( 32 )
+script = ExtResource( 2 )
+sprites = [ ExtResource( 17 ), ExtResource( 18 ), ExtResource( 15 ), ExtResource( 16 ) ]
 
 [node name="Anims" type="AnimationPlayer" parent="Body/Visual"]
-anims/Attack = SubResource( 14 )
-anims/Fly = SubResource( 15 )
+anims/Attack = SubResource( 33 )
+anims/Walk = SubResource( 34 )
 
 [node name="AnimationTree" type="AnimationTree" parent="Body/Visual"]
-tree_root = SubResource( 17 )
+tree_root = SubResource( 39 )
 anim_player = NodePath("../Anims")
 active = true
 parameters/playback = SubResource( 18 )
+
+[node name="Utility" type="Node2D" parent="Body"]
+
+[node name="Muzzle" type="Position2D" parent="Body/Utility"]
+position = Vector2( 15, 0 )
+
+[node name="RayCast2D" type="RayCast2D" parent="Body/Utility"]
+position = Vector2( 15, 0 )
+enabled = true
+cast_to = Vector2( 100, 0 )
 
 [node name="Combat" type="Node2D" parent="."]
 
@@ -218,19 +275,19 @@ parameters/playback = SubResource( 18 )
 script = ExtResource( 3 )
 destroy_path = NodePath("../..")
 i_timer_path = NodePath("../../Utils/I-Frames")
-hp = 3
-i_frames = 0.1
+hp = 6
+i_frames = 0.2
 team = 1
 destroy_on_death = true
 effects_hit = [ NodePath("../../FX/scale"), NodePath("../../FX/color"), NodePath("../../FX/Hit") ]
 effects_death = [ NodePath("../../FX/Kill") ]
 activity_objects_paths = [ NodePath("../.."), NodePath("../Hitbox") ]
 inactive_timer_path = NodePath("../../Utils/Inactivity")
-inactive_time = 0.1
+inactive_time = 0.2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Combat/Entity"]
 modulate = Color( 0.101961, 1, 0, 1 )
-position = Vector2( 0, 4.5 )
+position = Vector2( -2.5, -0.5 )
 shape = SubResource( 2 )
 
 [node name="Hitbox" type="Area2D" parent="Combat"]
@@ -240,12 +297,8 @@ team = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Combat/Hitbox"]
 modulate = Color( 1, 0, 0, 1 )
-position = Vector2( 0, 1 )
+position = Vector2( -0.5, -0.5 )
 shape = SubResource( 3 )
-
-[node name="Muzzle" type="Position2D" parent="Combat"]
-position = Vector2( 0, 18 )
-rotation = 1.5708
 
 [node name="Utils" type="Node" parent="."]
 
@@ -260,8 +313,8 @@ rotation = 1.5708
 [node name="BulletShooter" type="Node" parent="Utils"]
 script = ExtResource( 8 )
 team = 1
-projectile = ExtResource( 9 )
-muzzle_path = NodePath("../../Combat/Muzzle")
+projectile = ExtResource( 14 )
+muzzle_path = NodePath("../../Body/Utility/Muzzle")
 
 [node name="FX" type="Node" parent="."]
 

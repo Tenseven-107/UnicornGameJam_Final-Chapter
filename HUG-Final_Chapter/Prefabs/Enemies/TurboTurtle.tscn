@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=2]
+[gd_scene load_steps=33 format=2]
 
 [ext_resource path="res://Scripts/Enemies/GroundEnemyController.gd" type="Script" id=1]
 [ext_resource path="res://Sprites/Enemies/Turbo-turtle.png" type="Texture" id=2]
@@ -7,6 +7,9 @@
 [ext_resource path="res://Scripts/EffectPlayers/AnimTreeEffectPlayer.gd" type="Script" id=5]
 [ext_resource path="res://Scripts/EffectPlayers/ColorChangeEffectPlayer.gd" type="Script" id=6]
 [ext_resource path="res://Scripts/EffectPlayers/ScaleEffectPlayer.gd" type="Script" id=7]
+[ext_resource path="res://Prefabs/Graphics/Particles/Enemy-kill.tscn" type="PackedScene" id=8]
+[ext_resource path="res://Prefabs/Graphics/Particles/Enemy-hit.tscn" type="PackedScene" id=9]
+[ext_resource path="res://Scripts/EffectPlayers/SpawnerEffectPlayer.gd" type="Script" id=10]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 10, 13.5 )
@@ -171,12 +174,12 @@ position = Vector2( 0, 9 )
 
 [node name="RayCast2D" type="RayCast2D" parent="Rays"]
 enabled = true
-cast_to = Vector2( 20, 0 )
+cast_to = Vector2( 15, 0 )
 collision_mask = 2
 
 [node name="RayCast2D2" type="RayCast2D" parent="Rays"]
 enabled = true
-cast_to = Vector2( -20, 0 )
+cast_to = Vector2( -15, 0 )
 collision_mask = 2
 
 [node name="Body" type="Node2D" parent="."]
@@ -186,7 +189,7 @@ collision_mask = 2
 [node name="AnimatedSprite" type="AnimatedSprite" parent="Body/Visual"]
 frames = SubResource( 14 )
 animation = "Walk"
-frame = 2
+frame = 1
 flip_h = true
 
 [node name="Anims" type="AnimationPlayer" parent="Body/Visual"]
@@ -206,10 +209,11 @@ script = ExtResource( 3 )
 destroy_path = NodePath("../..")
 i_timer_path = NodePath("../../Utils/I-Frames")
 hp = 6
-i_frames = 0.25
+i_frames = 0.7
 team = 1
 destroy_on_death = true
-effects_hit = [ NodePath("../../FX/Hide-anim"), NodePath("../../FX/scale"), NodePath("../../FX/color") ]
+effects_hit = [ NodePath("../../FX/Hide-anim"), NodePath("../../FX/scale"), NodePath("../../FX/color"), NodePath("../../FX/Hit") ]
+effects_death = [ NodePath("../../FX/Kill") ]
 activity_objects_paths = [ NodePath("../.."), NodePath("../Hitbox") ]
 inactive_timer_path = NodePath("../../Utils/Inactivity")
 inactive_time = 0.9
@@ -255,3 +259,13 @@ script = ExtResource( 6 )
 object_path = NodePath("../../Body/Visual/AnimatedSprite")
 duration = 0.3
 start_color = Color( 1, 1, 1, 0 )
+
+[node name="Hit" type="Node" parent="FX"]
+script = ExtResource( 10 )
+spawned_effect = ExtResource( 9 )
+position_object = NodePath("../..")
+
+[node name="Kill" type="Node" parent="FX"]
+script = ExtResource( 10 )
+spawned_effect = ExtResource( 8 )
+position_object = NodePath("../..")

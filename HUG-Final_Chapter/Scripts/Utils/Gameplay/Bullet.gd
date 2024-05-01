@@ -40,6 +40,10 @@ enum TRANSITIONTYPE {
 }
 export (TRANSITIONTYPE) var dropoff_transition_type: int = 0
 
+# Physics layers
+const LAYER: int = 8
+const MASK: int = 8
+
 # Effect players
 export var _c_effect_players: String
 export (Array, NodePath) var effects_on_impact: Array
@@ -53,6 +57,10 @@ func _ready():
 	dropoff_timer.start()
 
 	dropoff_timer.connect("timeout", self, "dropoff")
+
+	# Setting up physics layers
+	collision_layer = LAYER
+	collision_mask = MASK
 
 
 

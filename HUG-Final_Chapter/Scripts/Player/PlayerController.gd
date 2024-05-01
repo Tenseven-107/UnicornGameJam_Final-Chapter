@@ -279,11 +279,12 @@ func movement(delta):
 
 func jumping(delta):
 	# Initiating jump
-	if Input.is_action_just_pressed("jump") and (check_rays(false) == true or coyote_timer.is_stopped() == false):
+	if (Input.is_action_just_pressed("jump") and (check_rays(false) == true or is_on_floor() == true 
+	or coyote_timer.is_stopped() == false)):
 		is_jumping = true
 
 		# Coyote jump
-		if coyote_timer.is_stopped() == false and is_on_floor() == false and check_rays(false) == false:
+		if coyote_timer.is_stopped() == false and check_rays(false) == false:
 			coyote = true
 
 		coyote_timer.stop()
@@ -295,7 +296,7 @@ func jumping(delta):
 			play_effect.play_effect()
 
 	# Jumping
-	if Input.is_action_pressed("jump") and is_jumping == true:
+	if (Input.is_action_pressed("jump") or is_on_floor() == false or check_rays(false) == false) and is_jumping == true:
 		input_vector.y = get_jump_force()
 
 		if current_gravity > min_gravity:
@@ -424,9 +425,11 @@ func teleport():
 
 # Used to check if the player can do a certain action besides simply moving
 func player_action(control_action: String, on_floor: bool):
-	if (Input.is_action_just_pressed(control_action) and ((on_floor == true and is_on_floor()) or on_floor == false)
+	if (Input.is_action_just_pressed(control_action) and 
+	((on_floor == true and check_rays(false) == true) or on_floor == false)
 	and attack_cooldown.is_stopped() 
 	and dodge_timer.is_stopped()):
+
 		return true
 	return false
 

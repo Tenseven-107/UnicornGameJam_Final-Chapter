@@ -1,0 +1,61 @@
+[gd_scene load_steps=9 format=2]
+
+[ext_resource path="res://Scripts/EffectPlayers/Destroy.gd" type="Script" id=1]
+[ext_resource path="res://Scripts/EffectPlayers/ParticleEffectPlayer.gd" type="Script" id=2]
+[ext_resource path="res://Sprites/FX/FX_sheet.png" type="Texture" id=3]
+[ext_resource path="res://Scripts/EffectPlayers/ScaleEffectPlayer.gd" type="Script" id=4]
+[ext_resource path="res://Scripts/Utils/Gamefeel/RandomRotation.gd" type="Script" id=5]
+
+[sub_resource type="AtlasTexture" id=1]
+atlas = ExtResource( 3 )
+region = Rect2( 11, 18, 10, 10 )
+
+[sub_resource type="Curve" id=2]
+_data = [ Vector2( 0, 0 ), 0.0, 0.0, 0, 0, Vector2( 0.222772, 0.990909 ), 0.0, 0.0, 0, 0, Vector2( 0.415842, 1 ), 0.0, 0.0, 0, 0, Vector2( 1, 0 ), 0.0, 0.0, 0, 0 ]
+
+[sub_resource type="AtlasTexture" id=3]
+atlas = ExtResource( 3 )
+region = Rect2( 88, 22, 26, 19 )
+
+[node name="EnemyKill" type="Node2D"]
+z_index = 2
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="."]
+emitting = false
+one_shot = true
+explosiveness = 1.0
+texture = SubResource( 1 )
+spread = 180.0
+gravity = Vector2( 0, 0 )
+initial_velocity = 20.0
+initial_velocity_random = 0.5
+scale_amount = 1.5
+scale_amount_random = 1.0
+scale_amount_curve = SubResource( 2 )
+
+[node name="Sprite" type="Sprite" parent="."]
+position = Vector2( 2, 1 )
+texture = SubResource( 3 )
+script = ExtResource( 5 )
+
+[node name="Timer" type="Timer" parent="."]
+
+[node name="Scale" type="Node" parent="."]
+script = ExtResource( 4 )
+on_start = true
+object_path = NodePath("../Sprite")
+duration = 0.5
+start_scale = Vector2( 1.5, 1.5 )
+ease_type = 2
+transition_type = 8
+
+[node name="Player" type="Node" parent="."]
+script = ExtResource( 2 )
+on_start = true
+particle_paths = [ NodePath("../CPUParticles2D") ]
+
+[node name="Destroyer" type="Node" parent="."]
+script = ExtResource( 1 )
+on_start = true
+timer_path = NodePath("../Timer")
+destroy_object_path = NodePath("..")

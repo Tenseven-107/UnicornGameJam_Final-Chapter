@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=2]
+[gd_scene load_steps=22 format=2]
 
 [ext_resource path="res://Prefabs/Utility/Gameplay/GameCamera.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Prefabs/Player/Player.tscn" type="PackedScene" id=2]
@@ -20,6 +20,7 @@
 [ext_resource path="res://Prefabs/Enemies/Peepee-fly.tscn" type="PackedScene" id=18]
 [ext_resource path="res://Prefabs/Objects/Hazards/Nest.tscn" type="PackedScene" id=19]
 [ext_resource path="res://Prefabs/Enemies/Orc.tscn" type="PackedScene" id=20]
+[ext_resource path="res://Scripts/EffectPlayers/MusicStarter.gd" type="Script" id=21]
 
 [node name="Testing" type="Node2D"]
 
@@ -166,3 +167,9 @@ position = Vector2( -776, -103 )
 position = Vector2( 216, -23 )
 
 [node name="DesertBackground" parent="." instance=ExtResource( 17 )]
+
+[node name="EffectPlayers" type="Node" parent="."]
+
+[node name="Music" type="Node" parent="EffectPlayers"]
+script = ExtResource( 21 )
+on_start = true

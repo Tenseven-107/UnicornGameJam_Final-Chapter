@@ -1,0 +1,209 @@
+[gd_scene load_steps=24 format=2]
+
+[ext_resource path="res://Sprites/UI/Fonts/Default-font.tres" type="DynamicFont" id=1]
+[ext_resource path="res://Scripts/EffectPlayers/MusicStarter.gd" type="Script" id=2]
+[ext_resource path="res://Sprites/UI/Menus/Intro/IntroScreens.png" type="Texture" id=3]
+[ext_resource path="res://Scripts/UI/Menus/StartScreen.gd" type="Script" id=4]
+[ext_resource path="res://Scripts/EffectPlayers/SFXEffectPlayer.gd" type="Script" id=5]
+[ext_resource path="res://Sound/SFX/UI/Name-pop.wav" type="AudioStream" id=6]
+[ext_resource path="res://Sound/SFX/UI/Intro-Action.wav" type="AudioStream" id=7]
+
+[sub_resource type="AtlasTexture" id=1]
+atlas = ExtResource( 3 )
+region = Rect2( 0, 0, 384, 216 )
+
+[sub_resource type="AtlasTexture" id=2]
+atlas = ExtResource( 3 )
+region = Rect2( 384, 0, 384, 216 )
+
+[sub_resource type="AtlasTexture" id=3]
+atlas = ExtResource( 3 )
+region = Rect2( 768, 0, 384, 216 )
+
+[sub_resource type="AtlasTexture" id=4]
+atlas = ExtResource( 3 )
+region = Rect2( 1152, 0, 384, 216 )
+
+[sub_resource type="AtlasTexture" id=5]
+atlas = ExtResource( 3 )
+region = Rect2( 0, 216, 384, 216 )
+
+[sub_resource type="AtlasTexture" id=6]
+atlas = ExtResource( 3 )
+region = Rect2( 384, 216, 384, 216 )
+
+[sub_resource type="AtlasTexture" id=7]
+atlas = ExtResource( 3 )
+region = Rect2( 768, 216, 384, 216 )
+
+[sub_resource type="AtlasTexture" id=8]
+atlas = ExtResource( 3 )
+region = Rect2( 1152, 216, 384, 216 )
+
+[sub_resource type="AtlasTexture" id=9]
+atlas = ExtResource( 3 )
+region = Rect2( 0, 432, 384, 216 )
+
+[sub_resource type="AtlasTexture" id=10]
+atlas = ExtResource( 3 )
+region = Rect2( 384, 432, 384, 216 )
+
+[sub_resource type="AtlasTexture" id=11]
+atlas = ExtResource( 3 )
+region = Rect2( 768, 432, 384, 216 )
+
+[sub_resource type="AtlasTexture" id=12]
+atlas = ExtResource( 3 )
+region = Rect2( 1152, 432, 384, 216 )
+
+[sub_resource type="AtlasTexture" id=13]
+atlas = ExtResource( 3 )
+region = Rect2( 0, 648, 384, 216 )
+
+[sub_resource type="AtlasTexture" id=14]
+atlas = ExtResource( 3 )
+region = Rect2( 384, 648, 384, 216 )
+
+[sub_resource type="SpriteFrames" id=15]
+animations = [ {
+"frames": [ SubResource( 1 ), SubResource( 2 ), SubResource( 3 ), SubResource( 4 ), SubResource( 5 ), SubResource( 6 ), SubResource( 7 ), SubResource( 8 ), SubResource( 9 ), SubResource( 10 ), SubResource( 11 ), SubResource( 12 ), SubResource( 13 ), SubResource( 14 ) ],
+"loop": true,
+"name": "default",
+"speed": 5.0
+} ]
+
+[sub_resource type="Animation" id=16]
+resource_name = "Intro"
+length = 43.0
+tracks/0/type = "value"
+tracks/0/path = NodePath("AnimatedSprite:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ "default" ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("AnimatedSprite:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 1.6, 1.8, 2, 2.6, 3.5, 5.7, 7.6, 10, 12, 14, 19.1, 21, 23, 28.1, 30, 35.1, 37.1, 40.1, 41 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 13, 0, 1, 2, 13, 3, 4, 5, 13, 6, 7, 13, 8, 9, 13, 10, 13, 11, 12, 13 ]
+}
+tracks/2/type = "method"
+tracks/2/path = NodePath("../EffectPlayers/Credit")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 1.6 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "play_effect"
+} ]
+}
+tracks/3/type = "method"
+tracks/3/path = NodePath("../EffectPlayers/SFX")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 3.5, 5.7, 7.6, 12, 14, 21, 23, 30, 37.1, 40.1, 41 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"values": [ {
+"args": [  ],
+"method": "play_effect"
+}, {
+"args": [  ],
+"method": "play_effect"
+}, {
+"args": [  ],
+"method": "play_effect"
+}, {
+"args": [  ],
+"method": "play_effect"
+}, {
+"args": [  ],
+"method": "play_effect"
+}, {
+"args": [  ],
+"method": "play_effect"
+}, {
+"args": [  ],
+"method": "play_effect"
+}, {
+"args": [  ],
+"method": "play_effect"
+}, {
+"args": [  ],
+"method": "play_effect"
+}, {
+"args": [  ],
+"method": "play_effect"
+}, {
+"args": [  ],
+"method": "play_effect"
+} ]
+}
+
+[node name="Startscreen" type="Node2D"]
+script = ExtResource( 4 )
+
+[node name="Camera" type="Camera2D" parent="."]
+current = true
+
+[node name="Visuals" type="Node2D" parent="."]
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="Visuals"]
+frames = SubResource( 15 )
+frame = 11
+
+[node name="Label" type="Label" parent="Visuals"]
+margin_left = -191.0
+margin_top = -107.0
+margin_right = -26.0
+margin_bottom = -91.0
+custom_fonts/font = ExtResource( 1 )
+text = "Press any button to skip!"
+
+[node name="Anims" type="AnimationPlayer" parent="Visuals"]
+anims/Intro = SubResource( 16 )
+
+[node name="Utility" type="Node" parent="."]
+
+[node name="Timer" type="Timer" parent="Utility"]
+
+[node name="DissapearTimer" type="Timer" parent="Utility"]
+
+[node name="EffectPlayers" type="Node" parent="."]
+
+[node name="SFX" type="Node" parent="EffectPlayers"]
+script = ExtResource( 5 )
+audiostream_path = NodePath("AudioStreamPlayer")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="EffectPlayers/SFX"]
+stream = ExtResource( 7 )
+bus = "SFX"
+
+[node name="Credit" type="Node" parent="EffectPlayers"]
+script = ExtResource( 5 )
+audiostream_path = NodePath("AudioStreamPlayer")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="EffectPlayers/Credit"]
+stream = ExtResource( 6 )
+bus = "SFX"
+
+[node name="Music" type="Node" parent="EffectPlayers"]
+script = ExtResource( 2 )

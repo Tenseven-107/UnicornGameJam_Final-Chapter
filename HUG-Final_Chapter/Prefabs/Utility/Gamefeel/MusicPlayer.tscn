@@ -4,5 +4,7 @@
 
 [node name="MusicPlayer" type="Node"]
 script = ExtResource( 1 )
+default_song_list = [ "res://Sound/Music/3. DesertThorns.mp3" ]
 
 [node name="AudioPlayer" type="AudioStreamPlayer" parent="."]
+bus = "Music"

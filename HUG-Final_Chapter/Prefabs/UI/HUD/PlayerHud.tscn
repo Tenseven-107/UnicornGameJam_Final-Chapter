@@ -111,6 +111,7 @@ color = Color( 0, 0, 0, 1 )
 script = ExtResource( 4 )
 screen_path = NodePath("../Effects/Screen")
 text_path = NodePath("../Effects/Text/VBoxContainer/Text")
+start_color = Color( 0.0588235, 0.00784314, 0.180392, 1 )
 
 [node name="Timer" type="Timer" parent="OverlayFX"]
 

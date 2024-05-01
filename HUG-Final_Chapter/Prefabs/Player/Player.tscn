@@ -407,7 +407,7 @@ texture = SubResource( 41 )
 [node name="Sprite" type="AnimatedSprite" parent="Visuals"]
 frames = ExtResource( 2 )
 animation = "Idle"
-frame = 3
+frame = 2
 
 [node name="Positions" type="Node2D" parent="Visuals"]
 
@@ -546,7 +546,7 @@ strong_vibration = 1.0
 [node name="Screen-dead" type="Node" parent="FX"]
 script = ExtResource( 9 )
 in_color = Color( 0, 0, 0, 0 )
-out_color = Color( 0, 0, 0, 1 )
+out_color = Color( 0.0588235, 0.00784314, 0.180392, 1 )
 time = 1.8
 resets = false
 

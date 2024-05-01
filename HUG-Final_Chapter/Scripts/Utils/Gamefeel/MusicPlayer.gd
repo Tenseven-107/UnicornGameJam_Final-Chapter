@@ -90,7 +90,7 @@ func create_song_directory():
 
 # Get the path of a song in the song_folder
 func get_song_path(path: String):
-	var song_path: String = song_folder + "/" + path.split("/")[5]
+	var song_path: String = song_folder + "/" + path.split("/")[4]
 	return song_path
 
 # Get a song in the array of used_songs

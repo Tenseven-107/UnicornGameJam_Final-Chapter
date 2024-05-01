@@ -31,6 +31,6 @@ texture = ExtResource( 1 )
 [node name="Screen-fx" type="Node" parent="FX"]
 script = ExtResource( 3 )
 in_color = Color( 0, 0, 0, 0 )
-out_color = Color( 0, 0, 0, 1 )
+out_color = Color( 0.0588235, 0.00784314, 0.180392, 1 )
 time = 1.4
 resets = false

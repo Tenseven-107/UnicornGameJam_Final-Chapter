@@ -111,7 +111,7 @@ _global_script_class_icons={
 [application]
 
 config/name="HUG-Final_Chapter"
-run/main_scene="res://Scenes/Testing/Testing.tscn"
+run/main_scene="res://Scenes/Main/StartScreen.tscn"
 config/icon="res://icon.png"
 
 [autoload]

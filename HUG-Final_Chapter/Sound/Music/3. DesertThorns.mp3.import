@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/3. DesertThorns.mp3-98524f750fa5fb824e5c15c619428502.mp3str"
+
+[deps]
+
+source_file="res://Sound/Music/3. DesertThorns.mp3"
+dest_files=[ "res://.import/3. DesertThorns.mp3-98524f750fa5fb824e5c15c619428502.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

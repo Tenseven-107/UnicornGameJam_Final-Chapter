@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://Sprites/Player/PlayerDrone.png" type="Texture" id=1]
 [ext_resource path="res://Scripts/Player/PlayerDrone.gd" type="Script" id=2]
@@ -6,9 +6,15 @@
 [ext_resource path="res://Prefabs/Weapons/Projectiles/DroneBullet.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Scripts/EffectPlayers/SpawnerEffectPlayer.gd" type="Script" id=5]
 [ext_resource path="res://Prefabs/Graphics/Particles/Shoot-drone.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Sprites/FX/FX_sheet.png" type="Texture" id=7]
+[ext_resource path="res://Scripts/EffectPlayers/ScaleEffectPlayer.gd" type="Script" id=8]
 
 [sub_resource type="CircleShape2D" id=1]
 radius = 4.0
+
+[sub_resource type="AtlasTexture" id=2]
+atlas = ExtResource( 7 )
+region = Rect2( 23, 28, 20, 9 )
 
 [node name="PlayerDrone" type="KinematicBody2D" groups=["Drone"]]
 collision_layer = 16
@@ -31,12 +37,20 @@ z_index = 1
 texture = ExtResource( 1 )
 flip_h = true
 
+[node name="Effects" type="Node2D" parent="Body/Visuals"]
+
+[node name="Muzzle" type="Sprite" parent="Body/Visuals/Effects"]
+position = Vector2( 5, 0 )
+scale = Vector2( 1e-05, 1e-05 )
+texture = SubResource( 2 )
+offset = Vector2( 10, 0 )
+
 [node name="Bulletshooter" type="Node2D" parent="Body"]
 script = ExtResource( 3 )
 projectile = ExtResource( 4 )
 firerate_cooldown = 0.01
 muzzle_path = NodePath("Muzzle")
-effects_on_fire = [ NodePath("../../FX/ShootParticle") ]
+effects_on_fire = [ NodePath("../../FX/ShootParticle"), NodePath("../../FX/MuzzleScale") ]
 
 [node name="Muzzle" type="Position2D" parent="Body/Bulletshooter"]
 position = Vector2( 8, 0 )
@@ -54,3 +68,11 @@ collision_mask = 2
 script = ExtResource( 5 )
 spawned_effect = ExtResource( 6 )
 position_object = NodePath("../../Body/Bulletshooter/Muzzle")
+
+[node name="MuzzleScale" type="Node" parent="FX"]
+script = ExtResource( 8 )
+object_path = NodePath("../../Body/Visuals/Effects/Muzzle")
+duration = 0.1
+start_scale = Vector2( 1, 1.5 )
+ease_type = 2
+transition_type = 8

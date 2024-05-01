@@ -7,7 +7,7 @@ export (NodePath) var position_object: NodePath
 export (bool) var should_inherit_rotation: bool = false
 
 # Objects
-const container_group: String = "FXContainer"
+export (String) var container_group: String = "FXContainer"
 var fx_container: NodeContainer = null
 
 

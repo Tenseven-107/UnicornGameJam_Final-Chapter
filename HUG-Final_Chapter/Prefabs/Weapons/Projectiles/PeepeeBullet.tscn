@@ -1,11 +1,13 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://Scripts/Utils/Gameplay/Bullet.gd" type="Script" id=1]
 [ext_resource path="res://Sprites/FX/FX_sheet.png" type="Texture" id=2]
 [ext_resource path="res://Scripts/Utils/Gameplay/Hitbox.gd" type="Script" id=3]
+[ext_resource path="res://Scripts/EffectPlayers/SpawnerEffectPlayer.gd" type="Script" id=4]
+[ext_resource path="res://Prefabs/Graphics/Particles/DustCloud.tscn" type="PackedScene" id=5]
 
 [sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 4, 2.5 )
+extents = Vector2( 3, 2.5 )
 
 [sub_resource type="RectangleShape2D" id=2]
 extents = Vector2( 2.5, 1.5 )
@@ -21,9 +23,10 @@ script = ExtResource( 1 )
 can_ricochet = false
 speed = 200
 dropoff_time = 5.0
+effects_on_impact = [ NodePath("FX/Hit") ]
 
 [node name="Collider" type="CollisionShape2D" parent="."]
-position = Vector2( 0, 0.5 )
+position = Vector2( -1, 0.5 )
 shape = SubResource( 1 )
 
 [node name="Hitbox" type="Area2D" parent="."]
@@ -50,3 +53,10 @@ one_shot = true
 [node name="Collision_tween" type="Tween" parent="."]
 
 [node name="Dropoff_tween" type="Tween" parent="."]
+
+[node name="FX" type="Node" parent="."]
+
+[node name="Hit" type="Node" parent="FX"]
+script = ExtResource( 4 )
+spawned_effect = ExtResource( 5 )
+position_object = NodePath("../..")

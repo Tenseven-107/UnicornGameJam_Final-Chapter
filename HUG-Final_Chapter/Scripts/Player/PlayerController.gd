@@ -193,6 +193,7 @@ func _ready():
 	dodge_timer.connect("timeout", self, "finish_dodge")
 
 	# Entity
+	GlobalSignals.connect("heal_player", entity, "handle_heal")
 	entity.connect("dead", self, "set_dead")
 
 	# Misc

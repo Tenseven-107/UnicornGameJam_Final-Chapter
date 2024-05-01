@@ -32,6 +32,7 @@ const MASK: int = 4
 # Effect players
 export var _c_effect_players: String
 export (Array, NodePath) var effects_hit
+export (Array, NodePath) var effects_heal
 export (Array, NodePath) var effects_death
 
 # Inactivity
@@ -103,14 +104,16 @@ func handle_hit(hit_team: int, damage: int):
 
 func handle_heal(hit_team: int, healed_hp: int):
 	if hit_team == team:
-		if (healed_hp + current_hp) <= hp:
-			current_hp += healed_hp
-
-		else:
-			current_hp += (hp - healed_hp)
+		current_hp += healed_hp
+		current_hp = clamp(current_hp, 0, hp)
 
 		# Emit a signal when healed
 		emit_signal("update_hp", current_hp, hp)
+
+		# Play effects on heal
+		for effect in effects_heal:
+			var play_effect: EffectPlayer = get_node(effect)
+			play_effect.play_effect()
 
 
 

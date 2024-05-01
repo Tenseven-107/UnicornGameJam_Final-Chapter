@@ -1,0 +1,55 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://Scripts/EffectPlayers/AnimEffectPlayer.gd" type="Script" id=1]
+[ext_resource path="res://Sprites/Environment/Tilemap.png" type="Texture" id=2]
+[ext_resource path="res://Scripts/Utils/Gameplay/HealingPickup.gd" type="Script" id=3]
+
+[sub_resource type="CircleShape2D" id=1]
+radius = 3.0
+
+[sub_resource type="AtlasTexture" id=2]
+atlas = ExtResource( 2 )
+region = Rect2( 259, 244, 8, 7 )
+
+[sub_resource type="Animation" id=3]
+resource_name = "Float"
+length = 0.6
+loop = true
+step = 0.05
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.05, 0.25, 0.35, 0.5 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ), Vector2( 0, -1 ), Vector2( 0, -1.5 ), Vector2( 0, 1 ), Vector2( 0, 0 ) ]
+}
+
+[node name="HealingPickup" type="Area2D"]
+collision_layer = 16
+collision_mask = 16
+script = ExtResource( 3 )
+target_groups = [ "Player", "Drone" ]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource( 1 )
+
+[node name="Visual" type="Node2D" parent="."]
+
+[node name="Sprite" type="Sprite" parent="Visual"]
+texture = SubResource( 2 )
+
+[node name="Anims" type="AnimationPlayer" parent="Visual"]
+anims/Float = SubResource( 3 )
+
+[node name="FX" type="Node" parent="."]
+
+[node name="FloatAnim" type="Node" parent="FX"]
+script = ExtResource( 1 )
+on_start = true
+animation_player_path = NodePath("../../Visual/Anims")
+animation_name = "Float"

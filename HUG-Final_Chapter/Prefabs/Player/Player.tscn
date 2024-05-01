@@ -1,4 +1,4 @@
-[gd_scene load_steps=50 format=2]
+[gd_scene load_steps=54 format=2]
 
 [ext_resource path="res://Scripts/Player/PlayerController.gd" type="Script" id=1]
 [ext_resource path="res://Sprites/Player/PlayerAnimMap.tres" type="SpriteFrames" id=2]
@@ -16,10 +16,22 @@
 [ext_resource path="res://Prefabs/Graphics/Particles/HitAttack-player.tscn" type="PackedScene" id=14]
 [ext_resource path="res://Prefabs/Graphics/Particles/HitPlayer.tscn" type="PackedScene" id=15]
 [ext_resource path="res://Prefabs/Graphics/Particles/TeleportCloud.tscn" type="PackedScene" id=16]
+[ext_resource path="res://Sprites/FX/FX_sheet.png" type="Texture" id=17]
 
 [sub_resource type="CapsuleShape2D" id=3]
 radius = 5.0
 height = 12.0
+
+[sub_resource type="CanvasItemMaterial" id=42]
+blend_mode = 1
+
+[sub_resource type="AtlasTexture" id=40]
+atlas = ExtResource( 17 )
+region = Rect2( 43, 3, 25, 23 )
+
+[sub_resource type="AtlasTexture" id=41]
+atlas = ExtResource( 17 )
+region = Rect2( 74, 3, 16, 16 )
 
 [sub_resource type="Animation" id=11]
 resource_name = "Attack"
@@ -338,11 +350,26 @@ effects_not_enough_stamina = [ NodePath("FX/not_enough_stamina"), NodePath("FX/S
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource( 3 )
 
+[node name="VisualEffects" type="Node2D" parent="."]
+
+[node name="Flashes" type="Node2D" parent="VisualEffects"]
+
+[node name="Flash" type="Sprite" parent="VisualEffects/Flashes"]
+material = SubResource( 42 )
+scale = Vector2( 1e-05, 1e-05 )
+texture = SubResource( 40 )
+
+[node name="Halo" type="Sprite" parent="VisualEffects/Flashes"]
+scale = Vector2( 1e-05, 1e-05 )
+z_index = 2
+texture = SubResource( 41 )
+
 [node name="Visuals" type="Node2D" parent="."]
 
 [node name="Sprite" type="AnimatedSprite" parent="Visuals"]
 frames = ExtResource( 2 )
 animation = "Idle"
+frame = 1
 
 [node name="Positions" type="Node2D" parent="Visuals"]
 
@@ -373,7 +400,8 @@ script = ExtResource( 3 )
 i_timer_path = NodePath("../../Utility/I-Timer")
 hp = 6
 i_frames = 0.5
-effects_hit = [ NodePath("../../FX/Hit"), NodePath("../../FX/Hit-cam"), NodePath("../../FX/Hit-controller"), NodePath("../../FX/PlayerHit") ]
+effects_hit = [ NodePath("../../FX/Hit"), NodePath("../../FX/Hit-cam"), NodePath("../../FX/Hit-controller"), NodePath("../../FX/PlayerHit"), NodePath("../../FX/FlashHit"), NodePath("../../FX/FlashScale") ]
+effects_heal = [ NodePath("../../FX/FlashHeal"), NodePath("../../FX/FlashScale"), NodePath("../../FX/HaloScale") ]
 effects_death = [ NodePath("../../FX/Screen-dead") ]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Combat/Entity"]
@@ -517,3 +545,27 @@ position_object = NodePath("../..")
 script = ExtResource( 10 )
 spawned_effect = ExtResource( 15 )
 position_object = NodePath("../..")
+
+[node name="HaloScale" type="Node" parent="FX"]
+script = ExtResource( 5 )
+object_path = NodePath("../../VisualEffects/Flashes/Halo")
+duration = 0.6
+ease_type = 2
+transition_type = 5
+
+[node name="FlashScale" type="Node" parent="FX"]
+script = ExtResource( 5 )
+object_path = NodePath("../../VisualEffects/Flashes/Flash")
+ease_type = 2
+transition_type = 8
+
+[node name="FlashHit" type="Node" parent="FX"]
+script = ExtResource( 4 )
+object_path = NodePath("../../VisualEffects/Flashes/Flash")
+start_color = Color( 1, 0.254902, 0.490196, 1 )
+end_color = Color( 1, 0.254902, 0.490196, 1 )
+
+[node name="FlashHeal" type="Node" parent="FX"]
+script = ExtResource( 4 )
+object_path = NodePath("../../VisualEffects/Flashes/Flash")
+start_color = Color( 1, 1, 1, 1 )

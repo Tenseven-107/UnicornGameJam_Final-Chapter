@@ -1,0 +1,81 @@
+[gd_scene load_steps=15 format=2]
+
+[ext_resource path="res://Scripts/EffectPlayers/SpawnerEffectPlayer.gd" type="Script" id=1]
+[ext_resource path="res://Scripts/EffectPlayers/ColorChangeEffectPlayer.gd" type="Script" id=2]
+[ext_resource path="res://Scripts/Utils/Gamefeel/RandomSprite.gd" type="Script" id=3]
+[ext_resource path="res://Scripts/EffectPlayers/ScaleEffectPlayer.gd" type="Script" id=4]
+[ext_resource path="res://Sprites/Objects/Game-elements/HealingPot.tres" type="Texture" id=5]
+[ext_resource path="res://Sprites/Objects/Game-elements/HealingPot5.tres" type="Texture" id=6]
+[ext_resource path="res://Sprites/Objects/Game-elements/HealingPot3.tres" type="Texture" id=7]
+[ext_resource path="res://Sprites/Objects/Game-elements/HealingPot2.tres" type="Texture" id=8]
+[ext_resource path="res://Sprites/Objects/Game-elements/HealingPot4.tres" type="Texture" id=9]
+[ext_resource path="res://Prefabs/Objects/Pickups/HealingPickup.tscn" type="PackedScene" id=10]
+[ext_resource path="res://Scripts/Utils/Gameplay/Entity.gd" type="Script" id=11]
+[ext_resource path="res://Prefabs/Graphics/Particles/Destroy-pot.tscn" type="PackedScene" id=12]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 10, 8 )
+
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 14, 10 )
+
+[node name="HealingPot" type="StaticBody2D"]
+collision_layer = 3
+collision_mask = 3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource( 1 )
+
+[node name="Visuals" type="Node2D" parent="."]
+
+[node name="Sprite" type="Sprite" parent="Visuals"]
+texture = ExtResource( 5 )
+script = ExtResource( 3 )
+sprites = [ ExtResource( 8 ), ExtResource( 7 ), ExtResource( 9 ), ExtResource( 6 ), ExtResource( 5 ) ]
+
+[node name="Combat" type="Node2D" parent="."]
+
+[node name="Entity" type="Area2D" parent="Combat"]
+script = ExtResource( 11 )
+destroy_path = NodePath("../..")
+hp = 2
+team = 1
+destroy_on_death = true
+effects_hit = [ NodePath("../../FX/Color"), NodePath("../../FX/Scale") ]
+effects_death = [ NodePath("../../Utils/HealthSpawner"), NodePath("../../FX/Destroy") ]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Combat/Entity"]
+position = Vector2( 0, -2 )
+shape = SubResource( 2 )
+
+[node name="Utils" type="Node" parent="."]
+
+[node name="HealthSpawner" type="Node" parent="Utils"]
+script = ExtResource( 1 )
+spawned_effect = ExtResource( 10 )
+position_object = NodePath("../..")
+container_group = "PickupContainer"
+
+[node name="FX" type="Node" parent="."]
+
+[node name="Color" type="Node" parent="FX"]
+script = ExtResource( 2 )
+object_path = NodePath("../../Visuals/Sprite")
+duration = 0.2
+start_color = Color( 0, 0, 0, 1 )
+ease_type = 2
+transition_type = 7
+
+[node name="Scale" type="Node" parent="FX"]
+script = ExtResource( 4 )
+object_path = NodePath("../../Visuals/Sprite")
+duration = 0.3
+start_scale = Vector2( 1.2, 0.8 )
+end_scale = Vector2( 1, 1 )
+ease_type = 2
+transition_type = 6
+
+[node name="Destroy" type="Node" parent="FX"]
+script = ExtResource( 1 )
+spawned_effect = ExtResource( 12 )
+position_object = NodePath("../..")

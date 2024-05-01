@@ -407,7 +407,7 @@ texture = SubResource( 41 )
 [node name="Sprite" type="AnimatedSprite" parent="Visuals"]
 frames = ExtResource( 2 )
 animation = "Idle"
-frame = 2
+frame = 3
 
 [node name="Positions" type="Node2D" parent="Visuals"]
 

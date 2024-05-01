@@ -57,12 +57,11 @@ onready var hud: PlayerHud = get_node(hud_path)
 
 # Movement
 export var _c_movement: String
-export (float) var move_speed: float = 10000
+export (float) var move_speed: float = 8000
 
 # - Jumping
 export var _c_jumping: String
 export (float) var jump_force: float = 380
-onready var coyote_jump_force: float = jump_force * 1.5
 export (float) var coyote_time: float = 1
 
 export (float) var gravity: float = 2100
@@ -284,7 +283,7 @@ func jumping(delta):
 		is_jumping = true
 
 		# Coyote jump
-		if coyote_timer.is_stopped() == false and check_rays(false) == false:
+		if coyote_timer.is_stopped() == false and is_on_floor() == false:
 			coyote = true
 
 		coyote_timer.stop()
@@ -296,7 +295,7 @@ func jumping(delta):
 			play_effect.play_effect()
 
 	# Jumping
-	if (Input.is_action_pressed("jump") or is_on_floor() == false or check_rays(false) == false) and is_jumping == true:
+	if (Input.is_action_pressed("jump") or is_on_floor() == false) and is_jumping == true:
 		input_vector.y = get_jump_force()
 
 		if current_gravity > min_gravity:
@@ -309,7 +308,7 @@ func jumping(delta):
 		input_vector.y = 0
 
 func get_jump_force():
-	return jump_force if coyote == false else coyote_jump_force
+	return jump_force if coyote == false else jump_force * 1.2
 
 
 
@@ -317,7 +316,7 @@ func get_jump_force():
 func check_rays(check_if_drone: bool):
 	for raycast in raycasts:
 		var object: RayCast2D = get_node(raycast)
-		if (object.is_colliding() and check_if_drone == false or 
+		if ((object.is_colliding() and check_if_drone == false) or 
 		(check_if_drone == true and object.get_collider() is PlayerDroneController)):
 
 			return true

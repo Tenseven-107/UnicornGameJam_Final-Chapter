@@ -15,14 +15,20 @@ export (Array, String) var variable_abilities: Array
 const save_path: String = "user://AbilitySave.save"
 const group_name: String = "AbilityHandler"
 
+# Clear save
+export var _c_clear_save: String
+export (bool) var clear_save: bool = false
 
 
 # Set up
 func _ready():
 	add_to_group(group_name)
 
-	load_save()
-	set_abilities()
+	if clear_save == false:
+		load_save()
+		set_abilities()
+
+	else: clear_file()
 
 
 
@@ -49,7 +55,7 @@ func load_save():
 
 
 # Removes the save file
-func clear_save():
+func clear_file():
 	var save_file: File = File.new()
 	save_file.open(save_path, File.WRITE)
 	save_file.close()

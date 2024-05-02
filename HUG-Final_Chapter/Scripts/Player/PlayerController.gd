@@ -366,10 +366,10 @@ func attacking():
 			if colliding_entity.is_in_group(Entity.group_name):
 				colliding_entity.handle_hit(damage_team, damage)
 
-			# Play effects on attack hit
-			for effect in effects_attack_hit:
-				var play_effect: EffectPlayer = get_node(effect)
-				play_effect.play_effect()
+				# Play effects on attack hit
+				for effect in effects_attack_hit:
+					var play_effect: EffectPlayer = get_node(effect)
+					play_effect.play_effect()
 
 		anims.start("Attack")
 

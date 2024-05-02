@@ -27,13 +27,21 @@ func _ready():
 
 # Activate checkpoint
 func activate_checkpoint(body: Node):
+	
+
 	if body.is_in_group(PlayerController.group_name):
 		var current_scene: String = get_tree().current_scene.filename
-		game_over_handler.save_checkpoint(current_scene, global_position)
 
-		GlobalSignals.emit_signal("heal_player", team, hp)
+		if game_over_handler.current_checkpoint_active(current_scene, global_position) == false:
+			game_over_handler.save_checkpoint(current_scene, global_position)
 
-		# Play effects on enter
-		for effect in effects_enter:
-			var play_effect: EffectPlayer = get_node(effect)
-			play_effect.play_effect()
+			GlobalSignals.emit_signal("heal_player", team, hp)
+
+			# Play effects on enter
+			for effect in effects_enter:
+				var play_effect: EffectPlayer = get_node(effect)
+				play_effect.play_effect()
+
+
+
+

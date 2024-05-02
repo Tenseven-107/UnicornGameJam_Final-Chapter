@@ -22,6 +22,8 @@ export (float) var x_cam_offset: float = 15
 export (float) var y_cam_offset: float = 30
 var last_cam_offset: Vector2
 
+var locked: bool = false
+
 # Movement
 export (NodePath) var target_path: NodePath
 onready var player_target: PlayerController
@@ -52,6 +54,9 @@ func _ready():
 	GlobalSignals.connect("camera_zoom", self, "zoom_cam")
 	GlobalSignals.connect("hitstop", self, "time_stop")
 
+	GlobalSignals.connect("lock_camera",self, "lock")
+	GlobalSignals.connect("unlock_camera",self, "unlock")
+
 	if target_path != "":
 		player_target = get_node(target_path)
 
@@ -78,11 +83,12 @@ func _process(delta):
 
 # Update camera
 func update_cam():
-	var player_offset = Vector2(player_target.input_vector.normalized().x * x_cam_offset, -y_cam_offset)
-	if player_offset.x != 0 and player_target.input_vector.y == 0:
-		last_cam_offset = player_offset
+	if locked == false:
+		var player_offset = Vector2(player_target.input_vector.normalized().x * x_cam_offset, -y_cam_offset)
+		if player_offset.x != 0 and player_target.input_vector.y == 0:
+			last_cam_offset = player_offset
 
-	global_position = lerp(global_position, player_target.global_position + last_cam_offset, 1)
+		global_position = lerp(global_position, player_target.global_position + last_cam_offset, 1)
 
 
 
@@ -148,6 +154,20 @@ func _on_Timer3_timeout():
 
 
 
+
+# Camera lock
+func lock(new_pos: Vector2):
+	global_position = new_pos
+	locked = true
+
+
+func unlock():
+	locked = false
+
+
+
+
+# Initialization
 func initialize(player: Node):
 	player_target = player
 

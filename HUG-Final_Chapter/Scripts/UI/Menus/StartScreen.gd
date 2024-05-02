@@ -15,7 +15,7 @@ onready var label: Label = $Visuals/Label
 export (String) var anim_name: String = "Intro"
 export (float) var time: float = 43
 export (float) var dissapear_time: float = 2
-export (String, FILE, ".tscn") var next_scene: String = "res://Scenes/Testing/Testing.tscn"
+export (String, FILE, "*.tscn") var next_scene: String = "res://Scenes/Testing/Testing.tscn"
 
 
 

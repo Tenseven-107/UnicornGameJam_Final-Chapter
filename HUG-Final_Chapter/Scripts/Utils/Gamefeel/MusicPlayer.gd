@@ -110,7 +110,7 @@ func set_song(idx: int) -> void:
 	var current_song_path: String = get_used_song_path(idx)
 
 	# If no song path is found, we do nothing
-	if current_song_path != "":
+	if current_song_path != "" and (current_song_path != get_used_song_path(current_song_idx) or audioplayer.stream == null):
 		# Set the current song index to idx (for debugging)
 		current_song_idx = idx
 

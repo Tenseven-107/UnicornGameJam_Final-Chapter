@@ -20,6 +20,12 @@ export var _c_hitstop: String
 export (bool) var hitstop: bool = false
 export (float) var hitstop_time: float = 0.07
 
+# - Locking
+export var _c_camera_locking: String
+export (bool) var locks: bool
+export (Vector2) var lock_position: Vector2 = Vector2.ZERO
+export (bool) var unlock: bool
+
 
 
 # Play effect
@@ -30,3 +36,9 @@ func play_effect():
 		GlobalSignals.emit_signal("camera_zoom", new_cam_zoom, cam_zoom_time, cam_zoom_limit)
 	if hitstop == true:
 		GlobalSignals.emit_signal("hitstop", hitstop_time)
+
+	if locks == true:
+		unlock = false
+		GlobalSignals.emit_signal("lock_camera", lock_position)
+	if unlock == true:
+		GlobalSignals.emit_signal("unlock_camera")

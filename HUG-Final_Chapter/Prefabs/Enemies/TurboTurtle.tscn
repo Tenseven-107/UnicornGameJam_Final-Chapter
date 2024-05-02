@@ -163,7 +163,9 @@ extents = Vector2( 8, 6.5 )
 script = ExtResource( 1 )
 right_ray_path = NodePath("Rays/RayCast2D")
 left_ray_path = NodePath("Rays/RayCast2D2")
+entity_path = NodePath("Combat/Entity")
 body_path = NodePath("Body")
+movement_speed = 35.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2( 0, 2.5 )
@@ -189,7 +191,7 @@ collision_mask = 2
 [node name="AnimatedSprite" type="AnimatedSprite" parent="Body/Visual"]
 frames = SubResource( 14 )
 animation = "Walk"
-frame = 1
+frame = 2
 flip_h = true
 
 [node name="Anims" type="AnimationPlayer" parent="Body/Visual"]

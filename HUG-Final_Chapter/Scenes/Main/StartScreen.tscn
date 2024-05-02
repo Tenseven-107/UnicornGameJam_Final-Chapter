@@ -160,6 +160,7 @@ tracks/3/keys = {
 
 [node name="Startscreen" type="Node2D"]
 script = ExtResource( 4 )
+next_scene = "res://Scenes/Main/Levels/Start.tscn"
 
 [node name="Camera" type="Camera2D" parent="."]
 current = true

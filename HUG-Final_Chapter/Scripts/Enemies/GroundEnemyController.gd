@@ -12,7 +12,11 @@ onready var right_ray: RayCast2D = get_node(right_ray_path)
 export (NodePath) var left_ray_path: NodePath
 onready var left_ray: RayCast2D = get_node(left_ray_path)
 
+export (NodePath) var entity_path: NodePath
+onready var entity: Entity = get_node(entity_path)
 
+
+# Additional objects
 export var _c_aditional_objects: String
 export (NodePath) var detection_path: NodePath
 var detection: RayCast2D
@@ -176,6 +180,9 @@ func reactivate_action():
 
 
 
+# Getting the entity
+func get_entity():
+	return entity
 
 
 

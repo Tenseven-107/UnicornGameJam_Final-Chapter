@@ -1,0 +1,108 @@
+[gd_scene load_steps=14 format=2]
+
+[ext_resource path="res://Scripts/Enemies/FlyingEnemyController.gd" type="Script" id=1]
+[ext_resource path="res://icon.png" type="Texture" id=2]
+[ext_resource path="res://Scripts/Utils/Gameplay/Entity.gd" type="Script" id=3]
+[ext_resource path="res://Scripts/Utils/Gameplay/Hitbox.gd" type="Script" id=4]
+[ext_resource path="res://Scripts/EffectPlayers/ColorChangeEffectPlayer.gd" type="Script" id=5]
+[ext_resource path="res://Scripts/EffectPlayers/SpawnerEffectPlayer.gd" type="Script" id=6]
+[ext_resource path="res://Scripts/EffectPlayers/ScaleEffectPlayer.gd" type="Script" id=7]
+[ext_resource path="res://Prefabs/Graphics/Particles/Enemy-kill.tscn" type="PackedScene" id=8]
+[ext_resource path="res://Prefabs/Graphics/Particles/Enemy-hit.tscn" type="PackedScene" id=9]
+
+[sub_resource type="CircleShape2D" id=1]
+radius = 7.0
+
+[sub_resource type="CircleShape2D" id=3]
+radius = 9.0
+
+[sub_resource type="CircleShape2D" id=4]
+radius = 5.0
+
+[sub_resource type="CircleShape2D" id=2]
+radius = 75.0
+
+[node name="FlyingEnemy" type="KinematicBody2D"]
+collision_layer = 0
+collision_mask = 0
+script = ExtResource( 1 )
+range_path = NodePath("Range")
+entity_path = NodePath("Combat/Entity")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource( 1 )
+
+[node name="Visuals" type="Node2D" parent="."]
+
+[node name="Icon" type="Sprite" parent="Visuals"]
+position = Vector2( 0, 1.78814e-07 )
+scale = Vector2( 0.1875, 0.125 )
+texture = ExtResource( 2 )
+
+[node name="Combat" type="Node2D" parent="."]
+
+[node name="Entity" type="Area2D" parent="Combat"]
+script = ExtResource( 3 )
+destroy_path = NodePath("../..")
+i_timer_path = NodePath("../../Utility/I-Frames")
+hp = 3
+i_frames = 0.1
+team = 1
+destroy_on_death = true
+effects_hit = [ NodePath("../../FX/scale"), NodePath("../../FX/color"), NodePath("../../FX/Hit") ]
+effects_death = [ NodePath("../../FX/Kill") ]
+activity_objects_paths = [ NodePath("../.."), NodePath("../Hitbox") ]
+inactive_timer_path = NodePath("../../Utility/Inactive")
+inactive_time = 0.3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Combat/Entity"]
+modulate = Color( 0.101961, 1, 0, 1 )
+shape = SubResource( 3 )
+
+[node name="Hitbox" type="Area2D" parent="Combat"]
+script = ExtResource( 4 )
+team = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Combat/Hitbox"]
+modulate = Color( 1, 0, 0, 1 )
+shape = SubResource( 4 )
+
+[node name="Range" type="Area2D" parent="."]
+collision_layer = 16
+collision_mask = 16
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Range"]
+shape = SubResource( 2 )
+
+[node name="Utility" type="Node" parent="."]
+
+[node name="Inactive" type="Timer" parent="Utility"]
+
+[node name="I-Frames" type="Timer" parent="Utility"]
+
+[node name="FX" type="Node" parent="."]
+
+[node name="scale" type="Node" parent="FX"]
+script = ExtResource( 7 )
+object_path = NodePath("../../Visuals")
+duration = 0.1
+start_scale = Vector2( 1.5, 1.25 )
+end_scale = Vector2( 1, 1 )
+ease_type = 2
+transition_type = 6
+
+[node name="color" type="Node" parent="FX"]
+script = ExtResource( 5 )
+object_path = NodePath("../../Visuals")
+duration = 0.1
+start_color = Color( 1, 1, 1, 0 )
+
+[node name="Hit" type="Node" parent="FX"]
+script = ExtResource( 6 )
+spawned_effect = ExtResource( 9 )
+position_object = NodePath("../..")
+
+[node name="Kill" type="Node" parent="FX"]
+script = ExtResource( 6 )
+spawned_effect = ExtResource( 8 )
+position_object = NodePath("../..")

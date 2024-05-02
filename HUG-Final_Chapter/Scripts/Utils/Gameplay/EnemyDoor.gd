@@ -52,7 +52,7 @@ func _ready():
 
 			entities.append(entity)
 
-	current_entities = entities.size() - 1
+	current_entities = entities.size()
 
 	area.connect("body_exited", self, "check_close")
 
@@ -104,11 +104,9 @@ func open():
 # Check if all enemies are killed, and if so, open all the doors
 func complete():
 	if active == false:
-		for entity in entities:
-			if is_instance_valid(entity) == false:
-				current_entities -= 1
+		current_entities -= 1
 
-		if current_entities == 0:
+		if current_entities <= 0:
 			open()
 
 

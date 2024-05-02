@@ -137,6 +137,10 @@ config/icon="res://icon.png"
 MusicPlayer="*res://Prefabs/Utility/Gamefeel/MusicPlayer.tscn"
 GlobalSignals="*res://Scripts/Utils/Backend/GlobalSignals.gd"
 
+[debug]
+
+settings/fps/force_fps=60
+
 [display]
 
 window/size/width=384

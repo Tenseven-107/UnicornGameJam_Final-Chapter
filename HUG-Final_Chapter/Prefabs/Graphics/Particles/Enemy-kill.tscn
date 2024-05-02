@@ -1,10 +1,11 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://Scripts/EffectPlayers/Destroy.gd" type="Script" id=1]
 [ext_resource path="res://Scripts/EffectPlayers/ParticleEffectPlayer.gd" type="Script" id=2]
 [ext_resource path="res://Sprites/FX/FX_sheet.png" type="Texture" id=3]
 [ext_resource path="res://Scripts/EffectPlayers/ScaleEffectPlayer.gd" type="Script" id=4]
 [ext_resource path="res://Scripts/Utils/Gamefeel/RandomRotation.gd" type="Script" id=5]
+[ext_resource path="res://Scripts/EffectPlayers/CameraEffectsPlayer.gd" type="Script" id=6]
 
 [sub_resource type="AtlasTexture" id=1]
 atlas = ExtResource( 3 )
@@ -48,6 +49,13 @@ duration = 0.5
 start_scale = Vector2( 1.5, 1.5 )
 ease_type = 2
 transition_type = 8
+
+[node name="CamEffect" type="Node" parent="."]
+script = ExtResource( 6 )
+on_start = true
+new_cam_shake = 100
+hitstop = true
+hitstop_time = 0.08
 
 [node name="Player" type="Node" parent="."]
 script = ExtResource( 2 )

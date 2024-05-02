@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/02_-_Spellunked.mp3-4dd060bfe345d22679d525922225a80d.mp3str"
+
+[deps]
+
+source_file="res://Sound/Music/02_-_Spellunked.mp3"
+dest_files=[ "res://.import/02_-_Spellunked.mp3-4dd060bfe345d22679d525922225a80d.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

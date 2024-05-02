@@ -4,16 +4,9 @@ class_name GroundEnemyController
 
 
 # Objects
-export var _c_objects: String
-
-export (NodePath) var right_ray_path: NodePath
-onready var right_ray: RayCast2D = get_node(right_ray_path)
-
-export (NodePath) var left_ray_path: NodePath
-onready var left_ray: RayCast2D = get_node(left_ray_path)
-
-export (NodePath) var entity_path: NodePath
-onready var entity: Entity = get_node(entity_path)
+onready var right_ray: RayCast2D = $Rays/RayCast2D
+onready var left_ray: RayCast2D = $Rays/RayCast2D2
+onready var entity: Entity = $Combat/Entity
 
 
 # Additional objects
@@ -121,21 +114,22 @@ func movement(delta):
 
 # Function that detects if it should turn around
 func turn_detect():
-	if global_position.distance_to(start_pos) >= turn_distance or right_ray.is_colliding() or left_ray.is_colliding():
-		right_direction = !right_direction
+	if is_instance_valid(right_ray) and is_instance_valid(left_ray):
+		if global_position.distance_to(start_pos) >= turn_distance or right_ray.is_colliding() or left_ray.is_colliding():
+			right_direction = !right_direction
 
-		right_ray.enabled = right_direction
-		left_ray.enabled = !right_direction
+			right_ray.enabled = right_direction
+			left_ray.enabled = !right_direction
 
-		# Invert body
-		if is_instance_valid(body):
-			if right_direction == true: body.scale.x = 1
-			else: body.scale.x = -1
+			# Invert body
+			if is_instance_valid(body):
+				if right_direction == true: body.scale.x = 1
+				else: body.scale.x = -1
 
-		# Play effects on turn
-		for effect in effects_turn:
-			var play_effect: EffectPlayer = get_node(effect)
-			play_effect.play_effect()
+			# Play effects on turn
+			for effect in effects_turn:
+				var play_effect: EffectPlayer = get_node(effect)
+				play_effect.play_effect()
 
 
 

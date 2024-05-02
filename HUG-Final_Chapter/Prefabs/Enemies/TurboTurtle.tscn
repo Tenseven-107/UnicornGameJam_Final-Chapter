@@ -161,9 +161,6 @@ extents = Vector2( 8, 6.5 )
 
 [node name="Turtle" type="KinematicBody2D"]
 script = ExtResource( 1 )
-right_ray_path = NodePath("Rays/RayCast2D")
-left_ray_path = NodePath("Rays/RayCast2D2")
-entity_path = NodePath("Combat/Entity")
 body_path = NodePath("Body")
 movement_speed = 35.0
 
@@ -191,7 +188,7 @@ collision_mask = 2
 [node name="AnimatedSprite" type="AnimatedSprite" parent="Body/Visual"]
 frames = SubResource( 14 )
 animation = "Walk"
-frame = 2
+frame = 1
 flip_h = true
 
 [node name="Anims" type="AnimationPlayer" parent="Body/Visual"]
@@ -211,7 +208,7 @@ script = ExtResource( 3 )
 destroy_path = NodePath("../..")
 i_timer_path = NodePath("../../Utils/I-Frames")
 hp = 6
-i_frames = 0.7
+i_frames = 0.9
 team = 1
 destroy_on_death = true
 effects_hit = [ NodePath("../../FX/Hide-anim"), NodePath("../../FX/scale"), NodePath("../../FX/color"), NodePath("../../FX/Hit") ]

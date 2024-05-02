@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/04_-_Dusts.mp3-fab8deb764e8fe5ec2e0eb665acc8f5c.mp3str"
+
+[deps]
+
+source_file="res://Sound/Music/04_-_Dusts.mp3"
+dest_files=[ "res://.import/04_-_Dusts.mp3-fab8deb764e8fe5ec2e0eb665acc8f5c.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

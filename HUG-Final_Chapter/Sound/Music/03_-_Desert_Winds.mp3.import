@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/03_-_Desert_Winds.mp3-0d7b5f346d4b40dac406de7ef8d5da1e.mp3str"
+
+[deps]
+
+source_file="res://Sound/Music/03_-_Desert_Winds.mp3"
+dest_files=[ "res://.import/03_-_Desert_Winds.mp3-0d7b5f346d4b40dac406de7ef8d5da1e.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

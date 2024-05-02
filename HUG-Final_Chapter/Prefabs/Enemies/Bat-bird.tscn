@@ -1,0 +1,315 @@
+[gd_scene load_steps=37 format=2]
+
+[ext_resource path="res://Scripts/Enemies/FlyingEnemyController.gd" type="Script" id=1]
+[ext_resource path="res://Sprites/Enemies/Bat-Bird.png" type="Texture" id=2]
+[ext_resource path="res://Scripts/Utils/Gameplay/Entity.gd" type="Script" id=3]
+[ext_resource path="res://Scripts/Utils/Gameplay/Hitbox.gd" type="Script" id=4]
+[ext_resource path="res://Scripts/EffectPlayers/ColorChangeEffectPlayer.gd" type="Script" id=5]
+[ext_resource path="res://Scripts/EffectPlayers/SpawnerEffectPlayer.gd" type="Script" id=6]
+[ext_resource path="res://Scripts/EffectPlayers/ScaleEffectPlayer.gd" type="Script" id=7]
+[ext_resource path="res://Prefabs/Graphics/Particles/Enemy-kill.tscn" type="PackedScene" id=8]
+[ext_resource path="res://Prefabs/Graphics/Particles/Enemy-hit.tscn" type="PackedScene" id=9]
+[ext_resource path="res://Scripts/EffectPlayers/AnimTreeEffectPlayer.gd" type="Script" id=10]
+
+[sub_resource type="CircleShape2D" id=1]
+radius = 7.0
+
+[sub_resource type="AtlasTexture" id=5]
+atlas = ExtResource( 2 )
+region = Rect2( 32, 32, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=6]
+atlas = ExtResource( 2 )
+region = Rect2( 64, 32, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=7]
+atlas = ExtResource( 2 )
+region = Rect2( 96, 32, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=8]
+atlas = ExtResource( 2 )
+region = Rect2( 64, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=9]
+atlas = ExtResource( 2 )
+region = Rect2( 96, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=10]
+atlas = ExtResource( 2 )
+region = Rect2( 128, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=11]
+atlas = ExtResource( 2 )
+region = Rect2( 0, 64, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=12]
+atlas = ExtResource( 2 )
+region = Rect2( 32, 64, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=13]
+atlas = ExtResource( 2 )
+region = Rect2( 64, 64, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=14]
+atlas = ExtResource( 2 )
+region = Rect2( 0, 0, 32, 32 )
+
+[sub_resource type="SpriteFrames" id=15]
+animations = [ {
+"frames": [ SubResource( 5 ), SubResource( 6 ), SubResource( 7 ) ],
+"loop": true,
+"name": "Detect",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 8 ), SubResource( 9 ), SubResource( 10 ) ],
+"loop": true,
+"name": "Fly",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 11 ), SubResource( 12 ), SubResource( 13 ) ],
+"loop": true,
+"name": "Idle",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 14 ) ],
+"loop": true,
+"name": "default",
+"speed": 5.0
+} ]
+
+[sub_resource type="Animation" id=16]
+resource_name = "Detect"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/path = NodePath("AnimatedSprite:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ "Detect" ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("AnimatedSprite:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 1, 2 ]
+}
+
+[sub_resource type="Animation" id=17]
+resource_name = "Fly"
+length = 0.3
+loop = true
+step = 0.05
+tracks/0/type = "value"
+tracks/0/path = NodePath("AnimatedSprite:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ "Fly" ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("AnimatedSprite:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 1, 2 ]
+}
+
+[sub_resource type="Animation" id=18]
+resource_name = "Idle"
+length = 0.4
+loop = true
+step = 0.05
+tracks/0/type = "value"
+tracks/0/path = NodePath("AnimatedSprite:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ "Idle" ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("AnimatedSprite:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.15, 0.3 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 1, 2 ]
+}
+
+[sub_resource type="AnimationNodeAnimation" id=19]
+animation = "Detect"
+
+[sub_resource type="AnimationNodeAnimation" id=27]
+animation = "Fly"
+
+[sub_resource type="AnimationNodeAnimation" id=21]
+animation = "Idle"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=22]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=28]
+switch_mode = 2
+auto_advance = true
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=29]
+
+[sub_resource type="AnimationNodeStateMachine" id=25]
+states/Detect/node = SubResource( 19 )
+states/Detect/position = Vector2( 628, 79 )
+states/Fly/node = SubResource( 27 )
+states/Fly/position = Vector2( 541, -28 )
+states/Idle/node = SubResource( 21 )
+states/Idle/position = Vector2( 454, 79 )
+transitions = [ "Idle", "Detect", SubResource( 22 ), "Detect", "Fly", SubResource( 28 ), "Fly", "Idle", SubResource( 29 ) ]
+start_node = "Idle"
+end_node = "Fly"
+graph_offset = Vector2( -52, -105 )
+
+[sub_resource type="AnimationNodeStateMachinePlayback" id=26]
+
+[sub_resource type="CircleShape2D" id=3]
+radius = 11.0
+
+[sub_resource type="CircleShape2D" id=4]
+radius = 8.0
+
+[sub_resource type="CircleShape2D" id=2]
+radius = 75.0
+
+[node name="BatBird" type="KinematicBody2D"]
+collision_layer = 0
+collision_mask = 0
+script = ExtResource( 1 )
+body_path = NodePath("Visuals")
+speed = 110.0
+min_speed = 40.0
+distance = 2.0
+effects_detect = [ NodePath("FX/Detect") ]
+effects_lost = [ NodePath("FX/Lost") ]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource( 1 )
+
+[node name="Visuals" type="Node2D" parent="."]
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="Visuals"]
+frames = SubResource( 15 )
+animation = "Idle"
+frame = 2
+
+[node name="Anims" type="AnimationPlayer" parent="Visuals"]
+anims/Detect = SubResource( 16 )
+anims/Fly = SubResource( 17 )
+anims/Idle = SubResource( 18 )
+
+[node name="AnimationTree" type="AnimationTree" parent="Visuals"]
+tree_root = SubResource( 25 )
+anim_player = NodePath("../Anims")
+active = true
+parameters/playback = SubResource( 26 )
+
+[node name="Combat" type="Node2D" parent="."]
+
+[node name="Entity" type="Area2D" parent="Combat"]
+script = ExtResource( 3 )
+destroy_path = NodePath("../..")
+i_timer_path = NodePath("../../Utility/I-Frames")
+hp = 3
+i_frames = 0.1
+team = 1
+destroy_on_death = true
+effects_hit = [ NodePath("../../FX/scale"), NodePath("../../FX/color"), NodePath("../../FX/Hit") ]
+effects_death = [ NodePath("../../FX/Kill") ]
+activity_objects_paths = [ NodePath("../.."), NodePath("../Hitbox") ]
+inactive_timer_path = NodePath("../../Utility/Inactive")
+inactive_time = 0.3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Combat/Entity"]
+modulate = Color( 0.101961, 1, 0, 1 )
+shape = SubResource( 3 )
+
+[node name="Hitbox" type="Area2D" parent="Combat"]
+script = ExtResource( 4 )
+team = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Combat/Hitbox"]
+modulate = Color( 1, 0, 0, 1 )
+shape = SubResource( 4 )
+
+[node name="Range" type="Area2D" parent="."]
+collision_layer = 16
+collision_mask = 16
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Range"]
+shape = SubResource( 2 )
+
+[node name="Utility" type="Node" parent="."]
+
+[node name="Inactive" type="Timer" parent="Utility"]
+
+[node name="I-Frames" type="Timer" parent="Utility"]
+
+[node name="FX" type="Node" parent="."]
+
+[node name="scale" type="Node" parent="FX"]
+script = ExtResource( 7 )
+object_path = NodePath("../../Visuals/AnimatedSprite")
+duration = 0.1
+start_scale = Vector2( 1.5, 1.25 )
+end_scale = Vector2( 1, 1 )
+ease_type = 2
+transition_type = 6
+
+[node name="color" type="Node" parent="FX"]
+script = ExtResource( 5 )
+object_path = NodePath("../../Visuals/AnimatedSprite")
+duration = 0.2
+start_color = Color( 1, 1, 1, 0 )
+
+[node name="Hit" type="Node" parent="FX"]
+script = ExtResource( 6 )
+spawned_effect = ExtResource( 9 )
+position_object = NodePath("../..")
+
+[node name="Kill" type="Node" parent="FX"]
+script = ExtResource( 6 )
+spawned_effect = ExtResource( 8 )
+position_object = NodePath("../..")
+
+[node name="Detect" type="Node" parent="FX"]
+script = ExtResource( 10 )
+anim_tree_path = NodePath("../../Visuals/AnimationTree")
+animation_name = "Fly"
+
+[node name="Lost" type="Node" parent="FX"]
+script = ExtResource( 10 )
+anim_tree_path = NodePath("../../Visuals/AnimationTree")

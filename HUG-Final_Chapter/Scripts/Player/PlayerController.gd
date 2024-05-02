@@ -61,7 +61,7 @@ export (float) var move_speed: float = 8000
 
 # - Jumping
 export var _c_jumping: String
-export (float) var jump_force: float = 380
+export (float) var jump_force: float = 19800
 export (float) var coyote_time: float = 1
 
 export (float) var gravity: float = 2100
@@ -282,6 +282,8 @@ func jumping(delta):
 	or coyote_timer.is_stopped() == false)):
 		is_jumping = true
 
+		input_vector.y = get_jump_force()
+
 		# Coyote jump
 		if coyote_timer.is_stopped() == false and is_on_floor() == false:
 			coyote = true
@@ -332,9 +334,9 @@ func set_velocity(delta):
 	velocity = move_and_slide(velocity, Vector2.UP)
 
 	if is_on_floor() == true or coyote == true:
-		if is_jumping == true: velocity.y -= input_vector.y
+		if is_jumping == true: velocity.y = -input_vector.y * delta
 		else: 
-			velocity.y = 0 # nullify the velocity to avoid constant velocity into the ground
+			if check_rays(false) == true: velocity.y = 0 # nullify the velocity to avoid constant velocity into the ground
 
 			coyote_timer.start()
 		coyote = false

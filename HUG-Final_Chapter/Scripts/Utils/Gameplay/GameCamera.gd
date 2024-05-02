@@ -11,9 +11,6 @@ onready var zoom_timer = $Timer2
 onready var hitstop_tween = $Hitstop_tween
 onready var hitstop_timer = $Timer3
 
-# Stats
-export (bool) var snappy_camera: bool = false
-
 # - Settings
 var can_zoom: bool = true
 var shake_multiplier: float = 1
@@ -64,15 +61,6 @@ func _ready():
 # Process
 
 func _process(delta):
-	if snappy_camera:
-		var x = global_position.x
-		var y = global_position.y
-		global_position = Vector2(int(x), int(y))
-
-		var offset_x = offset.x
-		var offset_y = offset.y
-		offset = Vector2(int(offset_x), int(offset_y))
-
 	if shaking:
 		offset = normal_offset - Vector2(rand_range(-shake_amount, shake_amount),
 		rand_range(shake_amount, -shake_amount)) * delta
@@ -88,7 +76,7 @@ func update_cam():
 		if player_offset.x != 0 and player_target.input_vector.y == 0:
 			last_cam_offset = player_offset
 
-		global_position = lerp(global_position, player_target.global_position + last_cam_offset, 1)
+		global_position = lerp(global_position, player_target.global_position + last_cam_offset, 1).round()
 
 
 

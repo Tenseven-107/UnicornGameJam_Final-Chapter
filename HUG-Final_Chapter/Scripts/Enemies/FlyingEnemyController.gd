@@ -4,16 +4,15 @@ class_name FlyingEnemyController
 
 
 # Objects
-export var _c_objects: String
-export (NodePath) var range_path: NodePath
-onready var target_range: Area2D = get_node(range_path)
-
-export (NodePath) var entity_path: NodePath
-onready var entity: Entity = get_node(entity_path)
+onready var target_range: Area2D = $Range
+onready var entity: Entity = $Combat/Entity
 
 
 # Aditional objects
 export var _c_additional_objects: String
+export (NodePath) var body_path: NodePath
+onready var body: Node2D = get_node(body_path)
+
 export (NodePath) var rest_timer_path: NodePath
 var rest_timer: Timer
 export (float) var rest_time: float = 4
@@ -69,6 +68,9 @@ func _ready():
 
 		rest_timer.connect("timeout", self, "action")
 
+	if body_path != "":
+		body = get_node(body_path)
+
 
 
 # Processing
@@ -79,11 +81,17 @@ func _physics_process(delta):
 			current_speed = sin(time * frequency) * speed
 			current_speed = clamp(current_speed, min_speed, speed)
 
+			if time > 1: time = 0
+
 			velocity -= (global_position - last_pos).normalized() * current_speed
 			velocity = move_and_slide(velocity) * delta
 
-	if is_instance_valid(target):
+	if is_instance_valid(target) == true:
 		last_pos = target.global_position
+
+		if is_instance_valid(body) == true:
+			if target.global_position.x > global_position.x: body.scale.x = -1
+			elif target.global_position.x < global_position.x: body.scale.x = 1
 
 
 
@@ -107,7 +115,7 @@ func reset_target(body: Node):
 		if invincible_on_idle == true: entity.invincible = true
 
 		# Play effects on lost
-		for effect in effects_action:
+		for effect in effects_lost:
 			var play_effect: EffectPlayer = get_node(effect)
 			play_effect.play_effect()
 

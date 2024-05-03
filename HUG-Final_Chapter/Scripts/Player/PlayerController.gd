@@ -283,13 +283,13 @@ func jumping(delta):
 		is_jumping = true
 
 		input_vector.y = get_jump_force()
+		input_vector.x = 0
 
 		# Coyote jump
 		if coyote_timer.is_stopped() == false and is_on_floor() == false:
 			coyote = true
 
 		coyote_timer.stop()
-		anims.start("Jump")
 
 		# Play effects on jump
 		for effect in effects_jump:
@@ -302,6 +302,9 @@ func jumping(delta):
 
 		if current_gravity > min_gravity:
 			current_gravity -= gravity_depletion
+		current_gravity = clamp(current_gravity, min_gravity, gravity)
+
+		anims.start("Jump")
 
 	# Release jump
 	if Input.is_action_just_released("jump") or current_gravity <= min_gravity:
@@ -310,7 +313,7 @@ func jumping(delta):
 		input_vector.y = 0
 
 func get_jump_force():
-	return jump_force if coyote == false else jump_force * 1.2
+	return jump_force if coyote == false else jump_force * 1.1
 
 
 
@@ -331,8 +334,6 @@ func set_velocity(delta):
 	velocity.x = (input_vector.x * move_speed) * delta
 	if is_on_floor() == false or check_rays(true) == true: velocity.y += current_gravity * delta
 
-	velocity = move_and_slide(velocity, Vector2.UP)
-
 	if is_on_floor() == true or coyote == true:
 		if is_jumping == true: velocity.y = -input_vector.y * delta
 		else: 
@@ -352,6 +353,8 @@ func set_velocity(delta):
 		if check_rays(false) == false: 
 			anims.travel("Fall")
 			effect_grounded = false
+
+	velocity = move_and_slide(velocity, Vector2.UP)
 
 
 
@@ -409,7 +412,7 @@ func finish_dodge():
 # Teleport
 func teleport():
 	if player_action("action_player", false) and drone.check_can_teleport():
-		if can_remove_stamina(stamina_teleport, false):
+		if can_remove_stamina(stamina_teleport, false) and GlobalSignals.can_teleport == true: # GlobalSignals fix == dirty fix
 			# Play effects on teleport_in
 			for effect in effects_teleport_in:
 				var play_effect: EffectPlayer = get_node(effect)
@@ -429,7 +432,7 @@ func player_action(control_action: String, on_floor: bool):
 	if (Input.is_action_just_pressed(control_action) and 
 	((on_floor == true and check_rays(false) == true) or on_floor == false)
 	and attack_cooldown.is_stopped() 
-	and dodge_timer.is_stopped()):
+	and dodge_timer.is_stopped() and is_jumping == false):
 
 		return true
 	return false

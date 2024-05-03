@@ -73,6 +73,8 @@ func close():
 		collider.set_deferred("disabled", false)
 		active = false
 
+		GlobalSignals.can_teleport = false
+
 		# Play effects on close
 		for effect in effects_close:
 			var play_effect: EffectPlayer = get_node(effect)
@@ -108,6 +110,8 @@ func complete():
 
 		if current_entities <= 0:
 			open()
+
+			GlobalSignals.can_teleport = true
 
 
 

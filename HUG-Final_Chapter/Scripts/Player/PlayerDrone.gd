@@ -8,11 +8,23 @@ export var _c_objects: String
 export (NodePath) var teleport_ray_path: NodePath
 onready var teleport_ray: RayCast2D = get_node(teleport_ray_path)
 
+export (NodePath) var player_ray_path: NodePath
+onready var player_ray: RayCast2D = get_node(player_ray_path)
+
+export (NodePath) var collider_path: NodePath
+onready var collider: CollisionShape2D = get_node(collider_path)
+
+export (NodePath) var turn_off_timer_path: NodePath
+onready var turn_off_timer: Timer = get_node(turn_off_timer_path)
+
 export (NodePath) var body_path: NodePath
 onready var body: Node2D = get_node(body_path)
 
 export (NodePath) var shooter_path: NodePath
 onready var shooter: BulletShooter = get_node(shooter_path)
+
+export (NodePath) var shoot_progress_path: NodePath
+onready var shoot_progress: TextureProgress = get_node(shoot_progress_path)
 
 
 # Movement stats
@@ -31,6 +43,9 @@ var input_vector: Vector2 = Vector2.ZERO
 var velocity: Vector2 = Vector2.ZERO
 
 # Misc
+export var _c_misc: String
+export (float) var turn_off_time: float = 0.5
+
 const group_name: String = "Drone"
 
 # Effect players
@@ -46,11 +61,21 @@ func _ready():
 	teleport_ray.cast_to = teleport_offset * 2
 	global_position = global_position + start_offset
 
+	# Set up progress
+	shoot_progress.max_value = shooter.firerate_cooldown * 100
+
+	# Set up the turn off
+	turn_off_timer.one_shot = true
+	turn_off_timer.wait_time = turn_off_time
+
+	player_ray.add_exception(self)
+
 
 
 # Processing
 func _physics_process(delta):
 	movement(delta)
+	check_player_ray()
 
 func _process(delta):
 	attacking()
@@ -91,6 +116,8 @@ func attacking():
 			var play_effect: EffectPlayer = get_node(effect)
 			play_effect.play_effect()
 
+	shoot_progress.value = shooter.firerate_timer.time_left * 100
+
 
 
 # Getting the input depending on controller
@@ -129,6 +156,15 @@ func check_can_teleport():
 
 
 
+# Check if the player is on the drone, and if so, turn off collider for a frame
+func check_player_ray():
+	if player_ray.is_colliding():
+		if turn_off_timer.is_stopped():
+			collider.disabled = true
+
+	else:
+		collider.disabled = false
+		turn_off_timer.start()
 
 
 

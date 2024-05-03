@@ -16,3 +16,7 @@ signal text_effect(text, text_color, time)
 # Gameplay
 signal heal_player(team, hp)
 signal gameover
+
+
+# Bools
+var can_teleport: bool = true # Dirty fix

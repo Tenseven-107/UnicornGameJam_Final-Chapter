@@ -158,9 +158,6 @@ extents = Vector2( 8, 8 )
 
 [node name="Fly" type="KinematicBody2D"]
 script = ExtResource( 1 )
-right_ray_path = NodePath("Rays/RayCast2D")
-left_ray_path = NodePath("Rays/RayCast2D2")
-entity_path = NodePath("Combat/Entity")
 detection_path = NodePath("Rays/RayCast2D3")
 body_path = NodePath("Body")
 action_timer_path = NodePath("Utils/Timer")
@@ -200,7 +197,7 @@ cast_to = Vector2( 0, 200 )
 [node name="AnimatedSprite" type="AnimatedSprite" parent="Body/Visual"]
 frames = SubResource( 13 )
 animation = "Fly"
-frame = 1
+frame = 2
 flip_h = true
 
 [node name="Anims" type="AnimationPlayer" parent="Body/Visual"]

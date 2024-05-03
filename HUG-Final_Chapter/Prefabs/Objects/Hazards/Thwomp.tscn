@@ -1,0 +1,92 @@
+[gd_scene load_steps=10 format=2]
+
+[ext_resource path="res://Scripts/Utils/Gameplay/Hitbox.gd" type="Script" id=1]
+[ext_resource path="res://Scripts/Utils/Gameplay/Thwomp.gd" type="Script" id=2]
+[ext_resource path="res://Sprites/Environment/Tilemap.png" type="Texture" id=3]
+[ext_resource path="res://Scripts/EffectPlayers/CameraEffectsPlayer.gd" type="Script" id=4]
+[ext_resource path="res://Scripts/EffectPlayers/SpawnerEffectPlayer.gd" type="Script" id=5]
+[ext_resource path="res://Prefabs/Graphics/Particles/DustCloudFist.tscn" type="PackedScene" id=6]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 9, 5.5 )
+
+[sub_resource type="AtlasTexture" id=2]
+atlas = ExtResource( 3 )
+region = Rect2( 323, 217, 28, 34 )
+
+[sub_resource type="RectangleShape2D" id=3]
+extents = Vector2( 10, 7.5 )
+
+[node name="Thwomp" type="KinematicBody2D"]
+collision_layer = 3
+collision_mask = 3
+script = ExtResource( 2 )
+interupt_ray_paths = [ NodePath("Rays/Interupt/Interuptray"), NodePath("Rays/Interupt/Interuptray2"), NodePath("Rays/Interupt/Interuptray3") ]
+effects_hit = [ NodePath("FX/Hit-cam"), NodePath("FX/Effect") ]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( 0, -0.5 )
+shape = SubResource( 1 )
+
+[node name="Visual" type="Node2D" parent="."]
+
+[node name="Sprite" type="Sprite" parent="Visual"]
+position = Vector2( 2, 11 )
+texture = SubResource( 2 )
+
+[node name="Rays" type="Node2D" parent="."]
+
+[node name="Moveray" type="RayCast2D" parent="Rays"]
+position = Vector2( 0, 28 )
+enabled = true
+cast_to = Vector2( 0, 300 )
+collision_mask = 16
+
+[node name="Stopray" type="RayCast2D" parent="Rays"]
+modulate = Color( 1, 0, 0, 1 )
+enabled = true
+cast_to = Vector2( 0, 29 )
+collision_mask = 2
+
+[node name="Interupt" type="Node2D" parent="Rays"]
+
+[node name="Interuptray" type="RayCast2D" parent="Rays/Interupt"]
+enabled = true
+cast_to = Vector2( 0, -10 )
+collision_mask = 16
+
+[node name="Interuptray2" type="RayCast2D" parent="Rays/Interupt"]
+position = Vector2( -8, 0 )
+enabled = true
+cast_to = Vector2( 0, -10 )
+collision_mask = 16
+
+[node name="Interuptray3" type="RayCast2D" parent="Rays/Interupt"]
+position = Vector2( 8, 0 )
+enabled = true
+cast_to = Vector2( 0, -10 )
+collision_mask = 16
+
+[node name="Combat" type="Node2D" parent="."]
+
+[node name="Hitbox" type="Area2D" parent="Combat"]
+script = ExtResource( 1 )
+damage = 3
+team = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Combat/Hitbox"]
+modulate = Color( 1, 0, 0, 1 )
+position = Vector2( 0, 20.5 )
+shape = SubResource( 3 )
+
+[node name="FX" type="Node" parent="."]
+
+[node name="Hit-cam" type="Node" parent="FX"]
+script = ExtResource( 4 )
+new_cam_shake = 125
+cam_shake_time = 0.1
+
+[node name="Effect" type="Node" parent="FX"]
+script = ExtResource( 5 )
+spawned_effect = ExtResource( 6 )
+position_object = NodePath("../../Rays/Moveray")

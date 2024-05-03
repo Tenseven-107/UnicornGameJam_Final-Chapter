@@ -22,7 +22,6 @@ export (int) var speed: int = 500
 var velocity = Vector2.ZERO
 
 export (float) var dropoff_time: float = 10
-export (bool) var piercing: bool = false
 export (bool) var wall_piercing: bool = false
 
 enum TRANSITIONTYPE {

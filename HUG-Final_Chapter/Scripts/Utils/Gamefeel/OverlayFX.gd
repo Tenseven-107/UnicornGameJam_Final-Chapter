@@ -16,6 +16,9 @@ onready var screen: ColorRect = get_node(screen_path)
 export (NodePath) var text_path: NodePath
 onready var text: Label = get_node(text_path)
 
+export (NodePath) var title_path: NodePath
+onready var title: Label = get_node(title_path)
+
 var can_reset: bool = true
 
 # At startup
@@ -37,6 +40,7 @@ func _ready():
 	text_timer.connect("timeout", self, "reset_text")
 
 	text.text = ""
+	title.text = ""
 
 	# Set up start
 	start_timer.wait_time = start_time
@@ -55,9 +59,14 @@ func start_animation(): effect(start_color, start_out_color, time_load, true)
 
 
 # Functions
-func text_effect(new_text: String, text_color: Color, time: float):
-	text.text = new_text
-	text.add_color_override("font_color", text_color)
+func text_effect(new_text: String, text_color: Color, time: float, big: bool):
+	if big == false:
+		text.text = new_text
+		text.add_color_override("font_color", text_color)
+
+	else:
+		title.text = new_text
+		title.add_color_override("font_color", text_color)
 
 	text_timer.wait_time = time
 	text_timer.start()
@@ -82,6 +91,7 @@ func reset_flash():
 # Reset text
 func reset_text():
 	text.text = ""
+	title.text = ""
 
 
 

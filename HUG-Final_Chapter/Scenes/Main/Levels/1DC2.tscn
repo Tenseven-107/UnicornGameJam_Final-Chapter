@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=2]
+[gd_scene load_steps=31 format=2]
 
 [ext_resource path="res://Prefabs/Utility/Gameplay/GameCamera.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Prefabs/Player/Player.tscn" type="PackedScene" id=2]
@@ -24,6 +24,7 @@
 [ext_resource path="res://Prefabs/Objects/Game-elements/HealingPot.tscn" type="PackedScene" id=22]
 [ext_resource path="res://Prefabs/Objects/Game-utility/Checkpoint.tscn" type="PackedScene" id=23]
 [ext_resource path="res://Prefabs/Enemies/Orc.tscn" type="PackedScene" id=24]
+[ext_resource path="res://Scripts/EffectPlayers/ScreenTextEffectPlayer.gd" type="Script" id=25]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 179.5, 79.5 )
@@ -296,3 +297,10 @@ lock_position = Vector2( 1039, -50 )
 script = ExtResource( 15 )
 on_start = true
 unlock = true
+
+[node name="AreaTitle" type="Node" parent="EffectPlayers"]
+script = ExtResource( 25 )
+on_start = true
+text = "- Desert Range -"
+time = 3.0
+is_title = true

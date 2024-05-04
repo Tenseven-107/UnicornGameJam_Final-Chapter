@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://Sprites/UI/HUD/empty_Stamina-bar.png" type="Texture" id=1]
 [ext_resource path="res://Sprites/UI/HUD/full_Stamina-bar.png" type="Texture" id=2]
@@ -7,6 +7,7 @@
 [ext_resource path="res://Sprites/UI/HUD/HP-empty.png" type="Texture" id=5]
 [ext_resource path="res://Sprites/UI/HUD/HP-full.png" type="Texture" id=6]
 [ext_resource path="res://Sprites/UI/Fonts/Default-font.tres" type="DynamicFont" id=7]
+[ext_resource path="res://Sprites/UI/Fonts/Title-font.tres" type="DynamicFont" id=8]
 
 [node name="PlayerHud" type="CanvasLayer"]
 script = ExtResource( 3 )
@@ -89,6 +90,20 @@ margin_bottom = 167.0
 size_flags_vertical = 3
 size_flags_stretch_ratio = 3.78
 
+[node name="CenterContainer" type="CenterContainer" parent="Effects/Text/VBoxContainer/Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="Title" type="Label" parent="Effects/Text/VBoxContainer/Control/CenterContainer"]
+margin_left = 146.0
+margin_top = 73.0
+margin_right = 238.0
+margin_bottom = 94.0
+custom_fonts/font = ExtResource( 8 )
+text = "- Orc Camp -"
+align = 1
+valign = 1
+
 [node name="Text" type="Label" parent="Effects/Text/VBoxContainer"]
 margin_top = 185.0
 margin_right = 384.0
@@ -111,6 +126,7 @@ color = Color( 0, 0, 0, 1 )
 script = ExtResource( 4 )
 screen_path = NodePath("../Effects/Screen")
 text_path = NodePath("../Effects/Text/VBoxContainer/Text")
+title_path = NodePath("../Effects/Text/VBoxContainer/Control/CenterContainer/Title")
 start_color = Color( 0.0588235, 0.00784314, 0.180392, 1 )
 
 [node name="Timer" type="Timer" parent="OverlayFX"]

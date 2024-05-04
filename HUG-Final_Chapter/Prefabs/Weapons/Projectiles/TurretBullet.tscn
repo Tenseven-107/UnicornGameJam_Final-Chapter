@@ -1,0 +1,62 @@
+[gd_scene load_steps=9 format=2]
+
+[ext_resource path="res://Scripts/Utils/Gameplay/Bullet.gd" type="Script" id=1]
+[ext_resource path="res://Sprites/FX/FX_sheet.png" type="Texture" id=2]
+[ext_resource path="res://Scripts/Utils/Gameplay/Hitbox.gd" type="Script" id=3]
+[ext_resource path="res://Scripts/EffectPlayers/SpawnerEffectPlayer.gd" type="Script" id=4]
+[ext_resource path="res://Prefabs/Graphics/Particles/DustCloud.tscn" type="PackedScene" id=5]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 6, 3 )
+
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 3, 4 )
+
+[sub_resource type="AtlasTexture" id=3]
+atlas = ExtResource( 2 )
+region = Rect2( 31, 42, 17, 8 )
+
+[node name="Bullet" type="KinematicBody2D"]
+collision_layer = 0
+collision_mask = 0
+script = ExtResource( 1 )
+can_ricochet = false
+speed = 150
+dropoff_time = 3.0
+effects_on_impact = [ NodePath("FX/Hit") ]
+
+[node name="Collider" type="CollisionShape2D" parent="."]
+position = Vector2( 1, 0 )
+shape = SubResource( 1 )
+
+[node name="Hitbox" type="Area2D" parent="."]
+collision_layer = 4
+collision_mask = 4
+script = ExtResource( 3 )
+destroy_path = NodePath("..")
+damage = 2
+team = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
+position = Vector2( 5, 0 )
+shape = SubResource( 2 )
+
+[node name="Sprites" type="Node2D" parent="."]
+
+[node name="Sprite" type="Sprite" parent="Sprites"]
+z_index = 2
+texture = SubResource( 3 )
+
+[node name="Dropoff_timer" type="Timer" parent="."]
+one_shot = true
+
+[node name="Collision_tween" type="Tween" parent="."]
+
+[node name="Dropoff_tween" type="Tween" parent="."]
+
+[node name="FX" type="Node" parent="."]
+
+[node name="Hit" type="Node" parent="FX"]
+script = ExtResource( 4 )
+spawned_effect = ExtResource( 5 )
+position_object = NodePath("../..")

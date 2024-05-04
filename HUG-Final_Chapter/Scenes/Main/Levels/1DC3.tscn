@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=2]
+[gd_scene load_steps=28 format=2]
 
 [ext_resource path="res://Prefabs/Utility/Gameplay/GameCamera.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Prefabs/Player/Player.tscn" type="PackedScene" id=2]
@@ -21,6 +21,7 @@
 [ext_resource path="res://Prefabs/Objects/Game-elements/EnemyDoor.tscn" type="PackedScene" id=19]
 [ext_resource path="res://Scripts/EffectPlayers/CameraEffectsPlayer.gd" type="Script" id=20]
 [ext_resource path="res://Scripts/EffectPlayers/MusicStarter.gd" type="Script" id=21]
+[ext_resource path="res://Scripts/EffectPlayers/ScreenTextEffectPlayer.gd" type="Script" id=22]
 
 [sub_resource type="RectangleShape2D" id=3]
 extents = Vector2( 239.5, 84.5 )
@@ -253,3 +254,10 @@ lock_position = Vector2( 1795, -565 )
 [node name="Unlock" type="Node" parent="EffectPlayers"]
 script = ExtResource( 20 )
 unlock = true
+
+[node name="AreaTitle" type="Node" parent="EffectPlayers"]
+script = ExtResource( 22 )
+on_start = true
+text = "- Desert Range -"
+time = 3.0
+is_title = true

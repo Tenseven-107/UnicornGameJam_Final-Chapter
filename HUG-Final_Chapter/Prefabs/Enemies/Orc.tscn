@@ -205,9 +205,6 @@ extents = Vector2( 5.5, 10.5 )
 
 [node name="Orc" type="KinematicBody2D"]
 script = ExtResource( 1 )
-right_ray_path = NodePath("Rays/RayCast2D")
-left_ray_path = NodePath("Rays/RayCast2D2")
-entity_path = NodePath("Combat/Entity")
 detection_path = NodePath("Body/Utility/RayCast2D")
 body_path = NodePath("Body")
 action_timer_path = NodePath("Utils/Timer")
@@ -242,10 +239,9 @@ collision_mask = 2
 [node name="AnimatedSprite" type="AnimatedSprite" parent="Body/Visual"]
 frames = SubResource( 31 )
 animation = "Walk"
-frame = 3
 
 [node name="Head" type="Sprite" parent="Body/Visual"]
-position = Vector2( 0, -8 )
+position = Vector2( 0, -10 )
 texture = SubResource( 32 )
 script = ExtResource( 2 )
 sprites = [ ExtResource( 17 ), ExtResource( 18 ), ExtResource( 15 ), ExtResource( 16 ) ]
@@ -293,7 +289,6 @@ shape = SubResource( 2 )
 
 [node name="Hitbox" type="Area2D" parent="Combat"]
 script = ExtResource( 4 )
-damage = 2
 team = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Combat/Hitbox"]

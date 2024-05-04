@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=2]
+[gd_scene load_steps=33 format=2]
 
 [ext_resource path="res://Prefabs/Utility/Gameplay/GameCamera.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Prefabs/Player/Player.tscn" type="PackedScene" id=2]
@@ -25,6 +25,7 @@
 [ext_resource path="res://Prefabs/Objects/Game-utility/Checkpoint.tscn" type="PackedScene" id=23]
 [ext_resource path="res://Prefabs/Enemies/Stink-fish.tscn" type="PackedScene" id=24]
 [ext_resource path="res://Prefabs/Objects/Game-elements/HealingPot.tscn" type="PackedScene" id=25]
+[ext_resource path="res://Scripts/EffectPlayers/ScreenTextEffectPlayer.gd" type="Script" id=26]
 
 [sub_resource type="RectangleShape2D" id=3]
 extents = Vector2( 214.875, 249.75 )
@@ -347,3 +348,10 @@ lock_position = Vector2( 1049, -227 )
 [node name="Unlock" type="Node" parent="EffectPlayers"]
 script = ExtResource( 16 )
 unlock = true
+
+[node name="AreaTitle" type="Node" parent="EffectPlayers"]
+script = ExtResource( 26 )
+on_start = true
+text = "- Orc Fortress -"
+time = 3.0
+is_title = true

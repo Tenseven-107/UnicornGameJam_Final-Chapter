@@ -11,7 +11,7 @@ signal unlock_camera
 
 # Overlay FX
 signal screen_effect(in_color, out_color, time, reset)
-signal text_effect(text, text_color, time)
+signal text_effect(text, text_color, time, big)
 
 # Gameplay
 signal heal_player(team, hp)

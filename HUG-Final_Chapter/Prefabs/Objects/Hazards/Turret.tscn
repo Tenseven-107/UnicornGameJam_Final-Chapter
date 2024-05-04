@@ -1,0 +1,46 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://Scripts/Utils/Gameplay/BulletShooter.gd" type="Script" id=1]
+[ext_resource path="res://Scripts/Utils/Gameplay/Turret.gd" type="Script" id=2]
+[ext_resource path="res://Scripts/EffectPlayers/SpawnerEffectPlayer.gd" type="Script" id=3]
+[ext_resource path="res://Prefabs/Weapons/Projectiles/TurretBullet.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Prefabs/Graphics/Particles/Shoot-turret.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Sprites/Environment/Tilemap.png" type="Texture" id=6]
+
+[sub_resource type="AtlasTexture" id=1]
+atlas = ExtResource( 6 )
+region = Rect2( 260, 212, 26, 28 )
+
+[node name="Turret" type="Node2D"]
+script = ExtResource( 2 )
+effects_hit = [ NodePath("Utils/Shooter") ]
+
+[node name="Visual" type="Node2D" parent="."]
+
+[node name="Sprite" type="Sprite" parent="Visual"]
+texture = SubResource( 1 )
+
+[node name="Utils" type="Node2D" parent="."]
+
+[node name="RayCast2D" type="RayCast2D" parent="Utils"]
+enabled = true
+cast_to = Vector2( 300, 0 )
+collision_mask = 16
+
+[node name="Position2D" type="Position2D" parent="Utils"]
+position = Vector2( 12, 6 )
+
+[node name="Shooter" type="Node2D" parent="Utils"]
+script = ExtResource( 1 )
+team = 1
+projectile = ExtResource( 4 )
+firerate_cooldown = 1.0
+muzzle_path = NodePath("../Position2D")
+effects_on_fire = [ NodePath("../../FX/Fire") ]
+
+[node name="FX" type="Node" parent="."]
+
+[node name="Fire" type="Node" parent="FX"]
+script = ExtResource( 3 )
+spawned_effect = ExtResource( 5 )
+position_object = NodePath("../../Utils/Position2D")

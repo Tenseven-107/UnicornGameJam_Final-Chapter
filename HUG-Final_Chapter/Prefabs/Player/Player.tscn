@@ -1,4 +1,4 @@
-[gd_scene load_steps=58 format=2]
+[gd_scene load_steps=59 format=2]
 
 [ext_resource path="res://Scripts/Player/PlayerController.gd" type="Script" id=1]
 [ext_resource path="res://Sprites/Player/PlayerAnimMap.tres" type="SpriteFrames" id=2]
@@ -331,6 +331,8 @@ auto_advance = true
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=46]
 
+[sub_resource type="AnimationNodeStateMachineTransition" id=47]
+
 [sub_resource type="AnimationNodeStateMachine" id=35]
 states/Attack/node = SubResource( 13 )
 states/Attack/position = Vector2( 834, 558 )
@@ -348,10 +350,10 @@ states/Start/node = SubResource( 18 )
 states/Start/position = Vector2( 373, 558 )
 states/Walk/node = SubResource( 19 )
 states/Walk/position = Vector2( 834, 401 )
-transitions = [ "Attack", "Idle", SubResource( 20 ), "Idle", "Attack", SubResource( 21 ), "Walk", "Attack", SubResource( 22 ), "Idle", "Walk", SubResource( 23 ), "Walk", "Idle", SubResource( 24 ), "Walk", "Roll", SubResource( 25 ), "Roll", "Idle", SubResource( 26 ), "Idle", "Roll", SubResource( 27 ), "Walk", "Fall", SubResource( 28 ), "Walk", "Jump", SubResource( 29 ), "Jump", "Fall", SubResource( 30 ), "Fall", "Idle", SubResource( 31 ), "Idle", "Jump", SubResource( 32 ), "Idle", "Fall", SubResource( 37 ), "Start", "Idle", SubResource( 38 ), "Idle", "Die", SubResource( 45 ), "Die", "Idle", SubResource( 46 ) ]
+transitions = [ "Attack", "Idle", SubResource( 20 ), "Idle", "Attack", SubResource( 21 ), "Walk", "Attack", SubResource( 22 ), "Idle", "Walk", SubResource( 23 ), "Walk", "Idle", SubResource( 24 ), "Walk", "Roll", SubResource( 25 ), "Roll", "Idle", SubResource( 26 ), "Idle", "Roll", SubResource( 27 ), "Walk", "Fall", SubResource( 28 ), "Walk", "Jump", SubResource( 29 ), "Jump", "Fall", SubResource( 30 ), "Fall", "Idle", SubResource( 31 ), "Idle", "Jump", SubResource( 32 ), "Idle", "Fall", SubResource( 37 ), "Start", "Idle", SubResource( 38 ), "Idle", "Die", SubResource( 45 ), "Die", "Idle", SubResource( 46 ), "Jump", "Idle", SubResource( 47 ) ]
 start_node = "Start"
 end_node = "Die"
-graph_offset = Vector2( -28, 488 )
+graph_offset = Vector2( -117, 257 )
 
 [sub_resource type="AnimationNodeStateMachinePlayback" id=36]
 
@@ -461,13 +463,13 @@ cast_to = Vector2( 0, 24 )
 collision_mask = 18
 
 [node name="RayCast2D2" type="RayCast2D" parent="Rays"]
-position = Vector2( 3, 0 )
+position = Vector2( 4, 0 )
 enabled = true
 cast_to = Vector2( 0, 24 )
 collision_mask = 18
 
 [node name="RayCast2D3" type="RayCast2D" parent="Rays"]
-position = Vector2( -3, 0 )
+position = Vector2( -4, 0 )
 enabled = true
 cast_to = Vector2( 0, 24 )
 collision_mask = 18

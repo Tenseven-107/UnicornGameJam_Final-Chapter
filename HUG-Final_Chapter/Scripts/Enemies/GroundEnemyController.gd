@@ -115,7 +115,7 @@ func movement(delta):
 # Function that detects if it should turn around
 func turn_detect():
 	if is_instance_valid(right_ray) and is_instance_valid(left_ray):
-		if global_position.distance_to(start_pos) >= turn_distance or right_ray.is_colliding() or left_ray.is_colliding():
+		if global_position.distance_to(start_pos) >= turn_distance != check_rays():
 			right_direction = !right_direction
 
 			right_ray.enabled = right_direction
@@ -130,6 +130,13 @@ func turn_detect():
 			for effect in effects_turn:
 				var play_effect: EffectPlayer = get_node(effect)
 				play_effect.play_effect()
+
+
+
+# Check rays
+func check_rays():
+	if right_ray.is_colliding() or left_ray.is_colliding(): return true
+	else: return false
 
 
 

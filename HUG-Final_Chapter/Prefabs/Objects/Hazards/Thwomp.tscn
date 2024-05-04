@@ -32,6 +32,7 @@ shape = SubResource( 1 )
 
 [node name="Sprite" type="Sprite" parent="Visual"]
 position = Vector2( 2, 11 )
+z_index = -1
 texture = SubResource( 2 )
 
 [node name="Rays" type="Node2D" parent="."]

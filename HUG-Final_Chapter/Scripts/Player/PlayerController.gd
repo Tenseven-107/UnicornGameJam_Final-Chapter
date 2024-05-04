@@ -142,6 +142,7 @@ export (Array, NodePath) var effects_not_enough_stamina
 export var _c_misc: String
 export (float) var start_time: float = 1.5
 export (float) var dead_time: float = 2
+var dead: bool = false # We just use this to disable some animations
 
 const group_name: String = "Player"
 
@@ -164,6 +165,9 @@ func _ready():
 
 	current_stamina = stamina
 	tired = false
+	dead = false
+
+	GlobalSignals.can_teleport = true
 
 	# Jumping set up
 	current_gravity = gravity
@@ -351,7 +355,7 @@ func set_velocity(delta):
 
 	else: 
 		if check_rays(false) == false: 
-			anims.travel("Fall")
+			if dead == false: anims.travel("Fall")
 			effect_grounded = false
 
 	velocity = move_and_slide(velocity, Vector2.UP)
@@ -483,6 +487,7 @@ func set_dead():
 	switch_state(STATES.UNACTIVE)
 	dead_cooldown.start()
 
+	dead = true
 	anims.start("Die")
 
 func signal_dead():GlobalSignals.emit_signal("gameover")

@@ -130,7 +130,8 @@ _global_script_class_icons={
 
 config/name="HUG-Final_Chapter"
 run/main_scene="res://Scenes/Main/StartScreen.tscn"
-config/icon="res://icon.png"
+config/icon="res://Sprites/UI/Meta/Desktop-Icon.png"
+config/windows_native_icon="res://Sprites/UI/Meta/Desktop-Icon.ico"
 
 [autoload]
 

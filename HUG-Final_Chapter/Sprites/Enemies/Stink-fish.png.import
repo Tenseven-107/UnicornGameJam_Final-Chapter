@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Tilemap.png-08d54f354bcf8f4e83e3c1d6a4c1c49b.stex"
+path="res://.import/Stink-fish.png-b0d4f1d0d1ce634cf90ec3bb401e6153.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Sprites/FX/Tilemap.png"
-dest_files=[ "res://.import/Tilemap.png-08d54f354bcf8f4e83e3c1d6a4c1c49b.stex" ]
+source_file="res://Sprites/Enemies/Stink-fish.png"
+dest_files=[ "res://.import/Stink-fish.png-b0d4f1d0d1ce634cf90ec3bb401e6153.stex" ]
 
 [params]
 

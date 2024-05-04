@@ -261,17 +261,17 @@ func switch_state(new_state: int):
 func movement(delta):
 	if attack_cooldown.is_stopped() and dodge_timer.is_stopped():
 		input_vector.x = Input.get_axis("left_player", "right_player")
-	if input_vector.x != 0:  
+	if input_vector.x != 0 and attack_timer.is_stopped():  
 		last_x_input = input_vector.normalized().x
 
 		if check_rays(false) == true: anims.travel("Walk")
 	else: if check_rays(false) == true: anims.travel("Idle")
 
 	# Turning the players direction
-	if input_vector.x > 0: 
+	if last_x_input > 0: 
 		sprite.flip_h = true
 		attack_ray.cast_to.x = attack_ray_reach
-	elif input_vector.x < 0: 
+	elif last_x_input < 0: 
 		sprite.flip_h = false
 		attack_ray.cast_to.x = -attack_ray_reach
 
@@ -370,6 +370,8 @@ func attacking():
 			var colliding_entity = attack_ray.get_collider()
 			if colliding_entity.is_in_group(Entity.group_name):
 				colliding_entity.handle_hit(damage_team, damage)
+
+				input_vector.x = last_x_input / 2 # Small knockback when hitting an enemy
 
 				# Play effects on attack hit
 				for effect in effects_attack_hit:

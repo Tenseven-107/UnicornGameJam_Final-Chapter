@@ -11,8 +11,6 @@ onready var dropoff_timer = $Dropoff_timer
 onready var collision_tween = $Collision_tween
 onready var dropoff_tween = $Dropoff_tween
 
-export (NodePath) var trail_path: NodePath
-
 # Stats
 # - Stats
 export (int, 2, 100) var times_ricochet: int = 4
@@ -58,8 +56,9 @@ func _ready():
 	dropoff_timer.connect("timeout", self, "dropoff")
 
 	# Setting up physics layers
-	collision_layer = LAYER
-	collision_mask = MASK
+	if wall_piercing == false:
+		collision_layer = LAYER
+		collision_mask = MASK
 
 
 
@@ -95,9 +94,8 @@ func move(delta):
 			play_effect.play_effect()
 
 		# Remove when cant ricochet
-		if (((can_ricochet == false and collision) or (collision and times_ricochet <= 0)) and 
-		wall_piercing == false):
-			queue_free()
+		if (((can_ricochet == false and collision) or (collision and times_ricochet <= 0))):
+			call_deferred("queue_free")
 
 
 
@@ -106,11 +104,6 @@ func dropoff():
 	dropoff_tween.interpolate_property(self, "scale", Vector2(1, 1), Vector2.ZERO, 0.1, 
 	dropoff_transition_type, Tween.EASE_IN_OUT)
 	dropoff_tween.start()
-
-	if trail_path.is_empty() == false:
-		var trail = get_node(trail_path)
-		trail.trail_active = false
-
 	dropoff_tween.connect("tween_all_completed", self, "destroy")
 
 func destroy():

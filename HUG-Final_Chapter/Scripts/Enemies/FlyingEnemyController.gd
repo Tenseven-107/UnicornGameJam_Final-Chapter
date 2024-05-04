@@ -11,7 +11,7 @@ onready var entity: Entity = $Combat/Entity
 # Aditional objects
 export var _c_additional_objects: String
 export (NodePath) var body_path: NodePath
-onready var body: Node2D = get_node(body_path)
+var body: Node2D
 
 export (NodePath) var rest_timer_path: NodePath
 var rest_timer: Timer
@@ -102,6 +102,7 @@ func get_target(body: Node):
 		detected = true
 
 		if invincible_on_idle == true: entity.invincible = false
+		if is_instance_valid(rest_timer) == true: rest_timer.start()
 
 		# Play effects on detect
 		for effect in effects_detect:

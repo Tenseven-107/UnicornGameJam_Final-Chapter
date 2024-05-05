@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/Attack-player.mp3-d80cce3ff8855b90837b9bbc1e93f779.mp3str"
+
+[deps]
+
+source_file="res://Sound/SFX/Player/Attack-player.mp3"
+dest_files=[ "res://.import/Attack-player.mp3-d80cce3ff8855b90837b9bbc1e93f779.mp3str" ]
+
+[params]
+
+loop=false
+loop_offset=0

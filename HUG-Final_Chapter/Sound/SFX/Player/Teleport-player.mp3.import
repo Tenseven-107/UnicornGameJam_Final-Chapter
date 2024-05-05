@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/Teleport-player.mp3-f54502692807ac6532d61312c734f956.mp3str"
+
+[deps]
+
+source_file="res://Sound/SFX/Player/Teleport-player.mp3"
+dest_files=[ "res://.import/Teleport-player.mp3-f54502692807ac6532d61312c734f956.mp3str" ]
+
+[params]
+
+loop=false
+loop_offset=0

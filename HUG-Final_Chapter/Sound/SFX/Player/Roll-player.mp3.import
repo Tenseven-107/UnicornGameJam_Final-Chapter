@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/Roll-player.mp3-5e894e8014f907e6bdaad49ca3ab8833.mp3str"
+
+[deps]
+
+source_file="res://Sound/SFX/Player/Roll-player.mp3"
+dest_files=[ "res://.import/Roll-player.mp3-5e894e8014f907e6bdaad49ca3ab8833.mp3str" ]
+
+[params]
+
+loop=false
+loop_offset=0

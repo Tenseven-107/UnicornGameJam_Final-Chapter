@@ -1,4 +1,4 @@
-[gd_scene load_steps=60 format=2]
+[gd_scene load_steps=72 format=2]
 
 [ext_resource path="res://Scripts/Player/PlayerController.gd" type="Script" id=1]
 [ext_resource path="res://Sprites/Player/PlayerAnimMap.tres" type="SpriteFrames" id=2]
@@ -18,6 +18,18 @@
 [ext_resource path="res://Prefabs/Graphics/Particles/TeleportCloud.tscn" type="PackedScene" id=16]
 [ext_resource path="res://Sprites/FX/FX_sheet.png" type="Texture" id=17]
 [ext_resource path="res://Prefabs/Player/CollectibleHandler.gd" type="Script" id=18]
+[ext_resource path="res://Sound/SFX/Player/Roll-player.mp3" type="AudioStream" id=19]
+[ext_resource path="res://Sound/SFX/Player/Attack-player.mp3" type="AudioStream" id=20]
+[ext_resource path="res://Scripts/EffectPlayers/SFXEffectPlayer.gd" type="Script" id=21]
+[ext_resource path="res://addons/randomAudioStreamPlayer/random_audio_stream_player.gd" type="Script" id=22]
+[ext_resource path="res://Sound/SFX/Player/Jump-player.mp3" type="AudioStream" id=23]
+[ext_resource path="res://Sound/SFX/Player/Land-player.mp3" type="AudioStream" id=24]
+[ext_resource path="res://Sound/SFX/Player/Hurt-player.mp3" type="AudioStream" id=25]
+[ext_resource path="res://Sound/SFX/Player/Teleport-player.mp3" type="AudioStream" id=26]
+[ext_resource path="res://Sound/SFX/Player/Die-player.mp3" type="AudioStream" id=27]
+[ext_resource path="res://Sound/SFX/Player/Heal-player.mp3" type="AudioStream" id=28]
+[ext_resource path="res://Sound/SFX/Player/NoStamina-player.mp3" type="AudioStream" id=29]
+[ext_resource path="res://Sound/SFX/Player/Stamina-player.mp3" type="AudioStream" id=30]
 
 [sub_resource type="CapsuleShape2D" id=3]
 radius = 5.0
@@ -379,14 +391,15 @@ start_timer_path = NodePath("Utility/ActiveTimer")
 has_jump = false
 has_attack = false
 has_teleport = false
-effects_teleport_in = [ NodePath("FX/Teleport-cloud"), NodePath("FX/no_stamina") ]
+effects_teleport_in = [ NodePath("FX/Teleport-cloud"), NodePath("FX/no_stamina"), NodePath("SFX/Teleport") ]
 effects_teleport_out = [ NodePath("FX/teleport"), NodePath("FX/Teleport-cloud") ]
+effects_attack = [ NodePath("SFX/Attack") ]
 effects_attack_hit = [ NodePath("FX/Attack-hit-cam"), NodePath("FX/HitAttack-particles"), NodePath("FX/Attack-hit_controller") ]
-effects_roll = [ NodePath("FX/Roll-cloud") ]
-effects_jump = [ NodePath("FX/Jump-cloud") ]
-effects_ground = [ NodePath("FX/Jump-cloud") ]
-effects_no_stamina = [ NodePath("FX/no_stamina"), NodePath("FX/Stars2") ]
-effects_not_enough_stamina = [ NodePath("FX/not_enough_stamina"), NodePath("FX/Stars") ]
+effects_roll = [ NodePath("FX/Roll-cloud"), NodePath("SFX/Roll") ]
+effects_jump = [ NodePath("FX/Jump-cloud"), NodePath("SFX/Jump") ]
+effects_ground = [ NodePath("FX/Jump-cloud"), NodePath("SFX/Land") ]
+effects_no_stamina = [ NodePath("FX/no_stamina"), NodePath("FX/Stars2"), NodePath("SFX/Tired") ]
+effects_not_enough_stamina = [ NodePath("FX/not_enough_stamina"), NodePath("FX/Stars"), NodePath("SFX/Stamina") ]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource( 3 )
@@ -410,7 +423,7 @@ texture = SubResource( 41 )
 [node name="Sprite" type="AnimatedSprite" parent="Visuals"]
 frames = ExtResource( 2 )
 animation = "Idle"
-frame = 2
+frame = 3
 
 [node name="Positions" type="Node2D" parent="Visuals"]
 
@@ -442,9 +455,9 @@ script = ExtResource( 3 )
 i_timer_path = NodePath("../../Utility/I-Timer")
 hp = 6
 i_frames = 0.5
-effects_hit = [ NodePath("../../FX/Hit"), NodePath("../../FX/Hit-cam"), NodePath("../../FX/Hit-controller"), NodePath("../../FX/PlayerHit"), NodePath("../../FX/FlashHit"), NodePath("../../FX/FlashScale") ]
-effects_heal = [ NodePath("../../FX/FlashHeal"), NodePath("../../FX/FlashScale"), NodePath("../../FX/HaloScale") ]
-effects_death = [ NodePath("../../FX/Screen-dead") ]
+effects_hit = [ NodePath("../../FX/Hit"), NodePath("../../FX/Hit-cam"), NodePath("../../FX/Hit-controller"), NodePath("../../FX/PlayerHit"), NodePath("../../FX/FlashHit"), NodePath("../../FX/FlashScale"), NodePath("../../SFX/Hurt") ]
+effects_heal = [ NodePath("../../FX/FlashHeal"), NodePath("../../FX/FlashScale"), NodePath("../../FX/HaloScale"), NodePath("../../SFX/Heal") ]
+effects_death = [ NodePath("../../FX/Screen-dead"), NodePath("../../SFX/Die") ]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Combat/Entity"]
 modulate = Color( 1, 0, 0, 1 )
@@ -622,3 +635,105 @@ start_color = Color( 1, 1, 1, 1 )
 script = ExtResource( 7 )
 vibration = 0.3
 strong_vibration = 0.5
+
+[node name="SFX" type="Node" parent="."]
+
+[node name="Attack" type="Node" parent="SFX"]
+script = ExtResource( 21 )
+audiostream_path = NodePath("RandomAudioStreamPlayer")
+
+[node name="RandomAudioStreamPlayer" type="AudioStreamPlayer" parent="SFX/Attack"]
+script = ExtResource( 22 )
+samples = [ ExtResource( 20 ) ]
+random_volume_range = 0
+random_pitch_range = 0.5
+
+[node name="Roll" type="Node" parent="SFX"]
+script = ExtResource( 21 )
+audiostream_path = NodePath("RandomAudioStreamPlayer")
+
+[node name="RandomAudioStreamPlayer" type="AudioStreamPlayer" parent="SFX/Roll"]
+script = ExtResource( 22 )
+samples = [ ExtResource( 19 ) ]
+random_volume_range = 0
+random_pitch_range = 0.5
+
+[node name="Jump" type="Node" parent="SFX"]
+script = ExtResource( 21 )
+audiostream_path = NodePath("RandomAudioStreamPlayer")
+
+[node name="RandomAudioStreamPlayer" type="AudioStreamPlayer" parent="SFX/Jump"]
+script = ExtResource( 22 )
+samples = [ ExtResource( 23 ) ]
+random_volume_range = 0
+random_pitch_range = 0.7
+
+[node name="Land" type="Node" parent="SFX"]
+script = ExtResource( 21 )
+audiostream_path = NodePath("RandomAudioStreamPlayer")
+
+[node name="RandomAudioStreamPlayer" type="AudioStreamPlayer" parent="SFX/Land"]
+script = ExtResource( 22 )
+samples = [ ExtResource( 24 ) ]
+random_volume_range = 0
+random_pitch_range = 0.7
+
+[node name="Hurt" type="Node" parent="SFX"]
+script = ExtResource( 21 )
+audiostream_path = NodePath("RandomAudioStreamPlayer")
+
+[node name="RandomAudioStreamPlayer" type="AudioStreamPlayer" parent="SFX/Hurt"]
+script = ExtResource( 22 )
+samples = [ ExtResource( 25 ) ]
+random_volume_range = 0
+random_pitch_range = 0.7
+
+[node name="Heal" type="Node" parent="SFX"]
+script = ExtResource( 21 )
+audiostream_path = NodePath("RandomAudioStreamPlayer")
+
+[node name="RandomAudioStreamPlayer" type="AudioStreamPlayer" parent="SFX/Heal"]
+script = ExtResource( 22 )
+samples = [ ExtResource( 28 ) ]
+random_volume_range = 0
+random_pitch_range = 0.7
+
+[node name="Die" type="Node" parent="SFX"]
+script = ExtResource( 21 )
+audiostream_path = NodePath("RandomAudioStreamPlayer")
+
+[node name="RandomAudioStreamPlayer" type="AudioStreamPlayer" parent="SFX/Die"]
+script = ExtResource( 22 )
+samples = [ ExtResource( 27 ) ]
+random_volume_range = 0
+random_pitch_range = 0.2
+
+[node name="Teleport" type="Node" parent="SFX"]
+script = ExtResource( 21 )
+audiostream_path = NodePath("RandomAudioStreamPlayer")
+
+[node name="RandomAudioStreamPlayer" type="AudioStreamPlayer" parent="SFX/Teleport"]
+script = ExtResource( 22 )
+samples = [ ExtResource( 26 ) ]
+random_volume_range = 0
+random_pitch_range = 0.5
+
+[node name="Stamina" type="Node" parent="SFX"]
+script = ExtResource( 21 )
+audiostream_path = NodePath("RandomAudioStreamPlayer")
+
+[node name="RandomAudioStreamPlayer" type="AudioStreamPlayer" parent="SFX/Stamina"]
+script = ExtResource( 22 )
+samples = [ ExtResource( 30 ) ]
+random_volume_range = 0
+random_pitch_range = 0.7
+
+[node name="Tired" type="Node" parent="SFX"]
+script = ExtResource( 21 )
+audiostream_path = NodePath("RandomAudioStreamPlayer")
+
+[node name="RandomAudioStreamPlayer" type="AudioStreamPlayer" parent="SFX/Tired"]
+script = ExtResource( 22 )
+samples = [ ExtResource( 29 ) ]
+random_volume_range = 0
+random_pitch_range = 0.2

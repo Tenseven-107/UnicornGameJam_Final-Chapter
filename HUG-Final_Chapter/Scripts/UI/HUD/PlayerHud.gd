@@ -28,6 +28,7 @@ func _ready():
 	# Set up pause
 	pause_menu.hide()
 	is_paused = false
+	get_tree().paused = false
 
 	resume.connect("button_down", self, "pause")
 	quit.connect("button_down", get_tree(), "quit")

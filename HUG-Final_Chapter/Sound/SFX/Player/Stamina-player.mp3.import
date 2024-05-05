@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/Stamina-player.mp3-3e799d4ea9c92c19aae784d18fe42d9c.mp3str"
+
+[deps]
+
+source_file="res://Sound/SFX/Player/Stamina-player.mp3"
+dest_files=[ "res://.import/Stamina-player.mp3-3e799d4ea9c92c19aae784d18fe42d9c.mp3str" ]
+
+[params]
+
+loop=false
+loop_offset=0

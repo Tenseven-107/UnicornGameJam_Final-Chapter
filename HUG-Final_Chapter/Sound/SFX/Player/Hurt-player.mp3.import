@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/Hurt-player.mp3-f5935efcecaa5fcf1e91bb4706fc49b4.mp3str"
+
+[deps]
+
+source_file="res://Sound/SFX/Player/Hurt-player.mp3"
+dest_files=[ "res://.import/Hurt-player.mp3-f5935efcecaa5fcf1e91bb4706fc49b4.mp3str" ]
+
+[params]
+
+loop=false
+loop_offset=0

@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/Die-player.mp3-64cc558a8ebd492a5e981f5d783a96b8.mp3str"
+
+[deps]
+
+source_file="res://Sound/SFX/Player/Die-player.mp3"
+dest_files=[ "res://.import/Die-player.mp3-64cc558a8ebd492a5e981f5d783a96b8.mp3str" ]
+
+[params]
+
+loop=false
+loop_offset=0

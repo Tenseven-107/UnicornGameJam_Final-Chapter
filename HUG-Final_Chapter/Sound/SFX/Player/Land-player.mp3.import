@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/Land-player.mp3-ed20bda05943a2a34e6e94970c246472.mp3str"
+
+[deps]
+
+source_file="res://Sound/SFX/Player/Land-player.mp3"
+dest_files=[ "res://.import/Land-player.mp3-ed20bda05943a2a34e6e94970c246472.mp3str" ]
+
+[params]
+
+loop=false
+loop_offset=0

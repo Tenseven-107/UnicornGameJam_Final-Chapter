@@ -27,6 +27,8 @@ export (bool) var clear_save: bool = false
 
 # Setup
 func _ready():
+	print("Loaded Scene")
+
 	add_to_group(group_name)
 	dead = false
 
@@ -41,7 +43,6 @@ func _ready():
 
 		load_checkpoint()
 		GlobalSignals.connect("gameover", self, "set_dead")
-		GlobalSignals.connect("gameover", self, "load_checkpoint")
 
 	else: clear_file()
 
@@ -118,7 +119,9 @@ func tp_drone():
 
 
 # Setting dead
-func set_dead(): dead = true
+func set_dead(): 
+	dead = true
+	load_checkpoint()
 
 
 

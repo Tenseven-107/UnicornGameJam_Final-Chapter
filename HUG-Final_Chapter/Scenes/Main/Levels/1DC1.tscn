@@ -139,7 +139,7 @@ texture = SubResource( 3 )
 [node name="LevelTransit" parent="Enviroment/Elements" instance=ExtResource( 5 )]
 position = Vector2( -171, -11 )
 right = false
-next_scene_pos = Vector2( 1605, 237 )
+next_scene_pos = Vector2( 1573, 237 )
 next_scene = "res://Scenes/Main/Levels/Start.tscn"
 
 [node name="LevelTransit2" parent="Enviroment/Elements" instance=ExtResource( 5 )]

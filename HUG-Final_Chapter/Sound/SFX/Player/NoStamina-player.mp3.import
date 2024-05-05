@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/NoStamina-player.mp3-6203f31881acb047806746a72cbafe18.mp3str"
+
+[deps]
+
+source_file="res://Sound/SFX/Player/NoStamina-player.mp3"
+dest_files=[ "res://.import/NoStamina-player.mp3-6203f31881acb047806746a72cbafe18.mp3str" ]
+
+[params]
+
+loop=false
+loop_offset=0

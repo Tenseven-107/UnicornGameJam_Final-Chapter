@@ -490,7 +490,7 @@ func set_dead():
 	dead = true
 	anims.start("Die")
 
-func signal_dead():GlobalSignals.emit_signal("gameover")
+func signal_dead(): GlobalSignals.emit_signal("gameover")
 
 
 #Set to active

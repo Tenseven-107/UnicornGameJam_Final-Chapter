@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=20 format=2]
 
 [ext_resource path="res://Sprites/UI/HUD/empty_Stamina-bar.png" type="Texture" id=1]
 [ext_resource path="res://Sprites/UI/HUD/full_Stamina-bar.png" type="Texture" id=2]
@@ -8,8 +8,34 @@
 [ext_resource path="res://Sprites/UI/HUD/HP-full.png" type="Texture" id=6]
 [ext_resource path="res://Sprites/UI/Fonts/Default-font.tres" type="DynamicFont" id=7]
 [ext_resource path="res://Sprites/UI/Fonts/Title-font.tres" type="DynamicFont" id=8]
+[ext_resource path="res://Sprites/Objects/Pickups/Collectible4.tres" type="Texture" id=9]
+[ext_resource path="res://Sprites/Objects/Pickups/Collectible3.tres" type="Texture" id=10]
+
+[sub_resource type="StyleBoxEmpty" id=4]
+
+[sub_resource type="StyleBoxEmpty" id=10]
+
+[sub_resource type="StyleBoxFlat" id=2]
+bg_color = Color( 0.980392, 1, 1, 1 )
+
+[sub_resource type="StyleBoxEmpty" id=5]
+
+[sub_resource type="StyleBoxEmpty" id=9]
+
+[sub_resource type="StyleBoxLine" id=6]
+color = Color( 0.980392, 1, 1, 1 )
+thickness = 10
+
+[sub_resource type="StyleBoxLine" id=8]
+color = Color( 0.466667, 0.690196, 0.164706, 1 )
+thickness = 10
+
+[sub_resource type="StyleBoxEmpty" id=11]
+
+[sub_resource type="StyleBoxEmpty" id=3]
 
 [node name="PlayerHud" type="CanvasLayer"]
+pause_mode = 2
 script = ExtResource( 3 )
 
 [node name="UI" type="Control" parent="."]
@@ -74,6 +100,7 @@ size_flags_horizontal = 3
 [node name="Effects" type="Control" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
+mouse_filter = 2
 
 [node name="Text" type="Control" parent="Effects"]
 anchor_right = 1.0
@@ -121,6 +148,107 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 mouse_filter = 2
 color = Color( 0, 0, 0, 1 )
+
+[node name="Pause" type="Control" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="ColorRect" type="ColorRect" parent="Pause"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0.0588235, 0.00784314, 0.180392, 0.588235 )
+
+[node name="Menu" type="VBoxContainer" parent="Pause"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -84.916
+margin_top = -40.5
+margin_right = 84.916
+margin_bottom = 40.5
+
+[node name="Paused" type="Label" parent="Pause/Menu"]
+margin_right = 169.0
+margin_bottom = 21.0
+custom_fonts/font = ExtResource( 8 )
+text = "- Paused -"
+align = 1
+valign = 1
+
+[node name="Resume" type="Button" parent="Pause/Menu"]
+margin_top = 25.0
+margin_right = 169.0
+margin_bottom = 41.0
+custom_fonts/font = ExtResource( 7 )
+custom_styles/hover = SubResource( 4 )
+custom_styles/pressed = SubResource( 10 )
+custom_styles/focus = SubResource( 2 )
+custom_styles/disabled = SubResource( 5 )
+custom_styles/normal = SubResource( 9 )
+text = "Resume"
+
+[node name="VolumeMaster" type="HBoxContainer" parent="Pause/Menu"]
+margin_top = 45.0
+margin_right = 169.0
+margin_bottom = 61.0
+
+[node name="Label" type="Label" parent="Pause/Menu/VolumeMaster"]
+margin_right = 46.0
+margin_bottom = 16.0
+custom_colors/font_color = Color( 0.466667, 0.690196, 0.164706, 1 )
+custom_fonts/font = ExtResource( 7 )
+text = "Master"
+
+[node name="Volume" type="HSlider" parent="Pause/Menu/VolumeMaster"]
+margin_left = 50.0
+margin_right = 169.0
+margin_bottom = 16.0
+size_flags_horizontal = 3
+custom_icons/grabber_highlight = ExtResource( 9 )
+custom_icons/grabber = ExtResource( 10 )
+custom_styles/slider = SubResource( 6 )
+custom_styles/grabber_area_highlight = SubResource( 8 )
+custom_styles/grabber_area = SubResource( 8 )
+min_value = -80.0
+max_value = 0.0
+
+[node name="VolumeMusic" type="HBoxContainer" parent="Pause/Menu"]
+margin_top = 65.0
+margin_right = 169.0
+margin_bottom = 81.0
+
+[node name="Label" type="Label" parent="Pause/Menu/VolumeMusic"]
+margin_right = 36.0
+margin_bottom = 16.0
+custom_colors/font_color = Color( 0.466667, 0.690196, 0.164706, 1 )
+custom_fonts/font = ExtResource( 7 )
+text = "Music"
+
+[node name="Volume" type="HSlider" parent="Pause/Menu/VolumeMusic"]
+margin_left = 40.0
+margin_right = 169.0
+margin_bottom = 16.0
+size_flags_horizontal = 3
+custom_icons/grabber_highlight = ExtResource( 9 )
+custom_icons/grabber = ExtResource( 10 )
+custom_styles/slider = SubResource( 6 )
+custom_styles/grabber_area_highlight = SubResource( 8 )
+custom_styles/grabber_area = SubResource( 8 )
+min_value = -80.0
+max_value = 0.0
+
+[node name="Quit" type="Button" parent="Pause/Menu"]
+margin_top = 85.0
+margin_right = 169.0
+margin_bottom = 101.0
+custom_fonts/font = ExtResource( 7 )
+custom_styles/hover = SubResource( 4 )
+custom_styles/pressed = SubResource( 11 )
+custom_styles/focus = SubResource( 2 )
+custom_styles/disabled = SubResource( 5 )
+custom_styles/normal = SubResource( 3 )
+text = "Quit"
 
 [node name="OverlayFX" type="Node" parent="."]
 script = ExtResource( 4 )

@@ -3,6 +3,7 @@ extends Area2D
 
 # objects
 var game_over_handler: GameOverHandler
+var collectible_handler: CollectibleHandler
 
 
 # Healing
@@ -19,6 +20,7 @@ export (Array, NodePath) var effects_enter
 # Setup
 func _ready():
 	game_over_handler = get_tree().get_nodes_in_group(GameOverHandler.group_name)[0]
+	collectible_handler = get_tree().get_nodes_in_group(CollectibleHandler.group_name)[0]
 
 	self.connect("body_entered", self, "activate_checkpoint")
 
@@ -27,8 +29,6 @@ func _ready():
 
 # Activate checkpoint
 func activate_checkpoint(body: Node):
-	
-
 	if body.is_in_group(PlayerController.group_name):
 		var current_scene: String = get_tree().current_scene.filename
 
@@ -36,6 +36,8 @@ func activate_checkpoint(body: Node):
 			game_over_handler.save_checkpoint(current_scene, global_position)
 
 			GlobalSignals.emit_signal("heal_player", team, hp)
+
+			collectible_handler.save()
 
 			# Play effects on enter
 			for effect in effects_enter:

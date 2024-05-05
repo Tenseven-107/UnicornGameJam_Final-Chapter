@@ -4,6 +4,8 @@ extends Area2D
 
 # objects
 var game_over_handler: GameOverHandler
+var collectible_handler: CollectibleHandler
+
 onready var sprite: Sprite = $Visuals/Sprite
 
 export (NodePath) var transit_timer_path: NodePath
@@ -29,6 +31,7 @@ export (Array, NodePath) var effects_enter
 # Setup
 func _ready():
 	game_over_handler = get_tree().get_nodes_in_group(GameOverHandler.group_name)[0]
+	collectible_handler = get_tree().get_nodes_in_group(CollectibleHandler.group_name)[0]
 
 	if right == false: sprite.flip_h = true
 	transit_timer.wait_time = transit_time
@@ -45,6 +48,8 @@ func transit(body: Node):
 
 		var player: PlayerController = body
 		player.switch_state(PlayerController.STATES.WALK)
+
+		collectible_handler.save()
 
 		transit_timer.start()
 

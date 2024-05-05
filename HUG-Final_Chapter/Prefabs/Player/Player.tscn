@@ -1,4 +1,4 @@
-[gd_scene load_steps=59 format=2]
+[gd_scene load_steps=60 format=2]
 
 [ext_resource path="res://Scripts/Player/PlayerController.gd" type="Script" id=1]
 [ext_resource path="res://Sprites/Player/PlayerAnimMap.tres" type="SpriteFrames" id=2]
@@ -17,6 +17,7 @@
 [ext_resource path="res://Prefabs/Graphics/Particles/HitPlayer.tscn" type="PackedScene" id=15]
 [ext_resource path="res://Prefabs/Graphics/Particles/TeleportCloud.tscn" type="PackedScene" id=16]
 [ext_resource path="res://Sprites/FX/FX_sheet.png" type="Texture" id=17]
+[ext_resource path="res://Prefabs/Player/CollectibleHandler.gd" type="Script" id=18]
 
 [sub_resource type="CapsuleShape2D" id=3]
 radius = 5.0
@@ -409,6 +410,7 @@ texture = SubResource( 41 )
 [node name="Sprite" type="AnimatedSprite" parent="Visuals"]
 frames = ExtResource( 2 )
 animation = "Idle"
+frame = 2
 
 [node name="Positions" type="Node2D" parent="Visuals"]
 
@@ -475,9 +477,14 @@ cast_to = Vector2( 0, 24 )
 collision_mask = 18
 
 [node name="AbilityHandler" type="Node" parent="." groups=["AbilityHandler"]]
+pause_mode = 2
 script = ExtResource( 8 )
 player_path = NodePath("..")
 variable_abilities = [ "has_jump", "has_attack", "has_teleport" ]
+
+[node name="CollectibleHandler" type="Node" parent="." groups=["CollectibleHandler"]]
+pause_mode = 2
+script = ExtResource( 18 )
 
 [node name="Utility" type="Node" parent="."]
 

@@ -63,7 +63,7 @@ func _ready():
 func _process(delta):
 	if shaking:
 		offset = normal_offset - Vector2(rand_range(-shake_amount, shake_amount),
-		rand_range(shake_amount, -shake_amount)) * delta
+		rand_range(shake_amount, -shake_amount)).round() * delta
 
 	if is_instance_valid(player_target):
 		update_cam()
@@ -76,7 +76,7 @@ func update_cam():
 		if player_offset.x != 0 and player_target.input_vector.y == 0:
 			last_cam_offset = player_offset
 
-		if Engine.get_frames_per_second() >= 60:
+		if Engine.get_frames_per_second() >= 50:
 			global_position = lerp(global_position, player_target.global_position + last_cam_offset, 1).round()
 			smoothing_enabled = true
 
@@ -90,7 +90,7 @@ func update_cam():
 func shake(new_shake, shake_time, shake_limit):
 	if shake_multiplier != 0:
 		var fps = Engine.get_frames_per_second()
-		if fps <= 60:
+		if fps <= 50:
 			new_shake /= 2
 			shake_limit /= 2
 

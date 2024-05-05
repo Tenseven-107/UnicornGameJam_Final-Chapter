@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=2]
+[gd_scene load_steps=23 format=2]
 
 [ext_resource path="res://Prefabs/Utility/Gameplay/GameCamera.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Prefabs/Player/Player.tscn" type="PackedScene" id=2]
@@ -15,6 +15,7 @@
 [ext_resource path="res://Prefabs/Enemies/TurboTurtle.tscn" type="PackedScene" id=13]
 [ext_resource path="res://Prefabs/Utility/Backend/GameOverHandler.tscn" type="PackedScene" id=14]
 [ext_resource path="res://Scripts/EffectPlayers/ScreenTextEffectPlayer.gd" type="Script" id=15]
+[ext_resource path="res://Prefabs/Objects/Pickups/Collectible.tscn" type="PackedScene" id=16]
 [ext_resource path="res://Prefabs/Graphics/Backgrounds/DesertBackground.tscn" type="PackedScene" id=17]
 [ext_resource path="res://Scripts/EffectPlayers/MusicStarter.gd" type="Script" id=21]
 
@@ -118,8 +119,8 @@ position = Vector2( -10, 9 )
 
 [node name="LevelTransit" parent="Enviroment/Elements" instance=ExtResource( 5 )]
 position = Vector2( 1637, 236 )
-next_scene_pos = Vector2( -139, -10 )
 next_scene = "res://Scenes/Main/Levels/1DC1.tscn"
+next_scene_pos = Vector2( -139, -10 )
 
 [node name="TeleportBlock" type="StaticBody2D" parent="Enviroment/Elements"]
 position = Vector2( 1833, 212 )
@@ -152,6 +153,10 @@ position = Vector2( 912, 224 )
 
 [node name="Thorns4" parent="Enviroment/Elements" instance=ExtResource( 11 )]
 position = Vector2( 1030, 224 )
+
+[node name="Collectible" parent="Enviroment/Elements" instance=ExtResource( 16 )]
+position = Vector2( -236, 133 )
+id = "congrats"
 
 [node name="DesertBackground" parent="." instance=ExtResource( 17 )]
 

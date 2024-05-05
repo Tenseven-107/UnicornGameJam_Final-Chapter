@@ -17,6 +17,8 @@ signal text_effect(text, text_color, time, big)
 signal heal_player(team, hp)
 signal gameover
 
+signal save_collectibles()
+
 
 # Bools
 var can_teleport: bool = true # Dirty fix

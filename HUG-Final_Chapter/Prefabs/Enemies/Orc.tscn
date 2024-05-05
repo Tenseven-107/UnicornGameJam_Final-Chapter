@@ -1,4 +1,4 @@
-[gd_scene load_steps=44 format=2]
+[gd_scene load_steps=50 format=2]
 
 [ext_resource path="res://Scripts/Enemies/GroundEnemyController.gd" type="Script" id=1]
 [ext_resource path="res://Scripts/Utils/Gamefeel/RandomSprite.gd" type="Script" id=2]
@@ -18,6 +18,12 @@
 [ext_resource path="res://Sprites/Enemies/OrcHead.tres" type="Texture" id=16]
 [ext_resource path="res://Sprites/Enemies/OrcHead2.tres" type="Texture" id=17]
 [ext_resource path="res://Sprites/Enemies/OrcHead3.tres" type="Texture" id=18]
+[ext_resource path="res://addons/randomAudioStreamPlayer/random_audio_stream_player_2D.gd" type="Script" id=19]
+[ext_resource path="res://Scripts/EffectPlayers/SFXEffectPlayer.gd" type="Script" id=20]
+[ext_resource path="res://Sound/SFX/Enemies/Orc1.mp3" type="AudioStream" id=21]
+[ext_resource path="res://Sound/SFX/Enemies/Shoot-orc.mp3" type="AudioStream" id=22]
+[ext_resource path="res://Sound/SFX/Enemies/Orc3.mp3" type="AudioStream" id=23]
+[ext_resource path="res://Sound/SFX/Enemies/Orc2.mp3" type="AudioStream" id=24]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 4, 10.5 )
@@ -277,7 +283,7 @@ hp = 6
 i_frames = 0.2
 team = 1
 destroy_on_death = true
-effects_hit = [ NodePath("../../FX/scale"), NodePath("../../FX/color"), NodePath("../../FX/Hit") ]
+effects_hit = [ NodePath("../../FX/scale"), NodePath("../../FX/color"), NodePath("../../FX/Hit"), NodePath("../../SFX/Voice") ]
 effects_death = [ NodePath("../../FX/Kill") ]
 activity_objects_paths = [ NodePath("../.."), NodePath("../Hitbox") ]
 inactive_timer_path = NodePath("../../Utils/Inactivity")
@@ -313,6 +319,7 @@ script = ExtResource( 8 )
 team = 1
 projectile = ExtResource( 14 )
 muzzle_path = NodePath("../../Body/Utility/Muzzle")
+effects_on_fire = [ NodePath("../../SFX/Shoot") ]
 
 [node name="FX" type="Node" parent="."]
 
@@ -345,3 +352,25 @@ position_object = NodePath("../..")
 script = ExtResource( 12 )
 spawned_effect = ExtResource( 10 )
 position_object = NodePath("../..")
+
+[node name="SFX" type="Node2D" parent="."]
+
+[node name="Voice" type="Node2D" parent="SFX"]
+script = ExtResource( 20 )
+audiostream_path = NodePath("RandomAudioStreamPlayer2D")
+
+[node name="RandomAudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="SFX/Voice"]
+script = ExtResource( 19 )
+samples = [ ExtResource( 21 ), ExtResource( 24 ), ExtResource( 23 ) ]
+random_volume_range = 0
+random_pitch_range = 0.25
+
+[node name="Shoot" type="Node2D" parent="SFX"]
+script = ExtResource( 20 )
+audiostream_path = NodePath("RandomAudioStreamPlayer2D")
+
+[node name="RandomAudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="SFX/Shoot"]
+script = ExtResource( 19 )
+samples = [ ExtResource( 22 ) ]
+random_volume_range = 0
+random_pitch_range = 0.5

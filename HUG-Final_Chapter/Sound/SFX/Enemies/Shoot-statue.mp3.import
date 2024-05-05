@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/Shoot-statue.mp3-cf5d0e08613e46d170e67922954e1872.mp3str"
+
+[deps]
+
+source_file="res://Sound/SFX/Enemies/Shoot-statue.mp3"
+dest_files=[ "res://.import/Shoot-statue.mp3-cf5d0e08613e46d170e67922954e1872.mp3str" ]
+
+[params]
+
+loop=false
+loop_offset=0

@@ -15,6 +15,11 @@ export var _c_clear_save: String
 export (bool) var clear_save: bool = false
 export (bool) var do_not_load: bool = false
 
+# Effect players
+export var _c_effect_players: String
+export (Array, NodePath) var effects_add
+
+
 
 # Set up
 func _ready():
@@ -58,6 +63,12 @@ func clear_file():
 # Add ability
 func collect(new_collectible_id: String):
 	current_collectibles.append(new_collectible_id)
+
+	# Play effects on add
+	for effect in effects_add:
+		var play_effect: EffectPlayer = get_node(effect)
+		play_effect.play_effect()
+
 
 
 func get_collectible_amount():

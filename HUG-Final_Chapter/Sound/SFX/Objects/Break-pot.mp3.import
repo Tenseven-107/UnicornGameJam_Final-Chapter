@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/Break-pot.mp3-228084a77552f840113411b95d8ba825.mp3str"
+
+[deps]
+
+source_file="res://Sound/SFX/Objects/Break-pot.mp3"
+dest_files=[ "res://.import/Break-pot.mp3-228084a77552f840113411b95d8ba825.mp3str" ]
+
+[params]
+
+loop=false
+loop_offset=0

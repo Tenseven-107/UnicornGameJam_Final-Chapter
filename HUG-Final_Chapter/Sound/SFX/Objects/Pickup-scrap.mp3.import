@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/Pickup-scrap.mp3-e42bc0bcf66d9b01665ac7da0a9a1c97.mp3str"
+
+[deps]
+
+source_file="res://Sound/SFX/Objects/Pickup-scrap.mp3"
+dest_files=[ "res://.import/Pickup-scrap.mp3-e42bc0bcf66d9b01665ac7da0a9a1c97.mp3str" ]
+
+[params]
+
+loop=false
+loop_offset=0

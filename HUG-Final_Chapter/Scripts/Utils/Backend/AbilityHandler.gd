@@ -19,6 +19,11 @@ const group_name: String = "AbilityHandler"
 export var _c_clear_save: String
 export (bool) var clear_save: bool = false
 
+# Effect players
+export var _c_effect_players: String
+export (Array, NodePath) var effects_add
+
+
 
 # Set up
 func _ready():
@@ -83,6 +88,11 @@ func add_ability(new_ability: String):
 	abilities.append(new_ability)
 	set_abilities()
 	save()
+
+	# Play effects on add
+	for effect in effects_add:
+		var play_effect: EffectPlayer = get_node(effect)
+		play_effect.play_effect()
 
 
 

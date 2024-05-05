@@ -1,8 +1,11 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://Scripts/EffectPlayers/Destroy.gd" type="Script" id=1]
 [ext_resource path="res://Scripts/EffectPlayers/ParticleEffectPlayer.gd" type="Script" id=2]
 [ext_resource path="res://Sprites/FX/FX_sheet.png" type="Texture" id=3]
+[ext_resource path="res://addons/randomAudioStreamPlayer/random_audio_stream_player_2D.gd" type="Script" id=4]
+[ext_resource path="res://Scripts/EffectPlayers/SFXEffectPlayer.gd" type="Script" id=5]
+[ext_resource path="res://Sound/SFX/Objects/Break-pot.mp3" type="AudioStream" id=6]
 
 [sub_resource type="AtlasTexture" id=1]
 atlas = ExtResource( 3 )
@@ -80,3 +83,14 @@ script = ExtResource( 1 )
 on_start = true
 timer_path = NodePath("../Timer")
 destroy_object_path = NodePath("..")
+
+[node name="SFX" type="Node2D" parent="."]
+script = ExtResource( 5 )
+on_start = true
+audiostream_path = NodePath("RandomAudioStreamPlayer2D")
+
+[node name="RandomAudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="SFX"]
+script = ExtResource( 4 )
+samples = [ ExtResource( 6 ) ]
+random_volume_range = 0
+random_pitch_range = 0.5

@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/Die-enemy.mp3-43e1b74c89d0485c3d880091881b8bee.mp3str"
+
+[deps]
+
+source_file="res://Sound/SFX/Enemies/Die-enemy.mp3"
+dest_files=[ "res://.import/Die-enemy.mp3-43e1b74c89d0485c3d880091881b8bee.mp3str" ]
+
+[params]
+
+loop=false
+loop_offset=0

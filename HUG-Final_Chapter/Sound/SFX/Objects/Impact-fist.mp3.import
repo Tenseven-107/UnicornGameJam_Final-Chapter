@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/Impact-fist.mp3-dec318f686387705b6bd88c2b937d65d.mp3str"
+
+[deps]
+
+source_file="res://Sound/SFX/Objects/Impact-fist.mp3"
+dest_files=[ "res://.import/Impact-fist.mp3-dec318f686387705b6bd88c2b937d65d.mp3str" ]
+
+[params]
+
+loop=false
+loop_offset=0

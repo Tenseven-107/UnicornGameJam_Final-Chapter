@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/Laser-drone.mp3-aa3cfdf0feba048e97b4304e7fe5acb8.mp3str"
+
+[deps]
+
+source_file="res://Sound/SFX/Player/Laser-drone.mp3"
+dest_files=[ "res://.import/Laser-drone.mp3-aa3cfdf0feba048e97b4304e7fe5acb8.mp3str" ]
+
+[params]
+
+loop=false
+loop_offset=0

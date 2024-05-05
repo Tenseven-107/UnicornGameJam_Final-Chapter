@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/Orc1.mp3-6045cc4fe847c150a9b7d96e3adc6b6b.mp3str"
+
+[deps]
+
+source_file="res://Sound/SFX/Enemies/Orc1.mp3"
+dest_files=[ "res://.import/Orc1.mp3-6045cc4fe847c150a9b7d96e3adc6b6b.mp3str" ]
+
+[params]
+
+loop=false
+loop_offset=0

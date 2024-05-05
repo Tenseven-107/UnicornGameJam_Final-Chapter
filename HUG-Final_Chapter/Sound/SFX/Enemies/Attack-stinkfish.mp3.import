@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/Attack-stinkfish.mp3-86f4c1790b376fa4ef187f84e79bd265.mp3str"
+
+[deps]
+
+source_file="res://Sound/SFX/Enemies/Attack-stinkfish.mp3"
+dest_files=[ "res://.import/Attack-stinkfish.mp3-86f4c1790b376fa4ef187f84e79bd265.mp3str" ]
+
+[params]
+
+loop=false
+loop_offset=0

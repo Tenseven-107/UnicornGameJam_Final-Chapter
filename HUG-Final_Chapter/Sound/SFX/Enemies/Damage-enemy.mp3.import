@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/Damage-enemy.mp3-85bdecff16ec478f3acdbebb1c89b13c.mp3str"
+
+[deps]
+
+source_file="res://Sound/SFX/Enemies/Damage-enemy.mp3"
+dest_files=[ "res://.import/Damage-enemy.mp3-85bdecff16ec478f3acdbebb1c89b13c.mp3str" ]
+
+[params]
+
+loop=false
+loop_offset=0

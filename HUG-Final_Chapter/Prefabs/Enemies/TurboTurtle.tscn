@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=2]
+[gd_scene load_steps=37 format=2]
 
 [ext_resource path="res://Scripts/Enemies/GroundEnemyController.gd" type="Script" id=1]
 [ext_resource path="res://Sprites/Enemies/Turbo-turtle.png" type="Texture" id=2]
@@ -10,6 +10,10 @@
 [ext_resource path="res://Prefabs/Graphics/Particles/Enemy-kill.tscn" type="PackedScene" id=8]
 [ext_resource path="res://Prefabs/Graphics/Particles/Enemy-hit.tscn" type="PackedScene" id=9]
 [ext_resource path="res://Scripts/EffectPlayers/SpawnerEffectPlayer.gd" type="Script" id=10]
+[ext_resource path="res://addons/randomAudioStreamPlayer/random_audio_stream_player_2D.gd" type="Script" id=11]
+[ext_resource path="res://Scripts/EffectPlayers/SFXEffectPlayer.gd" type="Script" id=12]
+[ext_resource path="res://Sound/SFX/Enemies/Hide-turtle.mp3" type="AudioStream" id=13]
+[ext_resource path="res://Sound/SFX/Enemies/Unhide-turtle.mp3" type="AudioStream" id=14]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 10, 13.5 )
@@ -99,6 +103,34 @@ tracks/1/keys = {
 "transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
 "update": 1,
 "values": [ 0, 1, 2, 3, 4, 5 ]
+}
+tracks/2/type = "method"
+tracks/2/path = NodePath("../../SFX/Hide")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "play_effect"
+} ]
+}
+tracks/3/type = "method"
+tracks/3/path = NodePath("../../SFX/Unhide")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0.65 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "play_effect"
+} ]
 }
 
 [sub_resource type="Animation" id=16]
@@ -268,3 +300,25 @@ position_object = NodePath("../..")
 script = ExtResource( 10 )
 spawned_effect = ExtResource( 8 )
 position_object = NodePath("../..")
+
+[node name="SFX" type="Node2D" parent="."]
+
+[node name="Hide" type="Node2D" parent="SFX"]
+script = ExtResource( 12 )
+audiostream_path = NodePath("RandomAudioStreamPlayer2D")
+
+[node name="RandomAudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="SFX/Hide"]
+script = ExtResource( 11 )
+samples = [ ExtResource( 13 ) ]
+random_volume_range = 0
+random_pitch_range = 0.5
+
+[node name="Unhide" type="Node2D" parent="SFX"]
+script = ExtResource( 12 )
+audiostream_path = NodePath("RandomAudioStreamPlayer2D")
+
+[node name="RandomAudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="SFX/Unhide"]
+script = ExtResource( 11 )
+samples = [ ExtResource( 14 ) ]
+random_volume_range = 0
+random_pitch_range = 0.5

@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/Shoot-fly.mp3-50ab12d5f19e3969088bf893826d9058.mp3str"
+
+[deps]
+
+source_file="res://Sound/SFX/Enemies/Shoot-fly.mp3"
+dest_files=[ "res://.import/Shoot-fly.mp3-50ab12d5f19e3969088bf893826d9058.mp3str" ]
+
+[params]
+
+loop=false
+loop_offset=0

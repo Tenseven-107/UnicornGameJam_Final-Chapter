@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=2]
+[gd_scene load_steps=27 format=2]
 
 [ext_resource path="res://Sprites/UI/HUD/empty_Stamina-bar.png" type="Texture" id=1]
 [ext_resource path="res://Sprites/UI/HUD/full_Stamina-bar.png" type="Texture" id=2]
@@ -10,6 +10,8 @@
 [ext_resource path="res://Sprites/UI/Fonts/Title-font.tres" type="DynamicFont" id=8]
 [ext_resource path="res://Sprites/Objects/Pickups/Collectible4.tres" type="Texture" id=9]
 [ext_resource path="res://Sprites/Objects/Pickups/Collectible3.tres" type="Texture" id=10]
+[ext_resource path="res://Sprites/Enemies/OrcHead2.tres" type="Texture" id=11]
+[ext_resource path="res://Sprites/Enemies/OrcHead.tres" type="Texture" id=12]
 
 [sub_resource type="StyleBoxEmpty" id=4]
 
@@ -29,6 +31,16 @@ thickness = 10
 [sub_resource type="StyleBoxLine" id=8]
 color = Color( 0.466667, 0.690196, 0.164706, 1 )
 thickness = 10
+
+[sub_resource type="StyleBoxEmpty" id=12]
+
+[sub_resource type="StyleBoxEmpty" id=13]
+
+[sub_resource type="StyleBoxEmpty" id=14]
+
+[sub_resource type="StyleBoxEmpty" id=15]
+
+[sub_resource type="StyleBoxEmpty" id=16]
 
 [sub_resource type="StyleBoxEmpty" id=11]
 
@@ -238,10 +250,38 @@ custom_styles/grabber_area = SubResource( 8 )
 min_value = -80.0
 max_value = 0.0
 
-[node name="Quit" type="Button" parent="Pause/Menu"]
+[node name="full_screen" type="CheckBox" parent="Pause/Menu"]
 margin_top = 85.0
 margin_right = 169.0
 margin_bottom = 101.0
+custom_colors/font_color_disabled = Color( 0.466667, 0.690196, 0.164706, 1 )
+custom_colors/font_color_focus = Color( 0.466667, 0.690196, 0.164706, 1 )
+custom_colors/font_color_hover_pressed = Color( 0.466667, 0.690196, 0.164706, 1 )
+custom_colors/font_color = Color( 0.466667, 0.690196, 0.164706, 1 )
+custom_colors/font_color_hover = Color( 0.466667, 0.690196, 0.164706, 1 )
+custom_colors/font_color_pressed = Color( 0.466667, 0.690196, 0.164706, 1 )
+custom_fonts/font = ExtResource( 7 )
+custom_icons/radio_checked_disabled = ExtResource( 12 )
+custom_icons/radio_checked = ExtResource( 12 )
+custom_icons/checked_disabled = ExtResource( 12 )
+custom_icons/radio_unchecked_disabled = ExtResource( 12 )
+custom_icons/checked = ExtResource( 12 )
+custom_icons/radio_unchecked = ExtResource( 11 )
+custom_icons/unchecked_disabled = ExtResource( 11 )
+custom_icons/unchecked = ExtResource( 11 )
+custom_styles/hover = SubResource( 12 )
+custom_styles/pressed = SubResource( 13 )
+custom_styles/focus = SubResource( 2 )
+custom_styles/disabled = SubResource( 14 )
+custom_styles/hover_pressed = SubResource( 15 )
+custom_styles/normal = SubResource( 16 )
+text = "Fullsccreen"
+align = 1
+
+[node name="Quit" type="Button" parent="Pause/Menu"]
+margin_top = 105.0
+margin_right = 169.0
+margin_bottom = 121.0
 custom_fonts/font = ExtResource( 7 )
 custom_styles/hover = SubResource( 4 )
 custom_styles/pressed = SubResource( 11 )

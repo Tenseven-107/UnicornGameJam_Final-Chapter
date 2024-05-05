@@ -13,13 +13,14 @@ const group_name: String = "CollectibleHandler"
 # Clear save
 export var _c_clear_save: String
 export (bool) var clear_save: bool = false
+export (bool) var do_not_load: bool = false
 
 
 # Set up
 func _ready():
 	add_to_group(group_name)
 
-	if clear_save == false:
+	if clear_save == false or do_not_load == true:
 		load_save()
 
 	else: clear_file()

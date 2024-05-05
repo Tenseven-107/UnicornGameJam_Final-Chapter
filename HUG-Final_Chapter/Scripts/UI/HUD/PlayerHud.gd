@@ -18,6 +18,8 @@ onready var quit: Button = $Pause/Menu/Quit
 onready var master_volume: Slider = $Pause/Menu/VolumeMaster/Volume
 onready var music_volume: Slider = $Pause/Menu/VolumeMusic/Volume
 
+onready var fullscreen: CheckBox = $Pause/Menu/full_screen
+
 var is_paused: bool = false
 
 
@@ -35,6 +37,10 @@ func _ready():
 
 	master_volume.connect("value_changed", self, "set_master")
 	music_volume.connect("value_changed", self, "set_music")
+
+	fullscreen.pressed = OS.window_fullscreen
+
+	fullscreen.connect("toggled", self, "set_fullscreen")
 
 
 
@@ -81,15 +87,13 @@ func pause():
 
 
 # Setting the volume
-func set_master(volume: float):
-	AudioServer.set_bus_volume_db(0, volume)
+func set_master(volume: float): AudioServer.set_bus_volume_db(0, volume)
 
-func set_music(volume: float):
-	AudioServer.set_bus_volume_db(1, volume)
+func set_music(volume: float): AudioServer.set_bus_volume_db(1, volume)
 
 
-
-
+# Setting fullscreen
+func set_fullscreen(toggle: bool): OS.window_fullscreen = toggle
 
 
 

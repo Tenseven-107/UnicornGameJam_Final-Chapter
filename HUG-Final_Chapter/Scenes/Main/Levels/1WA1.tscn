@@ -170,8 +170,8 @@ format = 1
 
 [node name="LevelTransit" parent="Enviroment/Elements" instance=ExtResource( 5 )]
 position = Vector2( 49, 5 )
-next_scene = "res://Scenes/Main/Levels/1DC3.tscn"
 next_scene_pos = Vector2( 696, -555 )
+next_scene = "res://Scenes/Main/Levels/1DC3.tscn"
 
 [node name="TeleportBlock" type="StaticBody2D" parent="Enviroment/Elements"]
 position = Vector2( 315, 0 )
@@ -278,6 +278,8 @@ position = Vector2( -1326, -8 )
 
 [node name="LevelTransit2" parent="Enviroment/Elements" instance=ExtResource( 5 )]
 position = Vector2( -1999, -923 )
+right = false
+next_scene = "res://Scenes/Main/EndScreen.tscn"
 
 [node name="TeleportBlock4" type="StaticBody2D" parent="Enviroment/Elements"]
 position = Vector2( -2362, -985 )

@@ -5,7 +5,7 @@ class_name AbilityHandler
 
 # Player
 export (NodePath) var player_path: NodePath
-onready var player: PlayerController = get_node(player_path)
+var player: PlayerController
 
 # Abilities array
 var abilities: Array = []
@@ -25,6 +25,8 @@ func _ready():
 	add_to_group(group_name)
 
 	if clear_save == false:
+		player = get_node(player_path)
+
 		load_save()
 		set_abilities()
 

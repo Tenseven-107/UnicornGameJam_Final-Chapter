@@ -4,7 +4,7 @@
 
 [node name="MusicPlayer" type="Node"]
 script = ExtResource( 1 )
-default_song_list = [ "res://Sound/Music/02_-_Spellunked.mp3", "res://Sound/Music/03_-_Desert_Winds.mp3", "res://Sound/Music/04_-_Dusts.mp3" ]
+default_song_list = [ "res://Sound/Music/01_-_Thorn-Intro.mp3", "res://Sound/Music/02_-_Spellunked.mp3", "res://Sound/Music/03_-_Desert_Winds.mp3", "res://Sound/Music/04_-_Dusts.mp3" ]
 
 [node name="AudioPlayer" type="AudioStreamPlayer" parent="."]
 bus = "Music"

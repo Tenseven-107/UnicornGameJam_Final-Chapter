@@ -338,7 +338,7 @@ position = Vector2( 910, -456 )
 [node name="Music" type="Node" parent="EffectPlayers"]
 script = ExtResource( 21 )
 on_start = true
-song_index = 2
+song_index = 3
 
 [node name="Lock-1" type="Node" parent="EffectPlayers"]
 script = ExtResource( 16 )

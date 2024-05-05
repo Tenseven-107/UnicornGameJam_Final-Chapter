@@ -157,6 +157,20 @@ tracks/3/keys = {
 "method": "play_effect"
 } ]
 }
+tracks/4/type = "method"
+tracks/4/path = NodePath("../EffectPlayers/Music")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 12 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "play_effect"
+} ]
+}
 
 [node name="Startscreen" type="Node2D"]
 script = ExtResource( 4 )
@@ -169,7 +183,7 @@ current = true
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="Visuals"]
 frames = SubResource( 15 )
-frame = 11
+frame = 13
 
 [node name="Label" type="Label" parent="Visuals"]
 margin_left = -191.0

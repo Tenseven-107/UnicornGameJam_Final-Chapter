@@ -160,6 +160,7 @@ position = Vector2( 1030, 224 )
 [node name="Music" type="Node" parent="EffectPlayers"]
 script = ExtResource( 21 )
 on_start = true
+song_index = 1
 
 [node name="AreaTitle" type="Node" parent="EffectPlayers"]
 script = ExtResource( 15 )

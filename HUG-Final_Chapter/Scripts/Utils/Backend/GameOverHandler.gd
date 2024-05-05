@@ -18,7 +18,7 @@ var last_check_point_pos: Vector2 = Vector2.ZERO
 # Utils
 const save_path: String = "user://CheckpointSave.save"
 const group_name: String = "GameOverHandler"
-const drone_tp_time: float = 0.2
+const drone_tp_time: float = 0.5
 
 # Clear save
 export var _c_clear_save: String

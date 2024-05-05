@@ -286,7 +286,7 @@ shape = SubResource( 5 )
 [node name="Music" type="Node" parent="EffectPlayers"]
 script = ExtResource( 21 )
 on_start = true
-song_index = 1
+song_index = 2
 
 [node name="Lock-1" type="Node" parent="EffectPlayers"]
 script = ExtResource( 15 )

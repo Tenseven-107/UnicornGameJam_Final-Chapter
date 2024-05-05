@@ -417,8 +417,8 @@ func finish_dodge():
 
 # Teleport
 func teleport():
-	if player_action("action_player", false) and drone.check_can_teleport():
-		if can_remove_stamina(stamina_teleport, false) and GlobalSignals.can_teleport == true: # GlobalSignals fix == dirty fix
+	if player_action("action_player", false) and drone.check_can_teleport()  and GlobalSignals.can_teleport == true:
+		if can_remove_stamina(stamina_teleport, false): # GlobalSignals fix == dirty fix
 			# Play effects on teleport_in
 			for effect in effects_teleport_in:
 				var play_effect: EffectPlayer = get_node(effect)

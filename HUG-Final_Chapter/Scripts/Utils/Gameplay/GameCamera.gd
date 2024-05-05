@@ -76,7 +76,13 @@ func update_cam():
 		if player_offset.x != 0 and player_target.input_vector.y == 0:
 			last_cam_offset = player_offset
 
-		global_position = lerp(global_position, player_target.global_position + last_cam_offset, 1).round()
+		if Engine.get_frames_per_second() >= 60:
+			global_position = lerp(global_position, player_target.global_position + last_cam_offset, 1).round()
+			smoothing_enabled = true
+
+		else:
+			global_position = lerp(global_position, player_target.global_position + last_cam_offset, 0.1).round()
+			smoothing_enabled = false
 
 
 

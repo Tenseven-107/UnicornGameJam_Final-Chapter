@@ -244,7 +244,7 @@ effects_enter = [ NodePath("../LevelTransit/FX/Screen-fx") ]
 [node name="Music" type="Node" parent="EffectPlayers"]
 script = ExtResource( 21 )
 on_start = true
-song_index = 1
+song_index = 2
 
 [node name="Lock" type="Node" parent="EffectPlayers"]
 script = ExtResource( 20 )

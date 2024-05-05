@@ -210,7 +210,7 @@ next_scene = "res://Scenes/Main/Levels/1OC2.tscn"
 [node name="Music" type="Node" parent="EffectPlayers"]
 script = ExtResource( 21 )
 on_start = true
-song_index = 2
+song_index = 3
 
 [node name="AreaTitle" type="Node" parent="EffectPlayers"]
 script = ExtResource( 19 )

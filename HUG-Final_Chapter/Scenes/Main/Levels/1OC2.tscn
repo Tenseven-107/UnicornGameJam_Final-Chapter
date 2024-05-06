@@ -48,7 +48,7 @@ region = Rect2( 129, 337, 62, 47 )
 atlas = ExtResource( 7 )
 region = Rect2( 257, 337, 61, 47 )
 
-[node name="Testing" type="Node2D"]
+[node name="Level" type="Node2D"]
 __meta__ = {
 "_edit_horizontal_guides_": [  ]
 }

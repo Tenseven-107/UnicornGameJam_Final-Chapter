@@ -34,7 +34,7 @@ region = Rect2( 129, 289, 62, 47 )
 atlas = ExtResource( 7 )
 region = Rect2( 257, 289, 62, 47 )
 
-[node name="Testing" type="Node2D"]
+[node name="Level" type="Node2D"]
 
 [node name="GameOverHandler" parent="." instance=ExtResource( 14 )]
 
@@ -119,8 +119,8 @@ position = Vector2( -10, 9 )
 
 [node name="LevelTransit" parent="Enviroment/Elements" instance=ExtResource( 5 )]
 position = Vector2( 1637, 236 )
-next_scene = "res://Scenes/Main/Levels/1DC1.tscn"
 next_scene_pos = Vector2( -139, -10 )
+next_scene = "res://Scenes/Main/Levels/1DC1.tscn"
 
 [node name="TeleportBlock" type="StaticBody2D" parent="Enviroment/Elements"]
 position = Vector2( 1833, 212 )

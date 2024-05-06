@@ -39,7 +39,7 @@ extents = Vector2( 93.5, 84.5 )
 atlas = ExtResource( 11 )
 region = Rect2( 193, 337, 62, 47 )
 
-[node name="Testing" type="Node2D"]
+[node name="Level" type="Node2D"]
 
 [node name="GameOverHandler" parent="." instance=ExtResource( 14 )]
 

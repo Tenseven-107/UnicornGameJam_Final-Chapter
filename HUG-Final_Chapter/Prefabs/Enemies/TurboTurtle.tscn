@@ -1,4 +1,4 @@
-[gd_scene load_steps=37 format=2]
+[gd_scene load_steps=38 format=2]
 
 [ext_resource path="res://Scripts/Enemies/GroundEnemyController.gd" type="Script" id=1]
 [ext_resource path="res://Sprites/Enemies/Turbo-turtle.png" type="Texture" id=2]
@@ -14,6 +14,7 @@
 [ext_resource path="res://Scripts/EffectPlayers/SFXEffectPlayer.gd" type="Script" id=12]
 [ext_resource path="res://Sound/SFX/Enemies/Hide-turtle.mp3" type="AudioStream" id=13]
 [ext_resource path="res://Sound/SFX/Enemies/Unhide-turtle.mp3" type="AudioStream" id=14]
+[ext_resource path="res://Scripts/Utils/Backend/VisibilityOptimizer.gd" type="Script" id=15]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 10, 13.5 )
@@ -220,7 +221,6 @@ collision_mask = 2
 [node name="AnimatedSprite" type="AnimatedSprite" parent="Body/Visual"]
 frames = SubResource( 14 )
 animation = "Walk"
-frame = 1
 flip_h = true
 
 [node name="Anims" type="AnimationPlayer" parent="Body/Visual"]
@@ -322,3 +322,10 @@ script = ExtResource( 11 )
 samples = [ ExtResource( 14 ) ]
 random_volume_range = 0
 random_pitch_range = 0.5
+
+[node name="VisibilityOptimizer" type="VisibilityNotifier2D" parent="."]
+position = Vector2( -4.76837e-07, 2 )
+scale = Vector2( 1.4, 1.4 )
+script = ExtResource( 15 )
+visibility_path = NodePath("..")
+processing_nodes = [ NodePath("..") ]

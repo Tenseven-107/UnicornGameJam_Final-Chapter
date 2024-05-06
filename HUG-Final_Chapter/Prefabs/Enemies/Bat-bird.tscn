@@ -1,4 +1,4 @@
-[gd_scene load_steps=40 format=2]
+[gd_scene load_steps=41 format=2]
 
 [ext_resource path="res://Scripts/Enemies/FlyingEnemyController.gd" type="Script" id=1]
 [ext_resource path="res://Sprites/Enemies/Bat-Bird.png" type="Texture" id=2]
@@ -13,6 +13,7 @@
 [ext_resource path="res://addons/randomAudioStreamPlayer/random_audio_stream_player_2D.gd" type="Script" id=11]
 [ext_resource path="res://Scripts/EffectPlayers/SFXEffectPlayer.gd" type="Script" id=12]
 [ext_resource path="res://Sound/SFX/Enemies/Detect-bird.mp3" type="AudioStream" id=13]
+[ext_resource path="res://Scripts/Utils/Backend/VisibilityOptimizer.gd" type="Script" id=14]
 
 [sub_resource type="CircleShape2D" id=1]
 radius = 7.0
@@ -228,7 +229,7 @@ shape = SubResource( 1 )
 z_index = 2
 frames = SubResource( 15 )
 animation = "Idle"
-frame = 1
+frame = 2
 
 [node name="Anims" type="AnimationPlayer" parent="Visuals"]
 anims/Detect = SubResource( 16 )
@@ -327,3 +328,10 @@ script = ExtResource( 11 )
 samples = [ ExtResource( 13 ) ]
 random_volume_range = 0
 random_pitch_range = 0.5
+
+[node name="VisibilityOptimizer" type="VisibilityNotifier2D" parent="."]
+position = Vector2( -4.76837e-07, -0.5 )
+scale = Vector2( 1.7, 1.45 )
+script = ExtResource( 14 )
+visibility_path = NodePath("..")
+processing_nodes = [ NodePath("..") ]

@@ -149,7 +149,7 @@ cell_custom_transform = Transform2D( 16, 0, 0, 16, 0, 0 )
 collision_layer = 0
 collision_mask = 0
 format = 1
-tile_data = PoolIntArray( 65557, 26, 0, 65562, 38, 0, 131093, 35, 0, 131095, 35, 0, 131097, 34, 0 )
+tile_data = PoolIntArray( -2162587, 31, 0, -2162583, 32, 0, -2162579, 536870941, 0, -2096990, 33, 0, -2096983, 29, 0, -2096980, 32, 0, -2096979, 28, 0, -2031476, 23, 0, -2031475, 14, 0, -2031470, 15, 0, -2031468, 21, 0, -2031453, 39, 0, -1965966, 536870942, 0, -1965953, 14, 0, -1965952, 22, 0, -1965950, 15, 0, -1900431, 16, 0, -1900426, 12, 0, -1900425, 21, 0, -1900423, 13, 0, -1048455, 12, 0, -786309, 11, 0, -524159, 15, 0, -458600, 27, 0, -327526, 19, 0, -196512, 40, 0, -196497, 40, 0, -196447, 14, 0, -130930, 40, 0, -130921, 40, 0, -130908, 11, 0, -65480, 31, 0, -65449, 32, 0, 52, 12, 0, 55, 22, 0, 177, 31, 0, 185, 33, 0, 65557, 26, 0, 65562, 38, 0, 65692, 20, 0, 65700, 21, 0, 65705, 22, 0, 65717, 13, 0, 131093, 35, 0, 131095, 35, 0, 131097, 34, 0, 131186, 13, 0, 131189, 38, 0, 131192, 15, 0, 131202, 31, 0, 131203, 33, 0, 131213, 13, 0, 131215, 21, 0, 131221, 39, 0, 196709, 36, 0, 196710, 12, 0, 196714, 37, 0, 196734, 22, 0, 196735, 15, 0, 196740, 25, 0, 196742, 17, 0 )
 
 [node name="Detail2" type="TileMap" parent="Enviroment"]
 z_index = -1
@@ -167,9 +167,9 @@ position = Vector2( 384, 5 )
 
 [node name="LevelTransit" parent="Enviroment/Elements" instance=ExtResource( 7 )]
 position = Vector2( -43, 5 )
-next_scene = "res://Scenes/Main/Levels/1DC1.tscn"
 right = false
 next_scene_pos = Vector2( 1465, 85 )
+next_scene = "res://Scenes/Main/Levels/1DC1.tscn"
 
 [node name="TeleportBlock" type="StaticBody2D" parent="Enviroment/Elements"]
 position = Vector2( -233, -27 )
@@ -261,8 +261,8 @@ next_scene = "res://Scenes/Main/Levels/1DC3.tscn"
 
 [node name="LevelTransit3" parent="Enviroment/Elements" instance=ExtResource( 7 )]
 position = Vector2( 2394, -491 )
-next_scene = "res://Scenes/Main/Levels/1OC2.tscn"
 next_scene_pos = Vector2( -28, -235 )
+next_scene = "res://Scenes/Main/Levels/1OC2.tscn"
 
 [node name="TeleportBlock4" type="StaticBody2D" parent="Enviroment/Elements"]
 position = Vector2( 3001, -40 )

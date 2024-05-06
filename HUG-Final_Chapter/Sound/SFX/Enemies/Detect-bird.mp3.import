@@ -11,5 +11,5 @@ dest_files=[ "res://.import/Detect-bird.mp3-5b9dfd70b0d55a2edc68ad80270020ca.mp3
 
 [params]
 
-loop=true
+loop=false
 loop_offset=0

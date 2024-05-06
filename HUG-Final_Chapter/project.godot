@@ -113,6 +113,11 @@ _global_script_classes=[ {
 "class": "TeleportBlock",
 "language": "GDScript",
 "path": "res://Scripts/Utils/Gameplay_help/TeleportBlock.gd"
+}, {
+"base": "VisibilityNotifier2D",
+"class": "VisibilityOptimizer",
+"language": "GDScript",
+"path": "res://Scripts/Utils/Backend/VisibilityOptimizer.gd"
 } ]
 _global_script_class_icons={
 "AbilityHandler": "",
@@ -135,7 +140,8 @@ _global_script_class_icons={
 "PlayerController": "",
 "PlayerDroneController": "",
 "PlayerHud": "",
-"TeleportBlock": ""
+"TeleportBlock": "",
+"VisibilityOptimizer": ""
 }
 
 [application]

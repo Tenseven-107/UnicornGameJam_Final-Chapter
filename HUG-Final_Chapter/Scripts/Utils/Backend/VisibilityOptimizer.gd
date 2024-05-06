@@ -34,8 +34,11 @@ func _ready():
 		disable_timer.start()
 		disable_timer.connect("timeout", self, "disable_timeout")
 
+	set_process_internal(false)
+
 # Disable on timeout of the disable timer
-func disable_timeout(): set_node_processes(false)
+func disable_timeout(): 
+	if is_on_screen() == false: set_node_processes(false)
 
 
 

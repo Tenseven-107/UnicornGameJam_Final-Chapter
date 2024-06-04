@@ -28,6 +28,7 @@ teleport_ray_path = NodePath("Rays/RayCast2D")
 player_ray_path = NodePath("Rays/RayCast2D2")
 collider_path = NodePath("CollisionShape2D")
 turn_off_timer_path = NodePath("Utils/Timer")
+move_timer_path = NodePath("Utils/Timer2")
 body_path = NodePath("Body")
 shooter_path = NodePath("Body/Bulletshooter")
 shoot_progress_path = NodePath("Body/Visuals/Shootprogress")
@@ -99,6 +100,8 @@ random_pitch_range = 0.5
 [node name="Utils" type="Node" parent="."]
 
 [node name="Timer" type="Timer" parent="Utils"]
+
+[node name="Timer2" type="Timer" parent="Utils"]
 
 [node name="FX" type="Node" parent="."]
 

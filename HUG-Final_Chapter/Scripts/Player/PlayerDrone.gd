@@ -17,6 +17,9 @@ onready var collider: CollisionShape2D = get_node(collider_path)
 export (NodePath) var turn_off_timer_path: NodePath
 onready var turn_off_timer: Timer = get_node(turn_off_timer_path)
 
+export (NodePath) var move_timer_path: NodePath
+onready var move_timer: Timer = get_node(move_timer_path)
+
 export (NodePath) var body_path: NodePath
 onready var body: Node2D = get_node(body_path)
 
@@ -45,6 +48,7 @@ var velocity: Vector2 = Vector2.ZERO
 # Misc
 export var _c_misc: String
 export (float) var turn_off_time: float = 0.5
+export (float) var move_time: float = 1
 
 const group_name: String = "Drone"
 
@@ -70,6 +74,11 @@ func _ready():
 
 	player_ray.add_exception(self)
 
+	# Set up move timer (fixes drone hop issue)
+	move_timer.one_shot = true
+	move_timer.wait_time = move_time
+	move_timer.connect("timeout", self, "enable_collider")
+
 
 
 # Processing
@@ -92,6 +101,10 @@ func movement(delta):
 
 		# Rotating to direction
 		body.rotation = input_vector.angle()
+
+		# Fix for drone hop
+		collider.disabled = true
+		move_timer.start()
 	else: current_speed = 0
 
 	velocity = move_and_slide(input_vector * current_speed) * delta
@@ -162,12 +175,13 @@ func check_player_ray():
 		if turn_off_timer.is_stopped():
 			collider.disabled = true
 
-	else:
+	elif move_timer.is_stopped() == true:
 		collider.disabled = false
 		turn_off_timer.start()
 
 
-
+# Re-enable collider
+func enable_collider(): collider.disabled = false
 
 
 
